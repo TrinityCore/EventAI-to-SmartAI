@@ -1,5 +1,5 @@
 <?php
-ini_set('memory_limit', "148M"); // That shouldnt be a problem, default is 128MB and the script peakes at around 140Mb.
+ini_set('memory_limit', "300M"); // That shouldnt be a problem, default is 128MB and the script peakes at around 140Mb.
 
 require_once('./utils.php');
 require_once('./factory.php');
@@ -38,7 +38,7 @@ echo PHP_EOL . 'Selecting all EventAIs from the database ...' . PHP_EOL;
 ob_end_flush();
 
 $oldDate = microtime(true);
-$EAIDataSet = Factory::createOrGetDBHandler()->query("SELECT * FROM creature_ai_scripts ORDER BY id")->fetchAll(PDO::FETCH_OBJ);
+$EAIDataSet = Factory::createOrGetDBHandler()->query("SELECT * FROM creature_ai_scripts;# WHERE creature_id=548 ORDER BY id")->fetchAll(PDO::FETCH_OBJ);
 
 ob_start();
 echo '>> Gotten ' . count($EAIDataSet) . ' entries in ' . round(microtime(true) - $oldDate, 4) . ' ms' . PHP_EOL;
@@ -49,7 +49,6 @@ $npcName   = "";  // Save the last iterated NPC name
 $npcId     = 0;   // And its entry in the table.
 
 $npcStore  = array();
-
 $oldDate   = microtime(true);
 
 foreach ($EAIDataSet as $eaiItem) {
@@ -69,6 +68,11 @@ unset($eaiItem, $npcName, $npcId, $EAIDataSet); // Save some memory
 
 $storeSize = count($npcStore);
 
+ob_start();
+echo '>> ' . $storeSize . ' different NPC EAIs detected in ' . round(microtime(true) - $oldDate, 4) . ' ms !' . PHP_EOL . PHP_EOL;
+printf('Converting [%3.3d%%] ', 0);
+ob_end_flush();
+
 # Delete previous files
 if (file_exists('creature_texts_v2.sql'))
     unlink('creature_texts_v2.sql');
@@ -76,28 +80,25 @@ if (file_exists('creature_texts_v2.sql'))
 if (file_exists('smart_scripts_v2.sql'))
     unlink('smart_scripts_v2.sql');
 
-ob_start();
-echo '>> ' . $storeSize . ' different NPC EAIs detected in ' . round(microtime(true) - $oldDate, 4) . ' ms !' . PHP_EOL . PHP_EOL;
-printf('Converting [%3.3d%%] ', 0);
-ob_end_flush();
-
 $itr = 0;
+$oldItr = 0;
 $oldDate = microtime(true);
 foreach ($npcStore as $npcId => $npcObj) {
-    $npcObj->convertAllToSAI();
-    $npcObj->getSmartScripts(false); // Dump texts ONLY
+    $npcObj->loadSAI();
+    $npcObj->prepare(); // Load texts ONLY
 
     // The order is important here, CreatureText changes data on the parent, thus on all the current NPC's SAI.
     sLog::outSpecificFile('creature_texts_v2.sql', $npcObj->getCreatureText());
     sLog::outSpecificFile('smart_scripts_v2.sql', $npcObj->getSmartScripts());
-    
+
     // Free memory on the fly
     unset($npcStore[$npcId], $npcId, $npcObj);
 
     ob_start();
     $pct = (++$itr) * 100 / $storeSize;
-    if (is_int($pct / 5))
-        printf(PHP_EOL . 'Converting [%3.3d%%] ', $pct);
+    if (is_int($pct) && $pct % 10 == 0) {
+            printf(PHP_EOL . 'Converting [%3.3d%%] ', $pct);
+    }
     ob_end_flush();
 }
 

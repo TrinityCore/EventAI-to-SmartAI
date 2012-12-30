@@ -3,11 +3,11 @@ require_once('./sqlbuilder.class.php');
 require_once('./eai.def.php');
 require_once('./sai.def.php');
 
-define('__FIXME__',  -1);
+define('__FIXME__',  "__FIXME__");
 
 class Utils
 {
-    static function SAI2EAIFlag($flag)
+    static function EAI2SAIFlags($flag)
     {
         // Rather than making shitty stuff, lets do it plain.
         $output = 0;
@@ -28,7 +28,7 @@ class Utils
 
         if ($flag & EFLAG_DEBUG_ONLY)
             $output |= SMART_EVENT_FLAG_DEBUG_ONLY;
-        
+
         return $output;
     }
 
@@ -129,7 +129,7 @@ class Utils
             case SMART_EVENT_TARGET_CASTING:
                 return "On Target Casting";
             case SMART_EVENT_FRIENDLY_HEALTH:
-                return "On Friendly Unit At ${param1} - ${param2}% Health";
+                return "On Friendly Unit Below ${param2}% Health";
             case SMART_EVENT_FRIENDLY_IS_CC:
                 return "On Friendly Unit In CC";
             case SMART_EVENT_FRIENDLY_MISSING_BUFF:
@@ -137,7 +137,7 @@ class Utils
             case SMART_EVENT_SUMMONED_UNIT:
                 return "On Summoned Unit";
             case SMART_EVENT_TARGET_MANA_PCT:
-                return "On Target At ${param1} - ${param2}% Mana";
+                return "On Target Between ${param1} And ${param2}% Mana";
             case SMART_EVENT_ACCEPTED_QUEST:
                 return "On Quest Accept";
             case SMART_EVENT_REWARD_QUEST:
@@ -193,7 +193,7 @@ class Utils
                 $data[4] = $eaiItem->event_param4;
                 break;
             case EVENT_T_FRIENDLY_HP:
-                $data[1] = 0;
+                $data[1] = $eaiItem->event_param1;
                 $data[2] = $eaiItem->event_param2;
                 $data[3] = $eaiItem->event_param3;
                 $data[4] = $eaiItem->event_param4;
@@ -212,7 +212,7 @@ class Utils
         }
         return array_map('intval', $data);
     }
-    
+
     static function buildSAIAction($eaiItem) {
         $result = array();
 
@@ -221,7 +221,7 @@ class Utils
 
             if ($eaiAction == 0)
                 break;
-            
+
             $param1    = $eaiItem->{'action'  . $i . '_param1'};
             $param2    = $eaiItem->{'action'  . $i . '_param2'};
             $param3    = $eaiItem->{'action'  . $i . '_param3'};
@@ -289,10 +289,10 @@ class Utils
                         'params'     => array(max(0, $param1), max(0, -$param1), 0, 0, 0, 0),
                         'commentType' => "_npcName_ - _eventName_ - "
                     );
-                    
+
                     if (isset($target))
                         $result[$i]['target'] = $target;
-                    
+
                     if ($param1 < 0)
                         $result[$i]['commentType'] .= "Remove " . (- $param1) . '% Threat';
                     else // if ($param1 > 0)
@@ -369,9 +369,9 @@ class Utils
                     $result[$i] = array(
                         'SAIAction'  => SMART_ACTION_INC_EVENT_PHASE,
                         'params'     => array(0, 0, 0, 0, 0, 0),
-                        'commentType' => "_npcName_ - _eventName_ - Increment Phase"
+                        'commentType' => "_npcName_ - _eventName_ - " . ($param1 < 0 ? "De" : "In") . "crement Phase"
                     );
-                    
+
                     if ($param1 < 0)
                         $result[$i]['params'][1] = -$param1;
                     else // if ($param1 > 0)
@@ -400,7 +400,7 @@ class Utils
                         'SAIAction'  => SMART_ACTION_REMOVEAURASFROMSPELL,
                         'params'     => array($param2, 0, 0, 0, 0, 0),
                         'target'     => $param1 + 1,
-                        'commentType' => "_npcName_ - _eventName_ - Remove Aura _removeAuraSpell_" 
+                        'commentType' => "_npcName_ - _eventName_ - Remove Aura _removeAuraSpell_"
                     );
                     if ($param2 == 0)
                         $result[$i]['commentType'] = "_npcName_ - _eventName_ - Remova all auras";
@@ -504,7 +504,7 @@ class Utils
                         'commentType' => "_npcName_ - _eventName_ - "
                     );
 
-                    switch ($param1) 
+                    switch ($param1)
                     {
                         case 0: // No melee weapon
                             $result[$i]['commentType'] .= 'Set unarmed';
@@ -611,11 +611,17 @@ class Utils
                 case ACTION_T_RANDOM_SAY:
                 case ACTION_T_RANDOM_YELL:
                 case ACTION_T_RANDOM_TEXTEMOTE:
+                    $result[$i] = array(
+                        'SAIAction'  => __FIXME__,
+                        'params'     => array(__FIXME__, __FIXME__, __FIXME__, __FIXME__, __FIXME__, __FIXME__),
+                        'commentType' => "_npcName_ - _eventName_ - EAI: RANDOM TALK ACTION - NON IMPLEMENTED BY THE SCRIPT"
+                    );
+                    break;
                 default:
                     $result[$i] = array(
                         'SAIAction'  => __FIXME__,
                         'params'     => array(__FIXME__, __FIXME__, __FIXME__, __FIXME__, __FIXME__, __FIXME__),
-                        'commentType' => "_npcName_ - _eventName_ - Y me not working ??? :("
+                        'commentType' => "_npcName_ - _eventName_ - UNKNOWN EAI ACTION"
                     );
                     break;
             }
@@ -630,17 +636,24 @@ class Utils
         return $result;
     }
 
-    static function generateSAIPhase($eaiPhase) {
-        //! Not sure if this how it should behave. EAI uses phases to force events NOT TO happen in phases. It means they happen in ~$phase to me.
-        //! Except for 0. (Seems kind of idiot for an event to never happen.)
-        //! Sample output: 0b100 inverted is 0b011 (4 => 3)
-        if ($eaiPhase == 0)
+    static function generateSAIPhase($eaiMask) {
+        if ($eaiMask == 0)
             return 0;
 
-        $saiPhase = decbin(~$eaiPhase);
-        return bindec(substr($saiPhase, -strlen(decbin($eaiPhase))));
+        $eaiBitMask = decbin(~intval($eaiMask));
+        // echo "decbin(~mask)" . PHP_EOL;
+        // var_dump($eaiBitMask);
+
+        // Shrink
+        $eaiBitMask = substr($eaiBitMask, -strlen(decbin(intval($eaiMask))));
+        // echo "substr(decbin(~mask), strlen(mask) = " . decbin(intval($eaiMask)) . ")" . PHP_EOL;
+        // var_dump($eaiBitMask);
+
+        $eaiBitMask = intval(bindec($eaiBitMask));
+        // echo "intval(bindec(mask))" . PHP_EOL;
+        return $eaiBitMask;
     }
-    
+
     // Not used, here as remnant to understand how targets are converted.
     static function EAITargetToSAI($eaiTarget) {
         //! Targets are the same, except SAI has then offsetted by +1.
@@ -651,26 +664,43 @@ class Utils
 
 class sLog
 {
+    private static $handles = array();
+    private static $specific = array();
+
     private function __construct() { }
 
-    static function outString($msg) {
-        if ($handle = fopen('dbErrors.log', 'a')) {
-            fwrite($handle, date('d/m/Y H:i:s :: ') . $msg . PHP_EOL);
-            fclose($handle);
+    public function __destruct() {
+        foreach ($this->handles as &$h) {
+            @fclose($h);
+            unset($h);
         }
+        foreach ($this->specific as &$h) {
+            @fclose($h);
+            unset($h);
+        }
+    }
+
+    static function outString($msg) {
+        if (!isset(self::$handle[0]))
+            self::$handle[0] = fopen('dbErrors.log', 'a');
+
+        if (self::$handle[0])
+            fwrite(self::$handle[0], date('d/m/Y H:i:s :: ') . $msg . PHP_EOL);
     }
 
     static function outInfo($msg) {
-        if ($handle = fopen('workProgress.log', 'a')) {
-            fwrite($handle, date('d/m/Y H:i:s :: ') . $msg . PHP_EOL);
-            fclose($handle);
-        }
+        if (!isset(self::$handle[1]))
+            self::$handle[1] = fopen('workProgress.log', 'a');
+
+        if (self::$handle[1])
+            fwrite(self::$handle[1], date('d/m/Y H:i:s :: ') . $msg . PHP_EOL);
     }
 
     static function outSpecificFile($file, $msg) {
-        if ($handle = fopen($file, 'a')) {
-            fwrite($handle, $msg);
-            fclose($handle);
-        }
+        if (!isset(self::$specific[$file]))
+            self::$specific[$file] = fopen($file, 'a');
+
+        if (self::$specific[$file])
+            fwrite(self::$specific[$file], $msg);
     }
 }

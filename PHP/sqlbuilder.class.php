@@ -9,17 +9,27 @@ class NPC
     public  $npcId;
     public  $npcName;
 
-    private $textGroupId = 0;
-    private $textId      = 0;
-    private $saiItemId   = 0;
-    private $linkItr     = 0;
-    private $eventCache  = array();
+    private $textGroupId  = 0;
+    private $textId       = 0;
+    private $saiItemId    = 0;
+
+    private $actionRowCache = array();
 
     public function __construct($npcId, $npcName) {
         $this->npcId      = $npcId;
         $this->npcName    = $npcName;
         $this->saiItemId  = 0;
         $this->dumpSpells = (Factory::createOrGetDBCWorker() !== false);
+    }
+
+    public function __destruct() {
+        $l = count($this->actionRowCache);
+        for ($i = 0; $i < $l; ++$i)
+            unset($this->actionRowCache[$i]);
+        $l = count($this->sai);
+        for ($i = 0; $i < $l; ++$i)
+            unset($this->sai[$i]);
+        unset($i, $l);
     }
 
     public function countSQLRows($isSAI = false) {
@@ -57,51 +67,13 @@ class NPC
     public function increaseSaiIndex()    { $this->saiItemId++; return $this; }
     public function resetSaiIndex()       { $this->saiItemId = 0; }
 
-    public function getLinkIndex()        { return $this->linkItr; }
-    public function increaseLinkIndex()   { $this->linkItr += 1; }
-    public function setLinkIndex($val)    { $this->linkItr = $val; }
-
-    public function addEventToCache($event) {
-        $item = array(
-            'type'    => $event['event_type'],
-            'phase'   => $event['event_phase'],
-            'flags'   => $event['event_flags'],
-            'chance'  => $event['event_chance'],
-            'params'  => $event['event_params']
-        );
+    public function AddSAIRow($actionRow) {
+        $this->actionRowCache[] = $actionRow;
     }
 
-    public function hasEventInCache($event) {
-        foreach ($this->eventCache as $item)
-            if ($item['type']         == $event['event_type']      && $item['phase']     == $event['event_phase']
-                && $item['flags']     == $event['event_flags']     && $item['chance']    == $event['event_chance']
-                && $item['params'][1] == $event['event_params'][1] && $item['params'][2] == $event['event_params'][2]
-                && $item['params'][3] == $event['event_params'][3] && $item['params'][4] == $event['event_params'][4])
-                return true;
-            return false;
-    }
-
-    public function convertAllToSAI() {
-        foreach ($this->eai as $eaiItem)
-            $this->addSAI($eaiItem->toSAI());
-        unset($this->eai); // Save some memory
-    }
-
-    public function updateTalkActions($eaiEntry, $saiEntry) {
-        foreach ($this->sai as $saiItem)
-            $saiItem->updateTalkActions($eaiEntry, $saiEntry);
-    }
-
-    public function getSmartScripts($write = true) {
-        if (!$write) {
-            foreach ($this->sai as $itr => $item)
-                $item->toSQL(false);
-
-            unset($item); // Save some memory
-            return;
-        }
-
-        $this->resetSaiIndex();
+    public function getSmartScripts() {
+        foreach ($this->sai as $itr => $item)
+            $item->toSQL();
 
         $output = '-- ' . $this->npcName . ' SAI' . PHP_EOL;
         $output .= 'SET @ENTRY := ' . $this->npcId . ';' . PHP_EOL;
@@ -110,12 +82,78 @@ class NPC
         $output .= 'DELETE FROM `smart_scripts` WHERE `entryorguid`=@ENTRY AND `source_type`=0;' . PHP_EOL; # The reason default source_type is 0 is because EventAI doesn't support timed actionlists.
         $output .= 'INSERT INTO `smart_scripts` (`entryorguid`,`source_type`,`id`,`link`,`event_type`,`event_phase_mask`,`event_chance`,`event_flags`,`event_param1`,`event_param2`,`event_param3`,`event_param4`,`action_type`,`action_param1`,`action_param2`,`action_param3`,`action_param4`,`action_param5`,`action_param6`,`target_type`,`target_param1`,`target_param2`,`target_param3`,`target_x`,`target_y`,`target_z`,`target_o`,`comment`) VALUES' . PHP_EOL;
 
-        foreach ($this->sai as $item)
-            $output .= $item->toSQL();
+        for ($i = 0; $i < count($this->actionRowCache) - 1; ++$i) {
+            $row = $this->actionRowCache[$i];
+            $nextRow = &$this->actionRowCache[$i + 1];
+            $row[2] = $i;
+            if ($this->isEventEqual($row, $nextRow)) {
+                $row[3] = $i + 1;
+                $nextRow['linkIndex'] = $i; // We know we were linked on next call
+            }
 
-        unset($item);
+            if (isset($row['linkIndex'])) {
+                $row[4] = SMART_EVENT_LINK;
+                $row[5] = 0;
+                $row[7] = 0;
+                $row[8] = 0;
+                $row[9] = 0;
+                $row[10] = 0;
+                $row[11] = 0;
+            }
 
-        return substr($output, 0, - strlen(PHP_EOL) - 1) . ';' . PHP_EOL . PHP_EOL;
+            unset($row['linkIndex']);
+            $output .= "(" . implode(",", $row) . "," . PHP_EOL;
+        }
+        // Append last record
+
+        $row = &$this->actionRowCache[count($this->actionRowCache) - 1];
+        if (isset($row['linkIndex'])) {
+            $row[4] = SMART_EVENT_LINK;
+            $row[5] = 0;
+            $row[7] = 0;
+            $row[8] = 0;
+            $row[9] = 0;
+            $row[10] = 0;
+            $row[11] = 0;
+        }
+        unset($row['linkIndex']);
+        $row[2] = count($this->actionRowCache) - 1;
+        $output .= "(" . implode(",", $this->actionRowCache[count($this->actionRowCache) - 1]) . ";" . PHP_EOL . PHP_EOL;
+        return $output;
+    }
+
+    public function isEventEqual($a, $b) {
+        if ($a[4] != $b[4]) // Event type
+            return false;
+        if ($a[6] != $b[6]) // Chance
+            return false;
+        if ($a[5] != $b[5]) // Phase
+            return false;
+        if ($a[9] != $b[9] || $a[10] != $b[10] || $a[11] != $b[11] || $a[8] != $b[8]) // Event params
+            return false;
+        if ($a[7] != $b[7]) // Flags
+            return false;
+        return true;
+    }
+
+    public function loadSAI() {
+        foreach ($this->eai as &$eaiItem)
+        {
+            $this->addSAI($eaiItem->toSAI());
+            unset($eaiItem);
+        }
+    }
+
+    public function updateTalkActions($eaiEntry, $saiEntry) {
+        foreach ($this->sai as $saiItem)
+            $saiItem->updateTalkActions($eaiEntry, $saiEntry);
+    }
+
+    public function prepare() {
+        foreach ($this->sai as $itr => &$item)
+            $item->toSQL(false);
+
+        unset($item); // Save some memory
     }
 
     public function getCreatureText() {
@@ -134,8 +172,6 @@ class NPC
         $output .= 'INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`probability`,`emote`,`duration`,`sound`,`comment`) VALUES' . PHP_EOL;
         foreach ($this->texts as $item)
             $output .= $item->toCreatureText();
-
-        unset($item); // Save some memory
 
         return substr($output, 0, - strlen(PHP_EOL) - 1) . ';' . PHP_EOL . PHP_EOL;
     }
@@ -177,15 +213,15 @@ class SAI
         unset($i, $size); // Save some memory
     }
 
-    public function toSQL($write = true) {
+    public function toSQL($parseEAI = true) {
         //! We do not write anything, we only store texts.
-        if (!$write) {
+        if (!$parseEAI) {
             for ($i = 1; $i <= 3; $i++) {
                 if (!isset($this->data['actions'][$i]))
                     continue;
 
                 $action = $this->data['actions'][$i];
-                
+
                 if (count($action) == 0)
                     continue;
 
@@ -199,97 +235,71 @@ class SAI
             return;
         }
 
-        $outputString = '';
-
-        // Fast-remove all flee emotes
-        // Need to be done before processing, else linking is fooked
+        # Fast-remove all flee emotes
+        # Needs to be done before processing, else linking is fooked
         foreach ($this->data['actions'] as $i => $action)
             if ($action['SAIAction'] == SMART_ACTION_TALK && $action['params'][0] == -47)
                 unset($this->data['actions'][$i]);
 
         foreach ($this->data['actions'] as $i => $action) {
-            // Found an empty action. Means no action's following.
-            //! Note: Invalid for TWO EAIs. Fix them by hand before running this script.
-            //! SELECT * FROM creature_ai_scripts WHERE action1_type= 0 AND (action2_type != 0 OR action3_type != 0);
+            $actionRow = array();
+            # Found an empty action. Means no action's following.
+            #! Note: Invalid for TWO EAIs. Fix them by hand before running this script.
+            #! SELECT * FROM creature_ai_scripts WHERE action1_type= 0 AND (action2_type != 0 OR action3_type != 0);
             if (count($action) == 0)
                 break;
 
-            $outputString .= '(@ENTRY,';
-            $outputString .= $this->data['source_type'] . ',';
-            $outputString .= $this->_parent->getSaiIndex() . ',';
-
-            $linked = false;
-            if ($this->_parent->hasEventInCache($this->data) || (isset($this->data['actions'][$i + 1]) && count($this->data['actions'][$i + 1]) != 0)) {
-                $this->_parent->increaseLinkIndex();
-                $outputString .= $this->_parent->getLinkIndex() . ',' . $this->data['event_type'] . ',';
-                $linked = true;
-            }
-            else
-            {
-                $this->_parent->setLinkIndex($this->_parent->getSaiIndex() + 1); // +1 because index is not yet updated
-                if (count($this->data['actions']) == 1)
-                    $outputString .= '0,' . $this->data['event_type'] . ',';
-                else {
-                    if ($i == 1)
-                        $outputString .= '0,' . $this->data['event_type'] . ',';
-                    else
-                        $outputString .= '0,' . SMART_EVENT_LINK . ',';
-                    $linked = ($i != 1);
-                }
-            }
-
-            # Writing event type, phase, chance, flags and parameters
-            if (!$linked)
-                $outputString .= $this->data['event_phase'] . ',' . $this->data['event_chance'] . ',' . $this->data['event_flags'] . ',';
-            else // Linked events cannot happen on their own, avoid unnecessary checks core-side.
-                $outputString .= '0,100,0,';
-
-            #! All EAI actions that have the same event are linked. The first one triggers the second, which triggers the third.
-            #! Extra linking, based on parameters sharing between events, should be implemented (See Hogger (#448))
-            if ($i == 1) {
-                for ($j = 1; $j <= 4; $j++) {
-                    if ($j == 2 && ($this->data['event_type'] == SMART_EVENT_SPELLHIT || $this->data['event_type'] == SMART_EVENT_SPELLHIT_TARGET))
-                        $outputString .= '0,';
-                    else
-                        $outputString .= $this->data['event_params'][$j] . ',';
-                }
-            }
-            else
-                $outputString .= '0,0,0,0,';
+            $actionRow[0]  = "@ENTRY";
+            $actionRow[1]  = $this->data['source_type'];
+            $actionRow[2]  = 0; # Event id, placeholder
+            $actionRow[3]  = 0; # Link, placeholder
+            $actionRow[4]  = $this->data['event_type']; # Change to SMART_EVENT_LINk if linked by previous event
+            $actionRow[5]  = $this->data['event_phase']; # Change to 0 if linked
+            $actionRow[6]  = $this->data['event_chance'];
+            $actionRow[7]  = $this->data['event_flags']; # Change to 0 if linked
+            // Event params
+            $actionRow[8]  = $this->data['event_params'][1]; # CHange to 0 if linked
+            $actionRow[9]  = $this->data['event_params'][2]; # CHange to 0 if linked
+            $actionRow[10] = $this->data['event_params'][3]; # CHange to 0 if linked
+            $actionRow[11] = $this->data['event_params'][4]; # CHange to 0 if linked
 
             # Writing action parameters
-            $outputString .= $this->data['actions'][$i]['SAIAction'] . ',';
+            $actionRow[12] = $this->data['actions'][$i]['SAIAction'];
 
             for ($j = 0; $j < 6; $j++)
-                $outputString .= (isset($this->data['actions'][$i]['params'][$j]) ? $this->data['actions'][$i]['params'][$j] : 0) . ',';
+                $actionRow[13 + $j] = (isset($this->data['actions'][$i]['params'][$j]) ? $this->data['actions'][$i]['params'][$j] : 0);
 
             # Writing targets
-                $outputString .= $this->data['actions'][$i]['target'] . ',';
+            $actionRow[20] = $this->data['actions'][$i]['target'];
 
             if ($this->data['actions'][$i]['SAIAction'] == SMART_ACTION_SUMMON_CREATURE && $this->data['actions'][$i]['isSpecialHandler'])
             {
                 $summonData = $this->data['actions'][$i]['extraData'];
-                $outputString .= SMART_TARGET_POSITION . ',0,0,0,';
-                $outputString .= $summonData->position_x . ',';
-                $outputString .= $summonData->position_y . ',';
-                $outputString .= $summonData->position_z . ',';
-                $outputString .= $summonData->orientation . ',';
+                $actionRow[20] = SMART_TARGET_POSITION;
+                $actionRow[21] = 0;
+                $actionRow[22] = 0;
+                $actionRow[23] = 0;
+                $actionRow[24] = $summonData->position_x;
+                $actionRow[25] = $summonData->position_y;
+                $actionRow[26] = $summonData->position_z;
+                $actionRow[27] = $summonData->orientation;
             }
-            else
-                $outputString .= '0,0,0,0,0,0,0,';
+            else {
+                $actionRow[21] = 0;
+                $actionRow[22] = 0;
+                $actionRow[23] = 0;
+                $actionRow[24] = 0;
+                $actionRow[25] = 0;
+                $actionRow[26] = 0;
+                $actionRow[27] = 0;
+            }
 
             # Build the comment, and we're done.
-            
-            $outputString .= '"' . $this->buildComment($action['commentType'], $i) . '"';
-
-            $outputString .= '),' . PHP_EOL;
+            $actionRow[28] = '"' . $this->buildComment($action['commentType'], $i) . '")';
 
             $this->_parent->increaseSaiIndex();
+            $this->_parent->AddSAIRow($actionRow);
         }
-        
-        $this->_parent->addEventToCache($this->data);
-
-        return $outputString;
     }
 
     private function buildComment($commentType, $actionIndex)
@@ -301,7 +311,7 @@ class SAI
 
         $commentType = str_replace(array_keys($match), array_values($match), $commentType);
 
-        
+
         if ($this->data['actions'][$actionIndex]['SAIAction'] == SMART_ACTION_TALK) {
             $commentType = str_replace('_lineEntry_', $this->data['actions'][$actionIndex]['params'][0], $commentType);
         }
@@ -318,9 +328,9 @@ class SAI
                         $commentType); # Use your own locale here. I do not have english DBCs.
                 }
                 else
-                    $commentType = str_replace(' _spellHitSpellId_', '', $commentType);
+                    $commentType = str_replace(' _spellHitSpellId_ ', '', $commentType); // Extra space needed to remove double whitespaces
             }
-            
+
             // Place action processors here
             if ($this->data['actions'][$actionIndex]['SAIAction'] == SMART_ACTION_CAST) {
                 $commentType = str_replace(
@@ -345,6 +355,9 @@ class SAI
 
             elseif ($this->data['actions'][$actionIndex]['SAIAction'] == SMART_ACTION_REMOVEAURASFROMSPELL && $this->data['actions'][$actionIndex]['params'][0] != 0)
                 $commentType = str_replace('_removeAuraSpell_', $this->data['actions'][$actionIndex]['params'][0] . " (Not found in DBCs!)", $commentType);
+
+            echo "NPC " . $this->npcName . "(" . $this->npcId . ")";
+            echo "Spell ID " . $this->data['actions'][$actionIndex]['params'][0] . " not found in DBCs!" . PHP_EOL;
         }
         // Some other parsing and fixing may be needed here
         return $commentType;
@@ -366,14 +379,14 @@ class EAI
 
         $saiData['event_type']   = Utils::convertEventToSAI($this->_eaiItem->event_type);
         $saiData['event_chance'] = intval($this->_eaiItem->event_chance);
-        $saiData['event_flags']  = Utils::SAI2EAIFlag($this->_eaiItem->event_flags);
-        
+        $saiData['event_flags']  = Utils::EAI2SAIFlags($this->_eaiItem->event_flags);
+
         $saiData['event_params'] = Utils::convertParamsToSAI($this->_eaiItem);
 
         $saiData['actions']      = Utils::buildSAIAction($this->_eaiItem);
 
         if (!is_array($saiData['actions'])) {
-            echo PHP_EOL . 'FATAL ERROR! Utils::buildSAIAction() did NOT return an array... Investigate this fucking crap, please.' . PHP_EOL;
+            echo PHP_EOL . 'FATAL ERROR! Utils::buildSAIAction() did NOT return an array... Investigate, please.' . PHP_EOL;
             exit(1);
         }
 

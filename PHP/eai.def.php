@@ -30,7 +30,7 @@ define('EVENT_T_FRIENDLY_MISSING_BUFF',   16); // SpellId, Radius, RepeatMin, Re
 define('EVENT_T_SUMMONED_UNIT',           17); // CreatureId, RepeatMin, RepeatMax
 define('EVENT_T_TARGET_MANA',             18); // ManaMax%, ManaMin%, RepeatMin, RepeatMax
 define('EVENT_T_QUEST_ACCEPT',            19); // QuestID
-define('EVENT_T_QUEST_COMPLETE',          20); // 
+define('EVENT_T_QUEST_COMPLETE',          20); //
 define('EVENT_T_REACHED_HOME',            21); // NONE
 define('EVENT_T_RECEIVE_EMOTE',           22); // EmoteId, Condition, CondValue1, CondValue2
 define('EVENT_T_BUFFED',                  23); // Param1 = SpellID, Param2 = Number of Time STacked, Param3/4 Repeat Min/Max
@@ -81,15 +81,15 @@ define('ACTION_T_SET_SHEATH',                 40); // Sheath (0-passive, 1-melee
 define('ACTION_T_FORCE_DESPAWN',              41); // Timer
 define('ACTION_T_SET_INVINCIBILITY_HP_LEVEL', 42); // MinHpValue, format(0-flat, 1-percent from max health)
 define('ACTION_T_MOUNT_TO_ENTRY_OR_MODEL',    43); // Creature_template entry(param1) OR ModelId (param2) (or 0 for both to dismount)
-define('ACTION_T_SET_PHASE_MASK',             97); 
-define('ACTION_T_SET_STAND_STATE',            98); 
-define('ACTION_T_MOVE_RANDOM_POINT',          99); 
-define('ACTION_T_SET_VISIBILITY',             100); 
+define('ACTION_T_SET_PHASE_MASK',             97);
+define('ACTION_T_SET_STAND_STATE',            98);
+define('ACTION_T_MOVE_RANDOM_POINT',          99);
+define('ACTION_T_SET_VISIBILITY',             100);
 define('ACTION_T_SET_ACTIVE',                 101);  //Apply
 define('ACTION_T_SET_AGGRESSIVE',             102);  //Apply
 define('ACTION_T_ATTACK_START_PULSE',         103);  //Distance
 define('ACTION_T_SUMMON_GO',                  104);  //GameObjectID, DespawnTime in ms
-define('ACTION_T_END',                        105); 
+define('ACTION_T_END',                        105);
 
 define("TARGET_T_SELF",                       0);
 define("TARGET_T_HOSTILE",                    1);
