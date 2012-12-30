@@ -1,5 +1,5 @@
 <?php
-ini_set('memory_limit', "300M"); // That shouldnt be a problem, default is 128MB and the script peakes at around 140Mb.
+// ini_set('memory_limit', "150M"); // That shouldnt be a problem, default is 128MB and the script peakes at around 125MB
 
 require_once('./utils.php');
 require_once('./factory.php');
@@ -38,7 +38,7 @@ echo PHP_EOL . 'Selecting all EventAIs from the database ...' . PHP_EOL;
 ob_end_flush();
 
 $oldDate = microtime(true);
-$EAIDataSet = Factory::createOrGetDBHandler()->query("SELECT * FROM creature_ai_scripts;# WHERE creature_id=548 ORDER BY id")->fetchAll(PDO::FETCH_OBJ);
+$EAIDataSet = Factory::createOrGetDBHandler()->query("SELECT * FROM creature_ai_scripts")->fetchAll(PDO::FETCH_OBJ);
 
 ob_start();
 echo '>> Gotten ' . count($EAIDataSet) . ' entries in ' . round(microtime(true) - $oldDate, 4) . ' ms' . PHP_EOL;
@@ -66,24 +66,21 @@ foreach ($EAIDataSet as $eaiItem) {
 
 unset($eaiItem, $npcName, $npcId, $EAIDataSet); // Save some memory
 
-$storeSize = count($npcStore);
-
 ob_start();
-echo '>> ' . $storeSize . ' different NPC EAIs detected in ' . round(microtime(true) - $oldDate, 4) . ' ms !' . PHP_EOL . PHP_EOL;
+echo '>> ' . count($npcStore) . ' different NPC EAIs detected in ' . round(microtime(true) - $oldDate, 4) . ' ms !' . PHP_EOL . PHP_EOL;
 printf('Converting [%3.3d%%] ', 0);
 ob_end_flush();
 
 # Delete previous files
 if (file_exists('creature_texts_v2.sql'))
     unlink('creature_texts_v2.sql');
-
 if (file_exists('smart_scripts_v2.sql'))
     unlink('smart_scripts_v2.sql');
 
-$itr = 0;
-$oldItr = 0;
-$oldDate = microtime(true);
-foreach ($npcStore as $npcId => $npcObj) {
+$itr       = 0;
+$oldDate   = microtime(true);
+$storeSize = count($npcStore);
+foreach ($npcStore as $npcId => &$npcObj) {
     $npcObj->loadSAI();
     $npcObj->prepare(); // Load texts ONLY
 
@@ -96,14 +93,11 @@ foreach ($npcStore as $npcId => $npcObj) {
 
     ob_start();
     $pct = (++$itr) * 100 / $storeSize;
-    if (is_int($pct) && $pct % 10 == 0) {
-            printf(PHP_EOL . 'Converting [%3.3d%%] ', $pct);
-    }
+    if (is_int($pct) && $pct % 10 == 0)
+        printf(PHP_EOL . 'Converting [%3.3d%%] ', $pct);
     ob_end_flush();
 }
 
-unset($pct, $itr, $npcObj, $npcId, $npcStore);
-
 echo PHP_EOL . 'Finished parsing data in ' . round(microtime(true) - $oldDate, 4) . ' ms!' . PHP_EOL;
 
-unset($oldDate);
+unset($pct, $itr, $npcObj, $npcId, $npcStore, $oldDate);

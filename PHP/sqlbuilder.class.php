@@ -67,8 +67,10 @@ class NPC
     }
 
     public function getSmartScripts() {
-        foreach ($this->sai as $itr => $item)
+        foreach ($this->sai as $itr => &$item)
             $item->toSQL();
+        foreach ($this->sai as $itr => &$item)
+            unset($item, $itr);
 
         $output = '-- ' . $this->npcName . ' SAI' . PHP_EOL;
         $output .= 'SET @ENTRY := ' . $this->npcId . ';' . PHP_EOL;
@@ -115,6 +117,8 @@ class NPC
         unset($row['linkIndex']);
         $row[2] = $max;
         $output .= "(" . implode(",", $this->actionRowCache[$max]) . ";" . PHP_EOL . PHP_EOL;
+        for ($i = 0; $i < $max + 1; ++$i)
+            unset($this->actionRowCache[$i]);
         return $output;
     }
 
@@ -176,7 +180,7 @@ class NPC
 
 class SAI
 {
-    public function __construct($array, $parent) {
+    public function __construct($array, &$parent) {
         $this->data = $array;
         $this->_parent = $parent;
     }
@@ -234,11 +238,11 @@ class SAI
 
         # Fast-remove all flee emotes
         # Needs to be done before processing, else linking is fooked
-        foreach ($this->data['actions'] as $i => $action)
+        foreach ($this->data['actions'] as $i => &$action)
             if ($action['SAIAction'] == SMART_ACTION_TALK && $action['params'][0] == -47)
                 unset($this->data['actions'][$i]);
 
-        foreach ($this->data['actions'] as $i => $action) {
+        foreach ($this->data['actions'] as $i => &$action) {
             $actionRow = array();
             # Found an empty action. Means no action's following.
             #! Note: Invalid for TWO EAIs. Fix them by hand before running this script.
@@ -261,17 +265,17 @@ class SAI
             $actionRow[11] = $this->data['event_params'][4]; # CHange to 0 if linked
 
             # Writing action parameters
-            $actionRow[12] = $this->data['actions'][$i]['SAIAction'];
+            $actionRow[12] = $action['SAIAction'];
 
             for ($j = 0; $j < 6; $j++)
-                $actionRow[13 + $j] = (isset($this->data['actions'][$i]['params'][$j]) ? $this->data['actions'][$i]['params'][$j] : 0);
+                $actionRow[13 + $j] = (isset($action['params'][$j]) ? $action['params'][$j] : 0);
 
             # Writing targets
             $actionRow[20] = $this->data['actions'][$i]['target'];
 
-            if ($this->data['actions'][$i]['SAIAction'] == SMART_ACTION_SUMMON_CREATURE && $this->data['actions'][$i]['isSpecialHandler'])
+            if ($action['SAIAction'] == SMART_ACTION_SUMMON_CREATURE && $action['isSpecialHandler'])
             {
-                $summonData = $this->data['actions'][$i]['extraData'];
+                $summonData = &$action['extraData'];
                 $actionRow[20] = SMART_TARGET_POSITION;
                 $actionRow[21] = 0;
                 $actionRow[22] = 0;
@@ -292,7 +296,7 @@ class SAI
             }
 
             # Build the comment, and we're done.
-            $actionRow[28] = '"' . $this->buildComment($action['commentType'], $i) . '")';
+            $actionRow[28] = ' "' . $this->buildComment($action['commentType'], $i) . '")';
 
             $this->_parent->AddSAIRow($actionRow);
         }
@@ -307,7 +311,6 @@ class SAI
 
         $commentType = str_replace(array_keys($match), array_values($match), $commentType);
 
-
         if ($this->data['actions'][$actionIndex]['SAIAction'] == SMART_ACTION_TALK) {
             $commentType = str_replace('_lineEntry_', $this->data['actions'][$actionIndex]['params'][0], $commentType);
         }
@@ -320,7 +323,7 @@ class SAI
                 if ($this->data['event_params'][1] != 0) {
                     $commentType = str_replace(
                         '_spellHitSpellId_',
-                        $factory->getRecordById($this->data['event_params'][1])->get('SpellNameLang0', DBC::STRING),
+                        $factory->getFieldFromRecord($this->data['event_params'][1], 'SpellNameLang0', DBC::STRING),
                         $commentType); # Use your own locale here. I do not have english DBCs.
                 }
                 else
@@ -331,13 +334,13 @@ class SAI
             if ($this->data['actions'][$actionIndex]['SAIAction'] == SMART_ACTION_CAST) {
                 $commentType = str_replace(
                     '_castSpellId_',
-                    $factory->getRecordById($this->data['actions'][$actionIndex]['params'][0])->get('SpellNameLang0', DBC::STRING),
+                    $factory->getFieldFromRecord($this->data['actions'][$actionIndex]['params'][0], 'SpellNameLang0', DBC::STRING),
                     $commentType);
             }
             elseif ($this->data['actions'][$actionIndex]['SAIAction'] == SMART_ACTION_REMOVEAURASFROMSPELL && $this->data['actions'][$actionIndex]['params'][0] != 0) {
                 $commentType = str_replace(
                     '_removeAuraSpell_',
-                    $factory->getRecordById($this->data['actions'][$actionIndex]['params'][0])->get('SpellNameLang0', DBC::STRING),
+                    $factory->getFieldFromRecord($this->data['actions'][$actionIndex]['params'][0], 'SpellNameLang0', DBC::STRING),
                     $commentType);
             }
         }
@@ -351,9 +354,6 @@ class SAI
 
             elseif ($this->data['actions'][$actionIndex]['SAIAction'] == SMART_ACTION_REMOVEAURASFROMSPELL && $this->data['actions'][$actionIndex]['params'][0] != 0)
                 $commentType = str_replace('_removeAuraSpell_', $this->data['actions'][$actionIndex]['params'][0] . " (Not found in DBCs!)", $commentType);
-
-            echo "NPC " . $this->npcName . "(" . $this->npcId . ")";
-            echo "Spell ID " . $this->data['actions'][$actionIndex]['params'][0] . " not found in DBCs!" . PHP_EOL;
         }
         // Some other parsing and fixing may be needed here
         return $commentType;
@@ -362,11 +362,11 @@ class SAI
 
 class EAI
 {
-    public function __construct($pdoObj, $parent) {
+    public function __construct($pdoObj, &$parent) {
         $this->_eaiItem = $pdoObj;
         $this->_parent = $parent;
     }
-    
+
     public function __destruct() {
         unset($this->_eaiItem);
     }
@@ -414,12 +414,12 @@ class CreatureAiText
     public $groupId = -1;
     public $textId  = -1;
 
-    public function __construct($item, $parentNpc) {
+    public function __construct($item, &$parentNpc) {
         $this->_item     = $item;
         $this->_parent   = $parentNpc;
         $this->_eaiEntry = $item->entry;
     }
-    
+
     public function __destruct() {
         unset($this->groupId, $this->_item, $this->_eaiEntry, $this->textId);
     }
