@@ -203,6 +203,12 @@ class Utils
                 $data[2] = $data[3] = 1000;
                 $data[4] = 0;
                 break;
+            case EVENT_T_FRIENDLY_IS_CC:
+                $data[1] = $eaiItem->event_param2;
+                $data[2] = $eaiItem->event_param3;
+                $data[3] = $eaiItem->event_param4;
+                $data[4] = 0;
+                break;
             default:
                 $data[1] = $eaiItem->event_param1;
                 $data[2] = $eaiItem->event_param2;

@@ -11,7 +11,6 @@ class NPC
 
     private $textGroupId  = 0;
     private $textId       = 0;
-    private $saiItemId    = 0;
 
     private $actionRowCache = array();
 
@@ -63,10 +62,6 @@ class NPC
     public function resetTextId()         { $this->textId = 0; }
     public function getTextId()    { $this->textId++; return $this->textId - 1; }
 
-    public function getSaiIndex()  { return $this->saiItemId; }
-    public function increaseSaiIndex()    { $this->saiItemId++; return $this; }
-    public function resetSaiIndex()       { $this->saiItemId = 0; }
-
     public function AddSAIRow($actionRow) {
         $this->actionRowCache[] = $actionRow;
     }
@@ -82,7 +77,8 @@ class NPC
         $output .= 'DELETE FROM `smart_scripts` WHERE `entryorguid`=@ENTRY AND `source_type`=0;' . PHP_EOL; # The reason default source_type is 0 is because EventAI doesn't support timed actionlists.
         $output .= 'INSERT INTO `smart_scripts` (`entryorguid`,`source_type`,`id`,`link`,`event_type`,`event_phase_mask`,`event_chance`,`event_flags`,`event_param1`,`event_param2`,`event_param3`,`event_param4`,`action_type`,`action_param1`,`action_param2`,`action_param3`,`action_param4`,`action_param5`,`action_param6`,`target_type`,`target_param1`,`target_param2`,`target_param3`,`target_x`,`target_y`,`target_z`,`target_o`,`comment`) VALUES' . PHP_EOL;
 
-        for ($i = 0; $i < count($this->actionRowCache) - 1; ++$i) {
+        $max = count($this->actionRowCache) - 1;
+        for ($i = 0; $i < $max; ++$i) {
             $row = $this->actionRowCache[$i];
             $nextRow = &$this->actionRowCache[$i + 1];
             $row[2] = $i;
@@ -106,7 +102,7 @@ class NPC
         }
         // Append last record
 
-        $row = &$this->actionRowCache[count($this->actionRowCache) - 1];
+        $row = &$this->actionRowCache[$max];
         if (isset($row['linkIndex'])) {
             $row[4] = SMART_EVENT_LINK;
             $row[5] = 0;
@@ -117,8 +113,8 @@ class NPC
             $row[11] = 0;
         }
         unset($row['linkIndex']);
-        $row[2] = count($this->actionRowCache) - 1;
-        $output .= "(" . implode(",", $this->actionRowCache[count($this->actionRowCache) - 1]) . ";" . PHP_EOL . PHP_EOL;
+        $row[2] = $max;
+        $output .= "(" . implode(",", $this->actionRowCache[$max]) . ";" . PHP_EOL . PHP_EOL;
         return $output;
     }
 
@@ -131,7 +127,7 @@ class NPC
             return false;
         if ($a[9] != $b[9] || $a[10] != $b[10] || $a[11] != $b[11] || $a[8] != $b[8]) // Event params
             return false;
-        if ($a[7] != $b[7]) // Flags
+        if ($a[7] != $b[7]) // Flags || Not sure about linking even if repeated flag is non-repeatable, wtb halp
             return false;
         return true;
     }
@@ -142,6 +138,7 @@ class NPC
             $this->addSAI($eaiItem->toSAI());
             unset($eaiItem);
         }
+        unset($this->eai);
     }
 
     public function updateTalkActions($eaiEntry, $saiEntry) {
@@ -297,7 +294,6 @@ class SAI
             # Build the comment, and we're done.
             $actionRow[28] = '"' . $this->buildComment($action['commentType'], $i) . '")';
 
-            $this->_parent->increaseSaiIndex();
             $this->_parent->AddSAIRow($actionRow);
         }
     }
@@ -370,6 +366,10 @@ class EAI
         $this->_eaiItem = $pdoObj;
         $this->_parent = $parent;
     }
+    
+    public function __destruct() {
+        unset($this->_eaiItem);
+    }
 
     public function toSAI() {
         $saiData = array();
@@ -419,6 +419,10 @@ class CreatureAiText
         $this->_parent   = $parentNpc;
         $this->_eaiEntry = $item->entry;
     }
+    
+    public function __destruct() {
+        unset($this->groupId, $this->_item, $this->_eaiEntry, $this->textId);
+    }
 
     public function isGroupIdSet() { return $this->groupId != -1; }
     public function isTextIdSet()  { return $this->textId != -1; }
@@ -426,9 +430,7 @@ class CreatureAiText
     public function setGroupId($groupId) { $this->groupId = $groupId; return $this; }
     public function setTextId($textId)   { $this->textId  = $textId;  return $this; }
 
-    public function isFleeEmote() {
-        return ($this->_item->entry == -47);
-    }
+    public function isFleeEmote() { return ($this->_item->entry == -47); }
 
     public function toCreatureText() {
         // Ignore flee emotes.
