@@ -187,6 +187,7 @@ class Utils
             case EVENT_T_HP:
             case EVENT_T_MANA:
             case EVENT_T_TARGET_HP:
+            case EVENT_T_TARGET_MANA:
                 $data[1] = $eaiItem->event_param2;
                 $data[2] = $eaiItem->event_param1;
                 $data[3] = $eaiItem->event_param3;
