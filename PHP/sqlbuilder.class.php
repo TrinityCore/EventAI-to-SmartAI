@@ -159,7 +159,7 @@ class NPC
 
     public function getCreatureText() {
         $qty = count($this->texts);
-        foreach ($this->texts as $textItem)
+        foreach ($this->texts as &$textItem)
             if ($textItem->isFleeEmote())
                 $qty--;
 
@@ -171,8 +171,12 @@ class NPC
         $output  = '-- Texts for ' . $this->npcName . PHP_EOL;
         $output .= 'DELETE FROM `creature_text` WHERE `entry`= ' . $this->npcId . ';' . PHP_EOL;
         $output .= 'INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`probability`,`emote`,`duration`,`sound`,`comment`) VALUES' . PHP_EOL;
-        foreach ($this->texts as $item)
+        foreach ($this->texts as &$item)
             $output .= $item->toCreatureText();
+            
+        // Free them now
+        foreach ($this->texts as &$item)
+            unset($item);
 
         return substr($output, 0, - strlen(PHP_EOL) - 1) . ';' . PHP_EOL . PHP_EOL;
     }
@@ -190,7 +194,7 @@ class SAI
             if (!isset($this->data['actions'][$i]))
                 continue;
 
-            $action = $this->data['actions'][$i];
+            $action = &$this->data['actions'][$i];
 
             if (count($action) == 0 || $action['SAIAction'] != SMART_ACTION_TALK || $eaiValue != $action['params'][0])
                 continue;
@@ -221,7 +225,7 @@ class SAI
                 if (!isset($this->data['actions'][$i]))
                     continue;
 
-                $action = $this->data['actions'][$i];
+                $action = &$this->data['actions'][$i];
 
                 if (count($action) == 0)
                     continue;
@@ -362,7 +366,7 @@ class SAI
 
 class EAI
 {
-    public function __construct($pdoObj, &$parent) {
+    public function __construct(&$pdoObj, &$parent) {
         $this->_eaiItem = $pdoObj;
         $this->_parent = $parent;
     }

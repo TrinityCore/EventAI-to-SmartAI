@@ -21,8 +21,13 @@ class Factory
 
     public static function createOrGetDBHandler() {
         if (!isset(self::$dbHandler)) {
-            $pdoOptions[PDO::ATTR_ERRMODE] = PDO::ERRMODE_EXCEPTION;
-            self::$dbHandler = new PDO('mysql:host=' . self::$hostName . ';dbname=' . self::$dbName, self::$username, self::$password, $pdoOptions);
+            try {
+                $pdoOptions[PDO::ATTR_ERRMODE] = PDO::ERRMODE_EXCEPTION;
+                self::$dbHandler = new PDO('mysql:host=' . self::$hostName . ';dbname=' . self::$dbName, self::$username, self::$password, $pdoOptions);
+            } catch (PDOException $e) {
+                echo "Error while connecting to database:" . PHP_EOL;
+                die($e->getMessage());
+            }
         }
         return self::$dbHandler;
     }

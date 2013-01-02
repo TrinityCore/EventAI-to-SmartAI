@@ -644,20 +644,13 @@ class Utils
     }
 
     static function generateSAIPhase($eaiMask) {
+        $eaiMask = intval($eaiMask);
         if ($eaiMask == 0)
             return 0;
 
-        $eaiBitMask = decbin(~intval($eaiMask));
-        // echo "decbin(~mask)" . PHP_EOL;
-        // var_dump($eaiBitMask);
-
-        // Shrink
-        $eaiBitMask = substr($eaiBitMask, -strlen(decbin(intval($eaiMask))));
-        // echo "substr(decbin(~mask), strlen(mask) = " . decbin(intval($eaiMask)) . ")" . PHP_EOL;
-        // var_dump($eaiBitMask);
-
-        $eaiBitMask = intval(bindec($eaiBitMask));
-        // echo "intval(bindec(mask))" . PHP_EOL;
+        $eaiBitMask = decbin(~$eaiMask);
+        $eaiBitMask = substr($eaiBitMask, -strlen(decbin($eaiMask)));
+        $eaiBitMask = intval(bindec($eaiBitMask)) << 1;
         return $eaiBitMask;
     }
 

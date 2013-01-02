@@ -1,5 +1,7 @@
 <?php
-// ini_set('memory_limit', "150M"); // That shouldnt be a problem, default is 128MB and the script peakes at around 125MB
+// ini_set('memory_limit', "150M"); // That shouldnt be a problem, default is 128MB and the script peakes at around 125M
+
+define('DEBUG', false);
 
 require_once('./utils.php');
 require_once('./factory.php');
@@ -38,7 +40,7 @@ echo PHP_EOL . 'Selecting all EventAIs from the database ...' . PHP_EOL;
 ob_end_flush();
 
 $oldDate = microtime(true);
-$EAIDataSet = Factory::createOrGetDBHandler()->query("SELECT * FROM creature_ai_scripts")->fetchAll(PDO::FETCH_OBJ);
+$EAIDataSet = Factory::createOrGetDBHandler()->query("SELECT * FROM creature_ai_scripts" . (DEBUG ? " WHERE creature_id=18870" : ""))->fetchAll(PDO::FETCH_OBJ);
 
 ob_start();
 echo '>> Gotten ' . count($EAIDataSet) . ' entries in ' . round(microtime(true) - $oldDate, 4) . ' ms' . PHP_EOL;
