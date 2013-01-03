@@ -360,6 +360,9 @@ class SAI
                 $commentType = str_replace('_removeAuraSpell_', $this->data['actions'][$actionIndex]['params'][0] . " (Not found in DBCs!)", $commentType);
         }
         // Some other parsing and fixing may be needed here
+        // Double quotes
+        // $commentType = str_replace("'", "''", $commentType);
+        $commentType = str_replace('"', '""', $commentType);
         return $commentType;
     }
 }
