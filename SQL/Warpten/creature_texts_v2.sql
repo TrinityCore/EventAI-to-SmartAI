@@ -3482,20 +3482,6 @@ INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`pr
 (1763,0,0, "Get those parts moving down to the ship!",12,0,100,0,0,0, "Gilnid"),
 (1763,0,1, "Anyone want to take a break?  Well too bad!  Get to work you oafs!",12,0,100,0,0,0, "Gilnid");
 
--- Texts for Commander Stoutbeard
-DELETE FROM `creature_text` WHERE `entry`= 26796;
-INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`probability`,`emote`,`duration`,`sound`,`comment`) VALUES
-(26796,0,0, "What? Where in a..? Don't just stand around lads KILL SOMEBODY!",14,0,100,0,0,13193, "Commander Stoutbeard"),
-(26796,1,0, "Now wee getting someplace!",14,0,100,0,0,13195, "Commander Stoutbeard"),
-(26796,2,0, "Is that all you've... got?",14,0,100,0,0,13194, "Commander Stoutbeard");
-
--- Texts for Commander Kolurg
-DELETE FROM `creature_text` WHERE `entry`= 26798;
-INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`probability`,`emote`,`duration`,`sound`,`comment`) VALUES
-(26798,0,0, "What is this? Mag thorin Kar! Kill them!",14,0,100,0,0,13458, "Commander Kolurg"),
-(26798,1,0, "Our task is not yet done!",14,0,100,0,0,13459, "Commander Kolurg"),
-(26798,2,0, "GOOO!",14,0,100,0,0,13460, "Commander Kolurg");
-
 -- Texts for Targorr the Dread
 DELETE FROM `creature_text` WHERE `entry`= 1696;
 INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`probability`,`emote`,`duration`,`sound`,`comment`) VALUES

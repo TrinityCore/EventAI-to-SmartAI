@@ -57,8 +57,8 @@ $forbiddenNpcs = array();
 foreach ($EAIDataSet as $eaiItem) {
     if ($npcId != $eaiItem->creature_id) {
         # New NPC. Create a corresponding NPC class instance.
-        $npcInfo   = Factory::createOrGetDBHandler()->query('SELECT name, flags_extra & 1 AS isBoss FROM creature_template WHERE entry = ' . $eaiItem->creature_id)->fetch(PDO::FETCH_OBJ);
-        if ($npcInfo->isBoss) {
+        $npcInfo   = Factory::createOrGetDBHandler()->query('SELECT name, flags_extra FROM creature_template WHERE entry = ' . $eaiItem->creature_id)->fetch(PDO::FETCH_OBJ);
+        if ($npcInfo->flags_extra & 1) {
             if (!in_array($npcInfo->name, $forbiddenNpcs))
                 $forbiddenNpcs[] = $npcInfo->name;
             continue;
