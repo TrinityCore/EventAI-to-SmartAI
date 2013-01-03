@@ -40,7 +40,7 @@ echo PHP_EOL . 'Selecting all EventAIs from the database ...' . PHP_EOL;
 ob_end_flush();
 
 $oldDate = microtime(true);
-$EAIDataSet = Factory::createOrGetDBHandler()->query("SELECT * FROM creature_ai_scripts" . (DEBUG ? " WHERE creature_id=18870" : ""))->fetchAll(PDO::FETCH_OBJ);
+$EAIDataSet = Factory::createOrGetDBHandler()->query("SELECT a.* FROM creature_ai_scripts a")->fetchAll(PDO::FETCH_OBJ);
 
 ob_start();
 echo '>> Gotten ' . count($EAIDataSet) . ' entries in ' . round(microtime(true) - $oldDate, 4) . ' ms' . PHP_EOL;
@@ -53,12 +53,19 @@ $npcId     = 0;   // And its entry in the table.
 $npcStore  = array();
 $oldDate   = microtime(true);
 
+$forbiddenNpcs = array();
 foreach ($EAIDataSet as $eaiItem) {
     if ($npcId != $eaiItem->creature_id) {
         # New NPC. Create a corresponding NPC class instance.
-        $npcName   = Factory::createOrGetDBHandler()->query('SELECT name FROM creature_template WHERE entry = ' . $eaiItem->creature_id)->fetch(PDO::FETCH_OBJ)->name;
+        $npcInfo   = Factory::createOrGetDBHandler()->query('SELECT name, flags_extra & 1 AS isBoss FROM creature_template WHERE entry = ' . $eaiItem->creature_id)->fetch(PDO::FETCH_OBJ);
+        if ($npcInfo->isBoss) {
+            if (!in_array($npcInfo->name, $forbiddenNpcs))
+                $forbiddenNpcs[] = $npcInfo->name;
+            continue;
+        }
+
         $npcId     = $eaiItem->creature_id;
-        $npcStore[$npcId] = new NPC($npcId, $npcName);
+        $npcStore[$npcId] = new NPC($npcId, $npcInfo->name);
     }
 
     $eaiItem->npcName = $npcName;
@@ -70,6 +77,12 @@ unset($eaiItem, $npcName, $npcId, $EAIDataSet); // Save some memory
 
 ob_start();
 echo '>> ' . count($npcStore) . ' different NPC EAIs detected in ' . round(microtime(true) - $oldDate, 4) . ' ms !' . PHP_EOL . PHP_EOL;
+
+for ($i = 0, $l = count($forbiddenNpcs); $i < $l; ++$i)
+    echo "Creature " . $forbiddenNpcs[$i] . " is scripted in EAI but is a boss. It won't be converted." . PHP_EOL;
+if ($l != 0) echo PHP_EOL;
+unset($forbiddenNpcs, $i, $l);
+
 printf('Converting [%3.3d%%] ', 0);
 ob_end_flush();
 
