@@ -318,7 +318,7 @@ class Utils
                 case ACTION_T_CAST_EVENT_ALL:
                 case ACTION_T_CAST_EVENT:
                     $result[$i] = array(
-                        'SAIAction'  => SMART_ACTION_SEND_CASTCREATUREORGO,
+                        'SAIAction'  => SMART_ACTION_CALL_CASTEDCREATUREORGO,
                         'params'     => array($param1, $param2, 0, 0, 0, 0),
                         'commentType' => "_npcName_ - _eventName_ - Quest Credit"
                     );
@@ -649,8 +649,12 @@ class Utils
             return 0;
 
         $eaiBitMask = decbin(~$eaiMask);
+        
+        // if (str_pad("", strlen($eaiBitMask), "1") == $eaiBitMask) // Return 0 if all bits are set
+        //     return 0;
+        
         $eaiBitMask = substr($eaiBitMask, -strlen(decbin($eaiMask)));
-        $eaiBitMask = intval(bindec($eaiBitMask)) << 1;
+        $eaiBitMask = intval(bindec($eaiBitMask)) >> 1;
         return $eaiBitMask;
     }
 
