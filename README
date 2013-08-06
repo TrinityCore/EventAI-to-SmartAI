@@ -11,12 +11,16 @@ Head into the directory where you installed that script. Open `config.ini` with 
 favorite file editor and change your database settings accordingly to what is needed
 for the script to run on your database. Save the file, and close your editor.
 
+Add a directory called `dbcs` in the directory `dep` and parse a spell.dbc file there.
+
 Linuxers: Make sure you have PHP installed, and that you have the PDO library as well.
 If you don't know how to install it, get a tour on PHP's online documentation.
 
 Windowsers: That's pretty much the same, except you'll have to add the directory where
 your PHP.exe relies to your PATH environment variable. Ask Google for more informations,
-there are plenty of places where you can learn what this is.
+there are plenty of places where you can learn what this is. Once you're about to issue
+the 'php version2.php' command, your cmd must be in the directory where the version2.php
+file is, else you'll get a fatal error.
 
 From now, things are pretty straigtforward. Head to the directory where you downloaded
 the source, and issue the `php version2.php` command. The script will start and work on
