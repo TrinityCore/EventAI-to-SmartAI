@@ -310,9 +310,8 @@ class SAI
 
             $this->_parent->increaseSaiIndex();
         }
-        
-        $this->_parent->addEventToCache($this->data);
 
+        $this->_parent->addEventToCache($this->data);
         return $outputString;
     }
 
@@ -325,7 +324,6 @@ class SAI
 
         $commentType = str_replace(array_keys($match), array_values($match), $commentType);
 
-        
         if ($this->data['actions'][$actionIndex]['SAIAction'] == SMART_ACTION_TALK)
             $commentType = str_replace('_lineEntry_', $this->data['actions'][$actionIndex]['params'][0], $commentType);
 
@@ -358,7 +356,7 @@ class SAI
                 else
                     $commentType = str_replace(' _hasAuraSpellId_', '', $commentType);
             }
-            
+
             // Place action processors here
             if ($this->data['actions'][$actionIndex]['SAIAction'] == SMART_ACTION_CAST) {
                 $commentType = str_replace(
@@ -384,6 +382,7 @@ class SAI
             if ($this->data['event_type'] == SMART_EVENT_SPELLHIT || $this->data['event_type'] == SMART_EVENT_SPELLHIT_TARGET)
                 $commentType = str_replace('_spellHitSpellId_', $this->data['event_params'][1] . " (Not found in DBCs!)", $commentType);
         }
+
         // Some other parsing and fixing may be needed here
         return $commentType;
     }
@@ -391,12 +390,14 @@ class SAI
 
 class EAI
 {
-    public function __construct($pdoObj, $parent) {
+    public function __construct($pdoObj, $parent)
+    {
         $this->_eaiItem = $pdoObj;
         $this->_parent = $parent;
     }
 
-    public function toSAI() {
+    public function toSAI()
+    {
         $saiData = array();
         $saiData['entryorguid']  = intval($this->_eaiItem->npcId);
         $saiData['npcName']      = $this->_eaiItem->npcName;
@@ -404,13 +405,13 @@ class EAI
 
         $saiData['event_type']   = Utils::convertEventToSAI($this->_eaiItem->event_type);
         $saiData['event_chance'] = intval($this->_eaiItem->event_chance);
-        $saiData['event_flags']  = Utils::SAI2EAIFlag($this->_eaiItem->event_flags);
-        
+        $saiData['event_flags']  = Utils::EAI2SAIFlag($this->_eaiItem->event_flags);
         $saiData['event_params'] = Utils::convertParamsToSAI($this->_eaiItem);
 
         $saiData['actions']      = Utils::buildSAIAction($this->_eaiItem);
 
-        if (!is_array($saiData['actions'])) {
+        if (!is_array($saiData['actions']))
+        {
             echo PHP_EOL . 'FATAL ERROR! Utils::buildSAIAction() did NOT return an array... Shutting down the engine, cooling down the nuclear reactor' . PHP_EOL;
             exit(1);
         }
@@ -439,17 +440,34 @@ class CreatureText
     public $groupId = -1;
     public $textId  = -1;
 
-    public function __construct($item, $parentNpc) {
+    public function __construct($item, $parentNpc)
+    {
         $this->_item     = $item;
         $this->_parent   = $parentNpc;
         $this->_eaiEntry = $item->entry;
     }
 
-    public function isGroupIdSet() { return $this->groupId != -1; }
-    public function isTextIdSet()  { return $this->textId != -1; }
+    public function isGroupIdSet()
+    {
+        return $this->groupId != -1;
+    }
 
-    public function setGroupId($groupId) { $this->groupId = $groupId; return $this; }
-    public function setTextId($textId)   { $this->textId  = $textId;  return $this; }
+    public function isTextIdSet()
+    {
+        return $this->textId != -1;
+    }
+
+    public function setGroupId($groupId)
+    {
+        $this->groupId = $groupId;
+        return $this;
+    }
+
+    public function setTextId($textId)
+    {
+        $this->textId = $textId;
+        return $this;
+    }
 
     public function isFleeEmote()
     {
@@ -472,18 +490,19 @@ class CreatureText
         $content = addslashes($this->_item->content_default);
         $content = str_replace($this->_parent->npcName, "%s", $content);
 
-        $output .= ' "' . str_replace("\'", "'", $content) . '",';
+        $output .= '"' . str_replace("\'", "'", $content) . '",';
         $output .= $this->typeToSAI($this->_item) . ',';
         $output .= $this->_item->language . ',100,';
         $output .= $this->_item->emote . ',0,';
-        $output .= $this->_item->sound . ', "' . addslashes($this->_parent->npcName) . '"),' . PHP_EOL;
+        $output .= $this->_item->sound . ',"' . addslashes($this->_parent->npcName) . '"),' . PHP_EOL;
         
         $this->_parent->updateTalkActions($this->_eaiEntry, $this->groupId);
 
         return $output;
     }
 
-    private function typeToSAI($item) {
+    private function typeToSAI($item)
+    {
         // Too lazy to add enums here.
         switch ($item->type)
         {
@@ -502,6 +521,7 @@ class CreatureText
                     return 16;
                 else if ($this->_item->entry == -860)
                     return 12;
+            //! No break on purpose.
             default:
                 return -999; // Should never happen
         }

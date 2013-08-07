@@ -7,7 +7,7 @@ define('__FIXME__',  -1);
 
 class Utils
 {
-    static function SAI2EAIFlag($flag)
+    static function EAI2SAIFlag($flag)
     {
         // Rather than making shitty stuff, lets do it plain.
         $output = 0;
@@ -211,18 +211,20 @@ class Utils
         return array_map('intval', $data);
     }
     
-    static function buildSAIAction($eaiItem) {
+    static function buildSAIAction($eaiItem)
+    {
         $result = array();
 
-        for ($i = 1; $i <= 3; $i++) {
+        for ($i = 1; $i <= 3; $i++)
+        {
             $eaiAction = $eaiItem->{'action'  . $i . '_type'};
 
             if ($eaiAction == 0)
                 break;
             
-            $param1    = $eaiItem->{'action'  . $i . '_param1'};
-            $param2    = $eaiItem->{'action'  . $i . '_param2'};
-            $param3    = $eaiItem->{'action'  . $i . '_param3'};
+            $param1 = $eaiItem->{'action'  . $i . '_param1'};
+            $param2 = $eaiItem->{'action'  . $i . '_param2'};
+            $param3 = $eaiItem->{'action'  . $i . '_param3'};
 
             switch ($eaiAction)
             {
@@ -287,14 +289,15 @@ class Utils
                         'params'     => array(max(0, $param1), max(0, -$param1), 0, 0, 0, 0),
                         'commentType' => "_npcName_ - _eventName_ - "
                     );
-                    
+
                     if (isset($target))
                         $result[$i]['target'] = $target;
-                    
+
                     if ($param1 < 0)
                         $result[$i]['commentType'] .= "Remove " . (- $param1) . '% Threat';
                     else // if ($param1 > 0)
                         $result[$i]['commentType'] .= "Add " . (- $param1) . '% Threat';
+
                     break;
                 case ACTION_T_QUEST_EVENT_ALL:
                 case ACTION_T_QUEST_EVENT:
@@ -303,8 +306,10 @@ class Utils
                         'params'     => array($param1, 0, 0, 0, 0, 0),
                         'commentType' => "_npcName_ - _eventName_ - Quest Credit"
                     );
+
                     if ($eaiAction == ACTION_T_QUEST_EVENT)
                         $result[$i]['target' ] = $param2 + 1;
+
                     break;
                 case ACTION_T_CAST_EVENT_ALL:
                 case ACTION_T_CAST_EVENT:
@@ -313,8 +318,10 @@ class Utils
                         'params'     => array($param1, $param2, 0, 0, 0, 0),
                         'commentType' => "_npcName_ - _eventName_ - Quest Credit"
                     );
+
                     if ($eaiAction == ACTION_T_CAST_EVENT)
                         $result[$i]['target' ] = $param3 + 1;
+
                     break;
                 case ACTION_T_SET_UNIT_FIELD:
                     //! Not a  100% sure on this, requires deeper research. (Horn's comments based)
@@ -369,11 +376,12 @@ class Utils
                         'params'     => array(0, 0, 0, 0, 0, 0),
                         'commentType' => "_npcName_ - _eventName_ - Increment Event Phase"
                     );
-                    
+
                     if ($param1 < 0)
                         $result[$i]['params'][1] = -$param1;
                     else // if ($param1 > 0)
                         $result[$i]['params'][0] = $param1;
+
                     break;
                 case ACTION_T_EVADE:
                     $result[$i] = array(
@@ -400,7 +408,7 @@ class Utils
                         'target'     => $param1 + 1,
                         'commentType' => "_npcName_ - _eventName_ - Remove Aura _removeAuraSpell_" 
                     );
-                    
+
                     if ($param2 == 0)
                         $result[$i]['commentType'] = "_npcName_ - _eventName_ - Remova All Auras";
                     break;
@@ -523,10 +531,10 @@ class Utils
                         'params'     => array($param1, 0, 0, 0, 0, 0),
                         'commentType' => "_npcName_ - _eventName_ - Forced Despawn"
                     );
-                    
+
                     if ($param1 > 0)
                         $result[$i]['commentType'] .= " In ".$param1." Ms";
-                        
+
                     break;
                 case ACTION_T_SET_INVINCIBILITY_HP_LEVEL:
                     $result[$i] = array(
@@ -534,7 +542,7 @@ class Utils
                         'params'     => array($param1, 0, 0, 0, 0, 0),
                         'commentType' => "_npcName_ - _eventName_ - Set Invincibility Health To ".$param1
                     );
-                    
+
                     //! In EAI, the action had two parameters: parameter 1 for the invincibility HP, param2 to decide
                     //! whether or not param1 would be pct or flat HP (1 = pct, 0 = flat).
                     //! In SAI, the action has two parameters as well: parameter 1 for the flat invincibility HP and
@@ -561,7 +569,7 @@ class Utils
                     $result[$i] = array(
                         'SAIAction'  => SMART_ACTION_SET_INGAME_PHASE_MASK,
                         'params'     => array($param1, 0, 0, 0, 0, 0),
-                        'commentType' => "_npcName_ - _eventName_ - Set Phase " . $param1
+                        'commentType' => "_npcName_ - _eventName_ - Set Phasemask " . $param1
                     );
                     break;
                 case ACTION_T_SET_STAND_STATE:
@@ -674,7 +682,8 @@ class Utils
         return $result;
     }
 
-    static function generateSAIPhase($eaiPhase) {
+    static function generateSAIPhase($eaiPhase)
+    {
         //! Not sure if this how it should behave. EAI uses phases to force events NOT TO happen in phases. It means they happen in ~$phase to me.
         //! Except for 0. (Seems kind of idiot for an event to never happen.) If 0, even always happen.
         //! Sample output: 0b100 inverted is 0b011 (4 => 3)
@@ -686,7 +695,8 @@ class Utils
     }
     
     // Not used, here as remnant to understand how targets are converted.
-    static function EAITargetToSAI($eaiTarget) {
+    static function EAITargetToSAI($eaiTarget)
+    {
         //! Targets are the same, except SAI has then offsetted by +1.
         return $eaiTarget + 1;
     }
