@@ -94,7 +94,8 @@ class NPC
     }
 
     public function getSmartScripts($write = true) {
-        if (!$write) {
+        if (!$write)
+        {
             foreach ($this->sai as $itr => $item)
                 $item->toSQL(false);
 
@@ -108,6 +109,10 @@ class NPC
         $output .= 'SET @ENTRY := ' . $this->npcId . ';' . PHP_EOL;
         $output .= 'UPDATE `creature_template` SET `AIName`=\'SmartAI\' WHERE `entry`=@ENTRY;' . PHP_EOL;
         $output .= 'DELETE FROM `creature_ai_scripts` WHERE `creature_id`=@ENTRY;' . PHP_EOL;
+        
+        //if ($this->data['actions'][$i]['SAIAction'] == SMART_ACTION_SUMMON_CREATURE && $this->data['actions'][$i]['isSpecialHandler'])
+        //    $output .= '_deleteCreatureAiSummonEntry_' . PHP_EOL;
+        
         $output .= 'DELETE FROM `smart_scripts` WHERE `entryorguid`=@ENTRY AND `source_type`=0;' . PHP_EOL; # The reason default source_type is 0 is because EventAI doesn't support timed actionlists.
         $output .= 'INSERT INTO `smart_scripts` (`entryorguid`,`source_type`,`id`,`link`,`event_type`,`event_phase_mask`,`event_chance`,`event_flags`,`event_param1`,`event_param2`,`event_param3`,`event_param4`,`action_type`,`action_param1`,`action_param2`,`action_param3`,`action_param4`,`action_param5`,`action_param6`,`target_type`,`target_param1`,`target_param2`,`target_param3`,`target_x`,`target_y`,`target_z`,`target_o`,`comment`) VALUES' . PHP_EOL;
 
@@ -115,7 +120,6 @@ class NPC
             $output .= $item->toSQL();
 
         unset($item);
-
         return substr($output, 0, - strlen(PHP_EOL) - 1) . ';' . PHP_EOL . PHP_EOL;
     }
 
@@ -178,10 +182,13 @@ class SAI
         unset($i, $size); // Save some memory
     }
 
-    public function toSQL($write = true) {
+    public function toSQL($write = true)
+    {
         //! We do not write anything, we only store texts.
-        if (!$write) {
-            for ($i = 1; $i <= 3; $i++) {
+        if (!$write)
+        {
+            for ($i = 1; $i <= 3; $i++)
+            {
                 if (!isset($this->data['actions'][$i]))
                     continue;
 
@@ -190,9 +197,11 @@ class SAI
                 if (count($action) == 0)
                     continue;
 
-                if ($action['SAIAction'] == SMART_ACTION_TALK) {
+                if ($action['SAIAction'] == SMART_ACTION_TALK)
+                {
                     foreach ($action['extraData'] as $text)
                         $this->_parent->addText($text)->setGroupId($this->_parent->getGroupId())->setTextId($this->_parent->getTextId());
+                        
                     $this->_parent->increaseTextGroupId();
                     unset($text); // Save some memory
                 }
@@ -266,7 +275,7 @@ class SAI
                 $outputString .= (isset($this->data['actions'][$i]['params'][$j]) ? $this->data['actions'][$i]['params'][$j] : 0) . ',';
 
             # Writing targets
-                $outputString .= $this->data['actions'][$i]['target'] . ',';
+            $outputString .= $this->data['actions'][$i]['target'] . ',';
 
             if ($this->data['actions'][$i]['SAIAction'] == SMART_ACTION_SUMMON_CREATURE && $this->data['actions'][$i]['isSpecialHandler'])
             {
@@ -281,7 +290,6 @@ class SAI
                 $outputString .= '0,0,0,0,0,0,0,';
 
             # Build the comment, and we're done.
-            
             $outputString .= '"' . $this->buildComment($action['commentType'], $i) . '"';
 
             $outputString .= '),' . PHP_EOL;
@@ -304,19 +312,18 @@ class SAI
         $commentType = str_replace(array_keys($match), array_values($match), $commentType);
 
         
-        if ($this->data['actions'][$actionIndex]['SAIAction'] == SMART_ACTION_TALK) {
+        if ($this->data['actions'][$actionIndex]['SAIAction'] == SMART_ACTION_TALK)
             $commentType = str_replace('_lineEntry_', $this->data['actions'][$actionIndex]['params'][0], $commentType);
-        }
 
         // Any DBC-needed data is dumped here
         if (Factory::hasDbcWorker())
         {
             // Place event precessors here
             if ($this->data['event_type'] == SMART_EVENT_SPELLHIT || $this->data['event_type'] == SMART_EVENT_SPELLHIT_TARGET)
-			{
+            {
                 // For some bitch reason, some spellhit events have 0 as the spell hitter
                 if ($this->data['event_params'][1] != 0)
-				{
+                {
                     $commentType = str_replace(
                         '_spellHitSpellId_',
                         Factory::getSpellNameForLoc($this->data['event_params'][1], 0),
@@ -326,9 +333,9 @@ class SAI
                     $commentType = str_replace(' _spellHitSpellId_', '', $commentType);
             }
             elseif ($this->data['event_type'] == SMART_EVENT_HAS_AURA)
-			{
+            {
                 if ($this->data['event_params'][1] != 0)
-				{
+                {
                     $commentType = str_replace(
                         '_hasAuraSpellId_',
                         Factory::getSpellNameForLoc($this->data['event_params'][1], 0),
@@ -337,7 +344,7 @@ class SAI
                 else
                     $commentType = str_replace(' _hasAuraSpellId_', '', $commentType);
             }
-			
+            
             // Place action processors here
             if ($this->data['actions'][$actionIndex]['SAIAction'] == SMART_ACTION_CAST) {
                 $commentType = str_replace(
@@ -346,7 +353,7 @@ class SAI
                     $commentType);
             }
             elseif ($this->data['actions'][$actionIndex]['SAIAction'] == SMART_ACTION_REMOVEAURASFROMSPELL && $this->data['actions'][$actionIndex]['params'][0] != 0)
-			{
+            {
                 $commentType = str_replace(
                     '_removeAuraSpell_',
                     Factory::getSpellNameForLoc($this->data['actions'][$actionIndex]['params'][0], 0),

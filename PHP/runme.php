@@ -81,7 +81,8 @@ ob_end_flush();
 
 $itr = 0;
 $oldDate = microtime(true);
-foreach ($npcStore as $npcId => $npcObj) {
+foreach ($npcStore as $npcId => $npcObj)
+{
     $npcObj->convertAllToSAI();
     $npcObj->getSmartScripts(false); // Dump texts ONLY
 
