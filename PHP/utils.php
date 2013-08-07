@@ -524,6 +524,10 @@ class Utils
                         'params'     => array($param1, 0, 0, 0, 0, 0),
                         'commentType' => "_npcName_ - _eventName_ - Forced Despawn"
                     );
+					
+					if ($param1 > 0)
+						$result[$i]['commentType'] .= " In ".$param1." Ms";
+						
                     break;
                 case ACTION_T_SET_INVINCIBILITY_HP_LEVEL:
                     $result[$i] = array(
