@@ -2,26 +2,26 @@
 /**
  * World of Warcraft DBC Library
  * Copyright (c) 2011 Tim Kurvers <http://www.moonsphere.net>
- *
+ * 
  * This library allows creation, reading and export of World of Warcraft's
  * client-side database files. These so-called DBCs store information
  * required by the client to operate successfully and can be extracted
  * from the MPQ archives of the actual game client.
- *
+ * 
  * The contents of this file are subject to the Mozilla Public License
  * Version 1.1 (the "License"); you may not use this file except in
  * compliance with the License. You may obtain a copy of the License at
  * http://www.mozilla.org/MPL/
- *
+ * 
  * Software distributed under the License is distributed on an "AS IS"
  * basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the
  * License for the specific language governing rights and limitations
  * under the License.
- *
+ * 
  * Alternatively, the contents of this file may be used under the terms of
  * the GNU General Public License version 3 license (the "GPLv3"), in which
  * case the provisions of the GPLv3 are applicable instead of the above.
- *
+ * 
  * @author	Tim Kurvers <tim@moonsphere.net>
  */
 
@@ -93,7 +93,7 @@ class DBCRecord {
 		$strings = array();
 		$format = array();
 		$fields = $map->getFields();
-		foreach($fields as $name=>$rule)
+		foreach($fields as $name=>$rule) 
         {
 			$count = max($rule & 0xFF, 1);
 			$bytes += DBC::FIELD_SIZE * $count;
@@ -125,7 +125,7 @@ class DBCRecord {
 	/**
 	 * Returns a collection of fields contained within this record as unsigned integers
 	 */
-	public function asArray()
+	public function asArray() 
     {
 		return unpack(DBC::UINT.$this->_dbc->getFieldCount(), $this->_data);
 	}
@@ -133,7 +133,7 @@ class DBCRecord {
 	/**
 	 * Returns the identifier of this record (first field)
 	 */
-	public function getID()
+	public function getID() 
     {
 		if($this->_id === null) {
 			$this->_id = $this->getUInt(0);
@@ -188,14 +188,14 @@ class DBCRecord {
 	public function getInt($field) {
 		return $this->get($field, DBC::INT);
 	}
-
+    
 	/**
 	 * Reads a float for given field from this record
 	 */
 	public function getFloat($field) {
 		return $this->get($field, DBC::FLOAT);
 	}
-
+    
 	/**
 	 * Reads a string for given field from this record
 	 */
@@ -204,9 +204,9 @@ class DBCRecord {
 	}
 	
 	/**
-	 * Dumps field information for this record (optionally uses the default map attached to the associated DBC)
+	 * Dumps field information for this record (optionally uses the default map attached to the associated DBC) 
 	 */
-	public function dump($useMap = false)
+	public function dump($useMap = false) 
     {
 		if (!$useMap || $this->_dbc->getMap() === null)
 			$fields = $this->asArray();
