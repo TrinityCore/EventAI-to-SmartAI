@@ -309,7 +309,8 @@ class SAI
         }
 
         // Any DBC-needed data is dumped here
-        if (Factory::hasDbcWorker()) {
+        if (Factory::hasDbcWorker())
+		{
             // Place event precessors here
             if ($this->data['event_type'] == SMART_EVENT_SPELLHIT || $this->data['event_type'] == SMART_EVENT_SPELLHIT_TARGET) {
                 // For some bitch reason, some spellhit events have 0 as the spell hitter
@@ -319,7 +320,8 @@ class SAI
                         Factory::getSpellNameForLoc($this->data['event_params'][1], 0),
                         $commentType);
                 }
-                else $commentType = str_replace(' _spellHitSpellId_', '', $commentType);
+                else
+					$commentType = str_replace(' _spellHitSpellId_', '', $commentType);
             }
             
             // Place action processors here
@@ -340,12 +342,11 @@ class SAI
         {
             if ($this->data['actions'][$actionIndex]['SAIAction'] == SMART_ACTION_CAST)
                 $commentType = str_replace('_castSpellId_', $this->data['actions'][$actionIndex]['params'][0] . " (Not found in DBCs!)", $commentType);
-
-            elseif ($this->data['event_type'] == SMART_EVENT_SPELLHIT || $this->data['event_type'] == SMART_EVENT_SPELLHIT_TARGET)
-                $commentType = str_replace('_spellHitSpellId_', $this->data['event_params'][1] . " (Not found in DBCs!)", $commentType);
-
             elseif ($this->data['actions'][$actionIndex]['SAIAction'] == SMART_ACTION_REMOVEAURASFROMSPELL && $this->data['actions'][$actionIndex]['params'][0] != 0)
                 $commentType = str_replace('_removeAuraSpell_', $this->data['actions'][$actionIndex]['params'][0] . " (Not found in DBCs!)", $commentType);
+
+            if ($this->data['event_type'] == SMART_EVENT_SPELLHIT || $this->data['event_type'] == SMART_EVENT_SPELLHIT_TARGET)
+                $commentType = str_replace('_spellHitSpellId_', $this->data['event_params'][1] . " (Not found in DBCs!)", $commentType);
         }
         // Some other parsing and fixing may be needed here
         return $commentType;
