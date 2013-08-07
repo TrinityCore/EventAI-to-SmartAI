@@ -508,13 +508,13 @@ class Utils
                     switch ($param1) 
                     {
                         case 0: // No melee weapon
-                            $result[$i]['commentType'] .= 'Set unarmed';
+                            $result[$i]['commentType'] .= 'Set Sheath Unarmed';
                             break;
                         case 1: // Melee weapon
-                            $result[$i]['commentType'] .= 'Display melee weapon';
+                            $result[$i]['commentType'] .= 'Set Sheath Melee';
                             break;
                         case 2: // Ranged
-                            $result[$i]['commentType'] .= 'Display ranged weapon';
+                            $result[$i]['commentType'] .= 'Set Sheath Ranged';
                             break;
                     }
                     break;
