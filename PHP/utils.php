@@ -403,15 +403,16 @@ class Utils
                         'target'     => $param1 + 1,
                         'commentType' => "_npcName_ - _eventName_ - Remove Aura _removeAuraSpell_" 
                     );
+					
                     if ($param2 == 0)
-                        $result[$i]['commentType'] = "_npcName_ - _eventName_ - Remova all auras";
+                        $result[$i]['commentType'] = "_npcName_ - _eventName_ - Remova All Auras";
                     break;
                 case ACTION_T_RANGED_MOVEMENT:
                     $result[$i] = array(
                         'SAIAction'  => SMART_ACTION_SET_RANGED_MOVEMENT,
                         'params'     => array($param1, $param2, 0, 0, 0, 0),
                         'target'     => SMART_TARGET_SELF,
-                        'commentType' => "_npcName_ - _eventName_ - Set Ranged Movement"
+                        'commentType' => "_npcName_ - _eventName_ - Set Ranged Movement Distance ".$param1." Angle ".$param2
                     );
                     break;
                 case ACTION_T_RANDOM_PHASE:
