@@ -548,7 +548,7 @@ class Utils
                     $result[$i] = array(
                         'SAIAction'  => SMART_ACTION_SET_INGAME_PHASE_MASK,
                         'params'     => array($param1, 0, 0, 0, 0, 0),
-                        'commentType' => "_npcName_ - _eventName_ - Set Phase"
+                        'commentType' => "_npcName_ - _eventName_ - Set Phase " . $param1
                     );
                     break;
                 case ACTION_T_SET_STAND_STATE:
