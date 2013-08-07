@@ -105,7 +105,7 @@ class Utils
             case SMART_EVENT_UPDATE_OOC:
                 return "Out Of Combat";
             case SMART_EVENT_HEALT_PCT:
-                return "At ${param2}% HP";
+                return "At ${param2}% Health";
             case SMART_EVENT_MANA_PCT:
                 return "At ${param2}% Mana";
             case SMART_EVENT_AGGRO:
@@ -125,7 +125,7 @@ class Utils
             case SMART_EVENT_RESPAWN:
                 return "On Respawn";
             case SMART_EVENT_TARGET_HEALTH_PCT:
-                return "On Target At ${param1} - ${param2}% HP";
+                return "On Target At ${param1} - ${param2}% Health";
             case SMART_EVENT_TARGET_CASTING:
                 return "On Target Casting";
             case SMART_EVENT_FRIENDLY_HEALTH:
