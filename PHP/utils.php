@@ -167,9 +167,6 @@ class Utils
                 return "On Target Charmed";
             case SMART_EVENT_SPELLHIT_TARGET:
                 return "On Spell Hit Target";
-            case SMART_EVENT_DAMAGED:
-            case SMART_EVENT_DAMAGED_TARGET:
-                return "Fixme -- SMART_EVENT_DAMAGED(_TARGET)"; # ???
             case SMART_EVENT_MOVEMENTINFORM:
                 return "On Movement Inform";
             case SMART_EVENT_SUMMON_DESPAWNED:
@@ -535,8 +532,19 @@ class Utils
                     $result[$i] = array(
                         'SAIAction'  => SMART_ACTION_SET_INVINCIBILITY_HP_LEVEL,
                         'params'     => array($param1, 0, 0, 0, 0, 0),
-                        'commentType' => "_npcName_ - _eventName_ - Set Invincibility Health Pct To " . $param1 . "%"
+                        'commentType' => "_npcName_ - _eventName_ - Set Invincibility Health "
                     );
+                    
+                    //! In EAI, the action had two parameters: parameter 1 for the invincibility HP, param2 to decide
+                    //! whether or not param1 would be pct or flat HP (1 = pct, 0 = flat).
+                    //! In SAI, the action has two parameters as well: parameter 1 for the flat invincibility HP and
+                    //! parameter 2 for the pct invincibility HP.
+                    if ($param2 > 0) //! If EAI line uses a percentage
+                    {
+                        $result[$i]['commentType'] .= "To ".$param1."%";
+                        $result[$i]['params'] = array(0, $param1, 0, 0, 0, 0);
+                    }
+                        
                     break;
                 case ACTION_T_MOUNT_TO_ENTRY_OR_MODEL:
                     $result[$i] = array(
