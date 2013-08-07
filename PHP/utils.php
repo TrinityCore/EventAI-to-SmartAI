@@ -445,7 +445,7 @@ class Utils
                         'SAIAction'     => SMART_ACTION_SUMMON_CREATURE,
                         'params'        => array($param1, 0, 0, 0, 0, 0),
                         'commentType'   => "_npcName_ - _eventName_ - Summon Creature " . Factory::createOrGetDBHandler()->query("SELECT `name` FROM `creature_template` WHERE `entry`=${param1}")->fetch(PDO::FETCH_OBJ)->name,
-                        'isSpecialHandler' => true,
+                        'isSpecialHandler' => true
                     );
                     break;
                 case ACTION_T_KILLED_MONSTER:
