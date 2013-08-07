@@ -42,7 +42,7 @@ class NPC
     }
 
     public function addText($item) {
-        $textObj = new CreatureAiText($item, $this);
+        $textObj = new CreatureText($item, $this);
         $this->texts[] = $textObj;
         return $textObj;
     }
@@ -217,7 +217,8 @@ class SAI
             if ($action['SAIAction'] == SMART_ACTION_TALK && $action['params'][0] == -47)
                 unset($this->data['actions'][$i]);
 
-        foreach ($this->data['actions'] as $i => $action) {
+        foreach ($this->data['actions'] as $i => $action)
+        {
             // Found an empty action. Means no action's following.
             //! Note: Invalid for TWO EAIs. Fix them by hand before running this script.
             //! SELECT * FROM creature_ai_scripts WHERE action1_type= 0 AND (action2_type != 0 OR action3_type != 0);
@@ -229,8 +230,8 @@ class SAI
             $outputString .= $this->_parent->getSaiIndex() . ',';
 
             $linked = false;
-            if ($this->_parent->hasEventInCache($this->data)
-                || (isset($this->data['actions'][$i + 1]) && count($this->data['actions'][$i + 1]) != 0)) {
+            if ($this->_parent->hasEventInCache($this->data) || (isset($this->data['actions'][$i + 1]) && count($this->data['actions'][$i + 1]) != 0))
+            {
                 $this->_parent->increaseLinkIndex();
                 $outputString .= $this->_parent->getLinkIndex() . ',' . $this->data['event_type'] . ',';
                 $linked = true;
@@ -240,7 +241,8 @@ class SAI
                 $this->_parent->setLinkIndex($this->_parent->getSaiIndex() + 1); // +1 because index is not yet updated
                 if (count($this->data['actions']) == 1)
                     $outputString .= '0,' . $this->data['event_type'] . ',';
-                else {
+                else
+                {
                     if ($i == 1)
                         $outputString .= '0,' . $this->data['event_type'] . ',';
                     else
@@ -256,9 +258,11 @@ class SAI
                 $outputString .= '0,100,0,';
 
             #! All EAI actions that have the same event are linked. The first one triggers the second, which triggers the third.
-            #! Extra linking, based on parameters sharing between events, should be implemented (See Hogger (#448))
-            if ($i == 1) {
-                for ($j = 1; $j <= 4; $j++) {
+            #! Extra linking, based on parameters sharing between events, should be implemented (See Hogger (448))
+            if ($i == 1)
+            {
+                for ($j = 1; $j <= 4; $j++)
+                {
                     if ($j == 2 && ($this->data['event_type'] == SMART_EVENT_SPELLHIT || $this->data['event_type'] == SMART_EVENT_SPELLHIT_TARGET))
                         $outputString .= '0,';
                     else
@@ -420,7 +424,7 @@ class EAI
     }
 }
 
-class CreatureAiText
+class CreatureText
 {
     public $groupId = -1;
     public $textId  = -1;
@@ -437,7 +441,8 @@ class CreatureAiText
     public function setGroupId($groupId) { $this->groupId = $groupId; return $this; }
     public function setTextId($textId)   { $this->textId  = $textId;  return $this; }
 
-    public function isFleeEmote() {
+    public function isFleeEmote()
+    {
         return ($this->_item->entry == -47);
     }
 
@@ -485,7 +490,7 @@ class CreatureAiText
                 else if ($this->_item->entry == -860)
                     return 12;
             default:
-                return -1; // Should never happen
+                return -999; // Should never happen
         }
     }
 }
