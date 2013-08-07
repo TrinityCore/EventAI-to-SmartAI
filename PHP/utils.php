@@ -363,14 +363,14 @@ class Utils
                     $result[$i] = array(
                         'SAIAction'  => SMART_ACTION_SET_EVENT_PHASE,
                         'params'     => array($param1, 0, 0, 0, 0, 0),
-                        'commentType' => "_npcName_ - _eventName_ - Set Phase " . $param1
+                        'commentType' => "_npcName_ - _eventName_ - Set Event Phase " . $param1
                     );
                     break;
                 case ACTION_T_INC_PHASE:
                     $result[$i] = array(
                         'SAIAction'  => SMART_ACTION_INC_EVENT_PHASE,
                         'params'     => array(0, 0, 0, 0, 0, 0),
-                        'commentType' => "_npcName_ - _eventName_ - Increment Phase"
+                        'commentType' => "_npcName_ - _eventName_ - Increment Event Phase"
                     );
                     
                     if ($param1 < 0)
