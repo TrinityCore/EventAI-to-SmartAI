@@ -427,7 +427,7 @@ class Utils
                     $result[$i] = array(
                         'SAIAction'  => SMART_ACTION_RANDOM_PHASE_RANGE,
                         'params'     => array($param1, $param2, 0, 0, 0, 0),
-                        'commentType' => "_npcName_ - _eventName_ - Random Phase Range (${param1} - ${param2})" // Because i'm tired of concatenating
+                        'commentType' => "_npcName_ - _eventName_ - Random Phase Range (${param1}-${param2})" // Because i'm tired of concatenating
                     );
                     break;
                 case ACTION_T_SUMMON:
