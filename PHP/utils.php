@@ -532,7 +532,7 @@ class Utils
                     $result[$i] = array(
                         'SAIAction'  => SMART_ACTION_SET_INVINCIBILITY_HP_LEVEL,
                         'params'     => array($param1, 0, 0, 0, 0, 0),
-                        'commentType' => "_npcName_ - _eventName_ - Set Invincibility Health "
+                        'commentType' => "_npcName_ - _eventName_ - Set Invincibility Health To ".$param1
                     );
                     
                     //! In EAI, the action had two parameters: parameter 1 for the invincibility HP, param2 to decide
@@ -541,7 +541,7 @@ class Utils
                     //! parameter 2 for the pct invincibility HP.
                     if ($param2 > 0) //! If EAI line uses a percentage
                     {
-                        $result[$i]['commentType'] .= "To ".$param1."%";
+                        $result[$i]['commentType'] .= "%";
                         $result[$i]['params'] = array(0, $param1, 0, 0, 0, 0);
                     }
                         
