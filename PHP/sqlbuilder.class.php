@@ -470,13 +470,14 @@ class CreatureText
         $output .= $this->textId . ',';
 
         $content = addslashes($this->_item->content_default);
+        $content = str_replace($this->_parent->npcName, "%s", $content);
 
         $output .= ' "' . str_replace("\'", "'", $content) . '",';
         $output .= $this->typeToSAI($this->_item) . ',';
         $output .= $this->_item->language . ',100,';
         $output .= $this->_item->emote . ',0,';
         $output .= $this->_item->sound . ', "' . addslashes($this->_parent->npcName) . '"),' . PHP_EOL;
-
+        
         $this->_parent->updateTalkActions($this->_eaiEntry, $this->groupId);
 
         return $output;
