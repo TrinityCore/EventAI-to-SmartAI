@@ -21,11 +21,11 @@ If you don't know how to install it, get a tour on PHP's online documentation.
 Windowsers: That's pretty much the same, except you'll have to add the directory where
 your PHP.exe relies to your PATH environment variable. Ask Google for more informations,
 there are plenty of places where you can learn what this is. Once you're about to issue
-the 'php version2.php' command, your cmd must be in the directory where the version2.php
-file is, else you'll get a fatal error.
+the 'php runme.php' command, your cmd must be in the directory where the runme.php file
+is, else you'll get a fatal error.
 
 From now, things are pretty straigtforward. Head to the directory where you downloaded
-the source, and issue the `php version2.php` command. The script will start and work on
+the source, and issue the `php runme.php` command. The script will start and work on
 its own. Go get a cofee, and when you're back you'll notice two *.sql files in the
 directoy. These are the files you have to apply to your world database to be able to
 effectively wipe EventAI from your database, and thus from the core!

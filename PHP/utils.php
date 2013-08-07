@@ -629,8 +629,8 @@ class Utils
                         'commentType' => "_npcName_ - _eventName_ - UNUSED"
                     );
                     break;
+                //! Need to be handled by random action scripts (thus scripted by hand).
                 case ACTION_T_RANDOM_SOUND:
-                    //! No event for this in SAI, needs to be handled though imo
                 case ACTION_T_RANDOM_SAY:
                 case ACTION_T_RANDOM_YELL:
                 case ACTION_T_RANDOM_TEXTEMOTE:
