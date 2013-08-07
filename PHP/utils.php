@@ -105,9 +105,9 @@ class Utils
             case SMART_EVENT_UPDATE_OOC:
                 return "Out Of Combat";
             case SMART_EVENT_HEALT_PCT:
-                return "At ${param2}% Health";
+                return "Between ${param1}-${param2}% Health";
             case SMART_EVENT_MANA_PCT:
-                return "At ${param2}% Mana";
+                return "Between ${param1}-${param2}% Mana";
             case SMART_EVENT_AGGRO:
                 return "On Aggro";
             case SMART_EVENT_KILL:
@@ -175,7 +175,7 @@ class Utils
             case SMART_EVENT_SUMMON_DESPAWNED:
                 return "On Summoned Unit Despawn";
             case SMART_EVENT_CORPSE_REMOVED:
-                return "On Corpse Removal";
+                return "On Corpse Removed";
             default:
                 return "Fixme -- Add case";
         }
