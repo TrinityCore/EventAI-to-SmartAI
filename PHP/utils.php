@@ -356,7 +356,7 @@ class Utils
                     $result[$i] = array(
                         'SAIAction'  => SMART_ACTION_ALLOW_COMBAT_MOVEMENT,
                         'params'     => array($param1, 0, 0, 0, 0, 0),
-                        'commentType' => "_npcName_ - _eventName_ - Allow Combat Movement"
+                        'commentType' => "_npcName_ - _eventName_ - ".($param1 == 0 ? "Disallow" : "Allow")." Combat Movement"
                     );
                     break;
                 case ACTION_T_SET_PHASE:
