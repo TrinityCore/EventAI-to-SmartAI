@@ -570,15 +570,14 @@ class Utils
                     $result[$i] = array(
                         'SAIAction'  => SMART_ACTION_SET_VISIBILITY,
                         'params'     => array($param1, 0, 0, 0, 0, 0),
-                        'commentType' => "_npcName_ - _eventName_ - Set Visiblity"
+                        'commentType' => "_npcName_ - _eventName_ - Set Visiblity " . $param1 == 0 ? "Off" : "On"
                     );
                     break;
                 case ACTION_T_SET_ACTIVE:
-                    //! SAI has no parameter and cannot set a NPC as inactive!
                     $result[$i] = array(
                         'SAIAction'  => SMART_ACTION_SET_ACTIVE,
-                        'params'     => array(0, 0, 0, 0, 0, 0),
-                        'commentType' => "_npcName_ - _eventName_ - Set Active"
+                        'params'     => array($param1, 0, 0, 0, 0, 0),
+                        'commentType' => "_npcName_ - _eventName_ - Set Active " . $param1 == 0 ? "Off" : "On"
                     );
                     break;
                 case ACTION_T_SET_AGGRESSIVE:
