@@ -68,11 +68,11 @@ unset($eaiItem, $npcName, $npcId, $EAIDataSet); // Save some memory
 $storeSize = count($npcStore);
 
 # Delete previous files
-if (file_exists('creature_texts_v2.sql'))
-    unlink('creature_texts_v2.sql');
+if (file_exists('creature_texts.sql'))
+    unlink('creature_texts.sql');
 
-if (file_exists('smart_scripts_v2.sql'))
-    unlink('smart_scripts_v2.sql');
+if (file_exists('smart_scripts.sql'))
+    unlink('smart_scripts.sql');
 
 ob_start();
 echo '>> ' . $storeSize . ' different NPC EAIs detected in ' . round(microtime(true) - $oldDate, 4) . ' ms !' . PHP_EOL . PHP_EOL;
@@ -87,8 +87,8 @@ foreach ($npcStore as $npcId => $npcObj)
     $npcObj->getSmartScripts(false); // Dump texts ONLY
 
     // The order is important here, CreatureText changes data on the parent, thus on all the current NPC's SAI.
-    sLog::outSpecificFile('creature_texts_v2.sql', $npcObj->getCreatureText());
-    sLog::outSpecificFile('smart_scripts_v2.sql', $npcObj->getSmartScripts());
+    sLog::outSpecificFile('creature_texts.sql', $npcObj->getCreatureText());
+    sLog::outSpecificFile('smart_scripts.sql', $npcObj->getSmartScripts());
     
     // Free memory on the fly
     unset($npcStore[$npcId], $npcId, $npcObj);
