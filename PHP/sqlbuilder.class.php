@@ -279,9 +279,6 @@ class SAI
             for ($j = 0; $j < 6; $j++)
                 $outputString .= (isset($this->data['actions'][$i]['params'][$j]) ? $this->data['actions'][$i]['params'][$j] : 0) . ',';
 
-            # Writing targets
-            $outputString .= $this->data['actions'][$i]['target'] . ',';
-
             if ($this->data['actions'][$i]['SAIAction'] == SMART_ACTION_SUMMON_CREATURE && $this->data['actions'][$i]['isSpecialHandler'])
             {
                 $summonData = $this->data['actions'][$i]['extraData'];
@@ -294,6 +291,7 @@ class SAI
             else
             {
                 //! Default values of all of these is 0, so we can safely use them like this.
+                $outputString .= $this->data['actions'][$i]['target'] . ',';
                 $outputString .= $this->data['actions'][$i]['target_param1'].',';
                 $outputString .= $this->data['actions'][$i]['target_param2'].',';
                 $outputString .= $this->data['actions'][$i]['target_param3'].',';
