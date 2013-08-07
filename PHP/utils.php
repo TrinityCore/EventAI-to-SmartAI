@@ -119,17 +119,17 @@ class Utils
             case SMART_EVENT_SPELLHIT:
                 return "On Spellhit _spellHitSpellId_";
             case SMART_EVENT_RANGE:
-                return "At ${param1} - ${param2} Range";
+                return "At ${param1}-${param2} Range";
             case SMART_EVENT_OOC_LOS:
                 return "On LOS Out Of Combat";
             case SMART_EVENT_RESPAWN:
                 return "On Respawn";
             case SMART_EVENT_TARGET_HEALTH_PCT:
-                return "On Target At ${param1} - ${param2}% Health";
+                return "On Target At ${param1}-${param2}% Health";
             case SMART_EVENT_TARGET_CASTING:
                 return "On Target Casting";
             case SMART_EVENT_FRIENDLY_HEALTH:
-                return "On Friendly Unit At ${param1} - ${param2}% Health";
+                return "On Friendly Unit At ${param1}-${param2}% Health";
             case SMART_EVENT_FRIENDLY_IS_CC:
                 return "On Friendly Unit In CC";
             case SMART_EVENT_FRIENDLY_MISSING_BUFF:
@@ -137,7 +137,7 @@ class Utils
             case SMART_EVENT_SUMMONED_UNIT:
                 return "On Summoned Unit";
             case SMART_EVENT_TARGET_MANA_PCT:
-                return "On Target At ${param1} - ${param2}% Mana";
+                return "On Target At ${param1}-${param2}% Mana";
             case SMART_EVENT_ACCEPTED_QUEST:
                 return "On Quest Accept";
             case SMART_EVENT_REWARD_QUEST:
@@ -149,6 +149,7 @@ class Utils
             case SMART_EVENT_HAS_AURA:
                 if ($param1 < 0)
                     return "On Aura _hasAuraSpellId_ Not Present";
+					
                 return "On Aura _hasAuraSpellId_ Present";
             case SMART_EVENT_TARGET_BUFFED:
                 return "On Target Buffed";
