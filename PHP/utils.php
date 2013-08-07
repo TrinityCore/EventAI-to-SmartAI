@@ -544,19 +544,18 @@ class Utils
                         $result[$i]['commentType'] .= "%";
                         $result[$i]['params'] = array(0, $param1, 0, 0, 0, 0);
                     }
-                        
+
                     break;
                 case ACTION_T_MOUNT_TO_ENTRY_OR_MODEL:
                     $result[$i] = array(
                         'SAIAction'  => SMART_ACTION_MOUNT_TO_ENTRY_OR_MODEL,
                         'params'     => array($param1, $param2, 0, 0, 0, 0),
-                        'commentType' => "_npcName_ - _eventName_ - Mount Up "
+                        'commentType' => "_npcName_ - _eventName_ - Mount Up Model ".$param1
                     );
 
                     if ($param1 == 0 && $param2 == 0)
                         $result[$i]['commentType'] = "_npcName_ - _eventName_ - Dismount";
-                    else
-                        $result[$i]['commentType'] .= "Model ".$param1;
+
                     break;
                 case ACTION_T_SET_PHASE_MASK:
                     $result[$i] = array(
@@ -595,6 +594,10 @@ class Utils
                     );
                     break;
                 case ACTION_T_SET_AGGRESSIVE:
+                    //! The naming of the EAI action type is wrong. Core handling simply goes like this:
+                    //! me->SetReactState(ReactStates(action.raw.param1));
+                    //! Therefore making it work the same as SMART_ACTION_SET_REACT_STATE and not setting
+                    //! the source to aggressive.
                     $result[$i] = array(
                         'SAIAction'  => SMART_ACTION_SET_REACT_STATE,
                         'params'     => array($param1, 0, 0, 0, 0, 0),
@@ -602,9 +605,13 @@ class Utils
                     );
                     break;
                 case ACTION_T_ATTACK_START_PULSE:
+                    //! ACTION_T_ATTACK_START_PULSE by default targets closest enemy within given range (param1), which we
+                    //! therefore pass on as target_param1 for SMART_TARGET_CLOSEST_ENEMY.
                     $result[$i] = array(
                         'SAIAction'  => SMART_ACTION_ATTACK_START,
                         'params'     => array(0, 0, 0, 0, 0, 0),
+                        'target'     => SMART_TARGET_CLOSEST_ENEMY,
+                        'target_param1' => $param1,
                         'commentType' => "_npcName_ - _eventName_ - Attack Start"
                     );
                     break;
@@ -639,8 +646,29 @@ class Utils
             if (!isset($result[$i]['isSpecialHandler']))
                 $result[$i]['isSpecialHandler'] = false;
 
-            if (!isset($result[$i]['target'])) // Default target
+            if (!isset($result[$i]['target']))
                 $result[$i]['target'] = SMART_TARGET_SELF;
+
+            if (!isset($result[$i]['target_param1']))
+                $result[$i]['target_param1'] = 0;
+
+            if (!isset($result[$i]['target_param2']))
+                $result[$i]['target_param2'] = 0;
+
+            if (!isset($result[$i]['target_param3']))
+                $result[$i]['target_param3'] = 0;
+
+            if (!isset($result[$i]['target_paramX']))
+                $result[$i]['target_paramX'] = 0;
+
+            if (!isset($result[$i]['target_paramY']))
+                $result[$i]['target_paramY'] = 0;
+
+            if (!isset($result[$i]['target_paramZ']))
+                $result[$i]['target_paramZ'] = 0;
+
+            if (!isset($result[$i]['target_paramO']))
+                $result[$i]['target_paramO'] = 0;
         }
 
         return $result;

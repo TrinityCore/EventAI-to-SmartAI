@@ -225,4 +225,5 @@ define("SMART_TARGET_CLOSEST_PLAYER",         21);  // maxDist
 define("SMART_TARGET_ACTION_INVOKER_VEHICLE", 22);  // Unit's vehicle who caused this Event to occur
 define("SMART_TARGET_OWNER_OR_SUMMONER",      23);  // Unit's owner or summoner
 define("SMART_TARGET_THREAT_LIST",            24);  // All units on creature's threat list
-define("SMART_TARGET_END",                    25);
+define("SMART_TARGET_CLOSEST_ENEMY",          25);  // maxDist
+define("SMART_TARGET_END",                    26);

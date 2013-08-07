@@ -291,7 +291,16 @@ class SAI
                 $outputString .= $summonData->orientation . ',';
             }
             else
-                $outputString .= '0,0,0,0,0,0,0,';
+            {
+                //! Default values of all of these is 0, so we can safely use them like this.
+                $outputString .= $this->data['actions'][$i]['target_param1'].',';
+                $outputString .= $this->data['actions'][$i]['target_param2'].',';
+                $outputString .= $this->data['actions'][$i]['target_param3'].',';
+                $outputString .= $this->data['actions'][$i]['target_paramX'].',';
+                $outputString .= $this->data['actions'][$i]['target_paramY'].',';
+                $outputString .= $this->data['actions'][$i]['target_paramZ'].',';
+                $outputString .= $this->data['actions'][$i]['target_paramO'].',';
+            }
 
             # Build the comment, and we're done.
             $outputString .= '"' . $this->buildComment($action['commentType'], $i) . '"';
