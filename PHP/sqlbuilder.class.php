@@ -135,7 +135,8 @@ class NPC
             return '';
 
         $output  = '-- Texts for ' . $this->npcName . PHP_EOL;
-        $output .= 'DELETE FROM `creature_text` WHERE `entry`= ' . $this->npcId . ';' . PHP_EOL;
+        $output .= 'SET @ENTRY := ' . $this->npcId . ';' . PHP_EOL;
+        $output .= 'DELETE FROM `creature_text` WHERE `entry`=@ENTRY;' . PHP_EOL;
         $output .= 'INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`probability`,`emote`,`duration`,`sound`,`comment`) VALUES' . PHP_EOL;
         foreach ($this->texts as $item)
             $output .= $item->toCreatureText();
@@ -455,14 +456,16 @@ class CreatureText
         return ($this->_item->entry == -47);
     }
 
-    public function toCreatureText() {
+    public function toCreatureText()
+    {
         // Ignore flee emotes.
-        if ($this->isFleeEmote()) {
+        if ($this->isFleeEmote())
+        {
             $this->_parent->setEmoteWhenFleeing(true);
             return '';
         }
 
-        $output  = '(' . $this->_parent->npcId . ',';
+        $output  = '(@ENTRY,';
         $output .= $this->groupId . ',';
         $output .= $this->textId . ',';
 
