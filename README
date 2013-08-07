@@ -30,5 +30,12 @@ its own. Go get a cofee, and when you're back you'll notice two *.sql files in t
 directoy. These are the files you have to apply to your world database to be able to
 effectively wipe EventAI from your database, and thus from the core!
 
+Thanks to:
+Warpten, Discover-, Horn
+
+As for the older project (where we were converting them by hand), thanks to the following people:
+Warpten, Discover-, Horn, Kandera, Valvorb, ZxBiohazardZx
+
+
 Thanks for reading
 The EAI2SAI PHP Developer (Aka ME, narcissism at its peak)
