@@ -476,7 +476,7 @@ class Utils
                     $result[$i] = array(
                         'SAIAction'  => SMART_ACTION_UPDATE_TEMPLATE,
                         'params'     => array($param1, $param2, 0, 0, 0, 0),
-                        'commentType' => "_npcName_ - _eventName_ - Update Template"
+                        'commentType' => "_npcName_ - _eventName_ - Update Template To " . Factory::createOrGetDBHandler()->query("SELECT `name` FROM `creature_template` WHERE `entry`=${param1}")->fetch(PDO::FETCH_OBJ)->name
                     );
                     break;
                 case ACTION_T_DIE:
