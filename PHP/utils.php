@@ -149,7 +149,7 @@ class Utils
             case SMART_EVENT_HAS_AURA:
                 if ($param1 < 0)
                     return "On Aura _hasAuraSpellId_ Not Present";
-					
+                    
                 return "On Aura _hasAuraSpellId_ Present";
             case SMART_EVENT_TARGET_BUFFED:
                 return "On Target Buffed";
@@ -403,7 +403,7 @@ class Utils
                         'target'     => $param1 + 1,
                         'commentType' => "_npcName_ - _eventName_ - Remove Aura _removeAuraSpell_" 
                     );
-					
+                    
                     if ($param2 == 0)
                         $result[$i]['commentType'] = "_npcName_ - _eventName_ - Remova All Auras";
                     break;
@@ -525,10 +525,10 @@ class Utils
                         'params'     => array($param1, 0, 0, 0, 0, 0),
                         'commentType' => "_npcName_ - _eventName_ - Forced Despawn"
                     );
-					
-					if ($param1 > 0)
-						$result[$i]['commentType'] .= " In ".$param1." Ms";
-						
+                    
+                    if ($param1 > 0)
+                        $result[$i]['commentType'] .= " In ".$param1." Ms";
+                        
                     break;
                 case ACTION_T_SET_INVINCIBILITY_HP_LEVEL:
                     $result[$i] = array(
@@ -546,8 +546,8 @@ class Utils
 
                     if ($param1 == 0 && $param2 == 0)
                         $result[$i]['commentType'] = "_npcName_ - _eventName_ - Dismount";
-					else
-						$result[$i]['commentType'] .= "Model ".$param1;
+                    else
+                        $result[$i]['commentType'] .= "Model ".$param1;
                     break;
                 case ACTION_T_SET_PHASE_MASK:
                     $result[$i] = array(
