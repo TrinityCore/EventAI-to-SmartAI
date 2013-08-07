@@ -312,9 +312,11 @@ class SAI
         if (Factory::hasDbcWorker())
         {
             // Place event precessors here
-            if ($this->data['event_type'] == SMART_EVENT_SPELLHIT || $this->data['event_type'] == SMART_EVENT_SPELLHIT_TARGET) {
+            if ($this->data['event_type'] == SMART_EVENT_SPELLHIT || $this->data['event_type'] == SMART_EVENT_SPELLHIT_TARGET)
+			{
                 // For some bitch reason, some spellhit events have 0 as the spell hitter
-                if ($this->data['event_params'][1] != 0) {
+                if ($this->data['event_params'][1] != 0)
+				{
                     $commentType = str_replace(
                         '_spellHitSpellId_',
                         Factory::getSpellNameForLoc($this->data['event_params'][1], 0),
@@ -323,7 +325,19 @@ class SAI
                 else
                     $commentType = str_replace(' _spellHitSpellId_', '', $commentType);
             }
-            
+            elseif ($this->data['event_type'] == SMART_EVENT_HAS_AURA)
+			{
+                if ($this->data['event_params'][1] != 0)
+				{
+                    $commentType = str_replace(
+                        '_hasAuraSpellId_',
+                        Factory::getSpellNameForLoc($this->data['event_params'][1], 0),
+                        $commentType);
+                }
+                else
+                    $commentType = str_replace(' _hasAuraSpellId_', '', $commentType);
+            }
+			
             // Place action processors here
             if ($this->data['actions'][$actionIndex]['SAIAction'] == SMART_ACTION_CAST) {
                 $commentType = str_replace(
@@ -331,7 +345,8 @@ class SAI
                     Factory::getSpellNameForLoc($this->data['actions'][$actionIndex]['params'][0], 0),
                     $commentType);
             }
-            elseif ($this->data['actions'][$actionIndex]['SAIAction'] == SMART_ACTION_REMOVEAURASFROMSPELL && $this->data['actions'][$actionIndex]['params'][0] != 0) {
+            elseif ($this->data['actions'][$actionIndex]['SAIAction'] == SMART_ACTION_REMOVEAURASFROMSPELL && $this->data['actions'][$actionIndex]['params'][0] != 0)
+			{
                 $commentType = str_replace(
                     '_removeAuraSpell_',
                     Factory::getSpellNameForLoc($this->data['actions'][$actionIndex]['params'][0], 0),
