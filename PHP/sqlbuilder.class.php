@@ -310,7 +310,7 @@ class SAI
 
         // Any DBC-needed data is dumped here
         if (Factory::hasDbcWorker())
-		{
+        {
             // Place event precessors here
             if ($this->data['event_type'] == SMART_EVENT_SPELLHIT || $this->data['event_type'] == SMART_EVENT_SPELLHIT_TARGET) {
                 // For some bitch reason, some spellhit events have 0 as the spell hitter
@@ -321,7 +321,7 @@ class SAI
                         $commentType);
                 }
                 else
-					$commentType = str_replace(' _spellHitSpellId_', '', $commentType);
+                    $commentType = str_replace(' _spellHitSpellId_', '', $commentType);
             }
             
             // Place action processors here
