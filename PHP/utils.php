@@ -529,18 +529,20 @@ class Utils
                     $result[$i] = array(
                         'SAIAction'  => SMART_ACTION_SET_INVINCIBILITY_HP_LEVEL,
                         'params'     => array($param1, 0, 0, 0, 0, 0),
-                        'commentType' => "_npcName_ - _eventName_ - Set Invincibility Health Pct To " . $param1
+                        'commentType' => "_npcName_ - _eventName_ - Set Invincibility Health Pct To " . $param1 . "%"
                     );
                     break;
                 case ACTION_T_MOUNT_TO_ENTRY_OR_MODEL:
                     $result[$i] = array(
                         'SAIAction'  => SMART_ACTION_MOUNT_TO_ENTRY_OR_MODEL,
                         'params'     => array($param1, $param2, 0, 0, 0, 0),
-                        'commentType' => "_npcName_ - _eventName_ - Mount Up"
+                        'commentType' => "_npcName_ - _eventName_ - Mount Up "
                     );
 
                     if ($param1 == 0 && $param2 == 0)
                         $result[$i]['commentType'] = "_npcName_ - _eventName_ - Dismount";
+					else
+						$result[$i]['commentType'] .= "Model ".$param1;
                     break;
                 case ACTION_T_SET_PHASE_MASK:
                     $result[$i] = array(
