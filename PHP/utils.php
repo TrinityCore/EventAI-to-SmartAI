@@ -349,7 +349,7 @@ class Utils
                     $result[$i] = array(
                         'SAIAction'  => SMART_ACTION_AUTO_ATTACK,
                         'params'     => array($param1, 0, 0, 0, 0, 0),
-                        'commentType' => "_npcName_ - _eventName_ - Start Auto Attack"
+                        'commentType' => "_npcName_ - _eventName_ - ".($param1 == 0 ? "Stop" : "Start")." Auto Attack"
                     );
                     break;
                 case ACTION_T_COMBAT_MOVEMENT:
