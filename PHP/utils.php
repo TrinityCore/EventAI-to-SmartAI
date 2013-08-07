@@ -440,6 +440,7 @@ class Utils
                     );
                     break;
                 case ACTION_T_SUMMON_ID:
+                    // Todo: empty creature_ai_summons based on id of param1 here.
                     $result[$i] = array(
                         'extraData'     => Factory::createOrGetDBHandler()->query("SELECT * FROM `creature_ai_summons` WHERE `id`=" . $param3)->fetch(PDO::FETCH_OBJ),
                         'SAIAction'     => SMART_ACTION_SUMMON_CREATURE,
@@ -460,7 +461,7 @@ class Utils
                     $result[$i] = array(
                         'SAIAction'  => SMART_ACTION_SET_INST_DATA,
                         'params'     => array($param1, $param2, 0, 0, 0, 0),
-                        'commentType' => "_npcName_ - _eventName_ - Set Instance Data ${param1} to ${param2}"
+                        'commentType' => "_npcName_ - _eventName_ - Set Instance Data Field To ${param1} To Data ${param2}"
                     );
                     break;
                 case ACTION_T_SET_INST_DATA64:
@@ -468,7 +469,7 @@ class Utils
                         'SAIAction'  => SMART_ACTION_SET_INST_DATA64,
                         'params'     => array($param1, 0, 0, 0, 0, 0),
                         'target'     => $param2 + 1,
-                        'commentType' => "_npcName_ - _eventName_ - Set Instance Data64"
+                        'commentType' => "_npcName_ - _eventName_ - Set Instance Data64 Field To ${param1}"
                     );
                     break;
                 case ACTION_T_UPDATE_TEMPLATE:
