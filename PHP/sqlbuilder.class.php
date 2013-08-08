@@ -106,13 +106,13 @@ class NPC
 
         $this->resetSaiIndex();
 
-        $output = '-- ' . $this->npcName . ' SAI' . PHP_EOL;
-        $output .= 'SET @ENTRY := ' . $this->npcId . ';' . PHP_EOL;
-        $output .= 'UPDATE `creature_template` SET `AIName`=\'SmartAI\' WHERE `entry`=@ENTRY;' . PHP_EOL;
+        $output = '-- '.$this->npcName.' SAI'.PHP_EOL;
+        $output .= 'SET @ENTRY := '.$this->npcId.';'.PHP_EOL;
+        $output .= 'UPDATE `creature_template` SET `AIName`=\'SmartAI\' WHERE `entry`=@ENTRY;'.PHP_EOL;
         $output .= 'DELETE FROM `creature_ai_scripts` WHERE `creature_id`=@ENTRY;';
-        $output .= '_deleteCreatureAiSummonEntry_' . PHP_EOL;
-        $output .= 'DELETE FROM `smart_scripts` WHERE `entryorguid`=@ENTRY AND `source_type`=0;' . PHP_EOL; # The reason default source_type is 0 is because EventAI doesn't support anything else than creature AI.
-        $output .= 'INSERT INTO `smart_scripts` (`entryorguid`,`source_type`,`id`,`link`,`event_type`,`event_phase_mask`,`event_chance`,`event_flags`,`event_param1`,`event_param2`,`event_param3`,`event_param4`,`action_type`,`action_param1`,`action_param2`,`action_param3`,`action_param4`,`action_param5`,`action_param6`,`target_type`,`target_param1`,`target_param2`,`target_param3`,`target_x`,`target_y`,`target_z`,`target_o`,`comment`) VALUES' . PHP_EOL;
+        $output .= '_deleteCreatureAiSummonEntry_'.PHP_EOL;
+        $output .= 'DELETE FROM `smart_scripts` WHERE `entryorguid`=@ENTRY AND `source_type`=0;'.PHP_EOL; # The reason default source_type is 0 is because EventAI doesn't support anything else than creature AI.
+        $output .= 'INSERT INTO `smart_scripts` (`entryorguid`,`source_type`,`id`,`link`,`event_type`,`event_phase_mask`,`event_chance`,`event_flags`,`event_param1`,`event_param2`,`event_param3`,`event_param4`,`action_type`,`action_param1`,`action_param2`,`action_param3`,`action_param4`,`action_param5`,`action_param6`,`target_type`,`target_param1`,`target_param2`,`target_param3`,`target_x`,`target_y`,`target_z`,`target_o`,`comment`) VALUES'.PHP_EOL;
 
         foreach ($this->sai as $item)
             $output .= $item->toSQL();
@@ -127,7 +127,7 @@ class NPC
                 {
                     $output = str_replace(
                         '_deleteCreatureAiSummonEntry_',
-                        PHP_EOL . 'DELETE FROM `creature_ai_summons` WHERE `id`='.$saiItem->data['actions'][$i]['extraData']->id.';',
+                        PHP_EOL.'DELETE FROM `creature_ai_summons` WHERE `id`='.$saiItem->data['actions'][$i]['extraData']->id.';',
                         $output);
                     $_break = true;
                     break;
@@ -140,7 +140,7 @@ class NPC
 
         $output = str_replace('_deleteCreatureAiSummonEntry_', '', $output);
         unset($item);
-        return substr($output, 0, - strlen(PHP_EOL) - 1) . ';' . PHP_EOL . PHP_EOL;
+        return substr($output, 0, - strlen(PHP_EOL) - 1).';'.PHP_EOL.PHP_EOL;
     }
 
     public function getCreatureText() {
@@ -154,16 +154,16 @@ class NPC
         if ($qty == 0)
             return '';
 
-        $output  = '-- Texts for ' . $this->npcName . PHP_EOL;
-        $output .= 'SET @ENTRY := ' . $this->npcId . ';' . PHP_EOL;
-        $output .= 'DELETE FROM `creature_text` WHERE `entry`=@ENTRY;' . PHP_EOL;
-        $output .= 'INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`probability`,`emote`,`duration`,`sound`,`comment`) VALUES' . PHP_EOL;
+        $output  = '-- Texts for '.$this->npcName.PHP_EOL;
+        $output .= 'SET @ENTRY := '.$this->npcId.';'.PHP_EOL;
+        $output .= 'DELETE FROM `creature_text` WHERE `entry`=@ENTRY;'.PHP_EOL;
+        $output .= 'INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`probability`,`emote`,`duration`,`sound`,`comment`) VALUES'.PHP_EOL;
         foreach ($this->texts as $item)
             $output .= $item->toCreatureText();
 
         unset($item); // Save some memory
 
-        return substr($output, 0, - strlen(PHP_EOL) - 1) . ';' . PHP_EOL . PHP_EOL;
+        return substr($output, 0, - strlen(PHP_EOL) - 1).';'.PHP_EOL.PHP_EOL;
     }
 }
 
@@ -247,34 +247,34 @@ class SAI
                 break;
 
             $outputString .= '(@ENTRY,';
-            $outputString .= $this->data['source_type'] . ',';
-            $outputString .= $this->_parent->getSaiIndex() . ',';
+            $outputString .= $this->data['source_type'].',';
+            $outputString .= $this->_parent->getSaiIndex().',';
 
             $linked = false;
             if ($this->_parent->hasEventInCache($this->data) || (isset($this->data['actions'][$i + 1]) && count($this->data['actions'][$i + 1]) != 0))
             {
                 $this->_parent->increaseLinkIndex();
-                $outputString .= $this->_parent->getLinkIndex() . ',' . $this->data['event_type'] . ',';
+                $outputString .= $this->_parent->getLinkIndex().','.$this->data['event_type'].',';
                 $linked = true;
             }
             else
             {
                 $this->_parent->setLinkIndex($this->_parent->getSaiIndex() + 1); // +1 because index is not yet updated
                 if (count($this->data['actions']) == 1)
-                    $outputString .= '0,' . $this->data['event_type'] . ',';
+                    $outputString .= '0,'.$this->data['event_type'].',';
                 else
                 {
                     if ($i == 1)
-                        $outputString .= '0,' . $this->data['event_type'] . ',';
+                        $outputString .= '0,'.$this->data['event_type'].',';
                     else
-                        $outputString .= '0,' . SMART_EVENT_LINK . ',';
+                        $outputString .= '0,'.SMART_EVENT_LINK.',';
                     $linked = ($i != 1);
                 }
             }
 
             # Writing event type, phase, chance, flags and parameters
             if (!$linked)
-                $outputString .= $this->data['event_phase'] . ',' . $this->data['event_chance'] . ',' . $this->data['event_flags'] . ',';
+                $outputString .= $this->data['event_phase'].','.$this->data['event_chance'].','.$this->data['event_flags'].',';
             else // Linked events cannot happen on their own, avoid unnecessary checks core-side.
                 $outputString .= '0,100,0,';
 
@@ -287,31 +287,31 @@ class SAI
                     if ($j == 2 && ($this->data['event_type'] == SMART_EVENT_SPELLHIT || $this->data['event_type'] == SMART_EVENT_SPELLHIT_TARGET))
                         $outputString .= '0,';
                     else
-                        $outputString .= $this->data['event_params'][$j] . ',';
+                        $outputString .= $this->data['event_params'][$j].',';
                 }
             }
             else
                 $outputString .= '0,0,0,0,';
 
             # Writing action parameters
-            $outputString .= $this->data['actions'][$i]['SAIAction'] . ',';
+            $outputString .= $this->data['actions'][$i]['SAIAction'].',';
 
             for ($j = 0; $j < 6; $j++)
-                $outputString .= (isset($this->data['actions'][$i]['params'][$j]) ? $this->data['actions'][$i]['params'][$j] : 0) . ',';
+                $outputString .= (isset($this->data['actions'][$i]['params'][$j]) ? $this->data['actions'][$i]['params'][$j] : 0).',';
 
             if ($this->data['actions'][$i]['SAIAction'] == SMART_ACTION_SUMMON_CREATURE && $this->data['actions'][$i]['isSpecialHandler'])
             {
                 $summonData = $this->data['actions'][$i]['extraData'];
-                $outputString .= SMART_TARGET_POSITION . ',0,0,0,';
-                $outputString .= $summonData->position_x . ',';
-                $outputString .= $summonData->position_y . ',';
-                $outputString .= $summonData->position_z . ',';
-                $outputString .= $summonData->orientation . ',';
+                $outputString .= SMART_TARGET_POSITION.',0,0,0,';
+                $outputString .= $summonData->position_x.',';
+                $outputString .= $summonData->position_y.',';
+                $outputString .= $summonData->position_z.',';
+                $outputString .= $summonData->orientation.',';
             }
             else
             {
                 //! Default values of all of these is 0, so we can safely use them like this.
-                $outputString .= $this->data['actions'][$i]['target'] . ',';
+                $outputString .= $this->data['actions'][$i]['target'].',';
                 $outputString .= $this->data['actions'][$i]['target_param1'].',';
                 $outputString .= $this->data['actions'][$i]['target_param2'].',';
                 $outputString .= $this->data['actions'][$i]['target_param3'].',';
@@ -322,9 +322,9 @@ class SAI
             }
 
             # Build the comment, and we're done.
-            $outputString .= '"' . $this->buildComment($action['commentType'], $i) . '"';
+            $outputString .= '"'.$this->buildComment($action['commentType'], $i).'"';
 
-            $outputString .= '),' . PHP_EOL;
+            $outputString .= '),'.PHP_EOL;
 
             $this->_parent->increaseSaiIndex();
         }
@@ -393,12 +393,12 @@ class SAI
         else
         {
             if ($this->data['actions'][$actionIndex]['SAIAction'] == SMART_ACTION_CAST)
-                $commentType = str_replace('_castSpellId_', $this->data['actions'][$actionIndex]['params'][0] . " (Not found in DBCs!)", $commentType);
+                $commentType = str_replace('_castSpellId_', $this->data['actions'][$actionIndex]['params'][0]." (Not found in DBCs!)", $commentType);
             elseif ($this->data['actions'][$actionIndex]['SAIAction'] == SMART_ACTION_REMOVEAURASFROMSPELL && $this->data['actions'][$actionIndex]['params'][0] != 0)
-                $commentType = str_replace('_removeAuraSpell_', $this->data['actions'][$actionIndex]['params'][0] . " (Not found in DBCs!)", $commentType);
+                $commentType = str_replace('_removeAuraSpell_', $this->data['actions'][$actionIndex]['params'][0]." (Not found in DBCs!)", $commentType);
 
             if ($this->data['event_type'] == SMART_EVENT_SPELLHIT || $this->data['event_type'] == SMART_EVENT_SPELLHIT_TARGET)
-                $commentType = str_replace('_spellHitSpellId_', $this->data['event_params'][1] . " (Not found in DBCs!)", $commentType);
+                $commentType = str_replace('_spellHitSpellId_', $this->data['event_params'][1]." (Not found in DBCs!)", $commentType);
         }
 
         if ($this->data['event_flags'] != 0)
@@ -462,7 +462,7 @@ class EAI
 
         if (!is_array($saiData['actions']))
         {
-            echo PHP_EOL . 'FATAL ERROR! Utils::buildSAIAction() did NOT return an array... Shutting down the engine, cooling down the nuclear reactor' . PHP_EOL;
+            echo PHP_EOL.'FATAL ERROR! Utils::buildSAIAction() did NOT return an array... Shutting down the engine, cooling down the nuclear reactor'.PHP_EOL;
             exit(1);
         }
 
@@ -534,17 +534,17 @@ class CreatureText
         }
 
         $output  = '(@ENTRY,';
-        $output .= $this->groupId . ',';
-        $output .= $this->textId . ',';
+        $output .= $this->groupId.',';
+        $output .= $this->textId.',';
 
         $content = addslashes($this->_item->content_default);
         $content = str_replace($this->_parent->npcName, "%s", $content);
 
-        $output .= '"' . str_replace("\'", "'", $content) . '",';
-        $output .= $this->typeToSAI($this->_item) . ',';
-        $output .= $this->_item->language . ',100,';
-        $output .= $this->_item->emote . ',0,';
-        $output .= $this->_item->sound . ',"' . addslashes($this->_parent->npcName) . '"),' . PHP_EOL;
+        $output .= '"'.str_replace("\'", "'", $content).'",';
+        $output .= $this->typeToSAI($this->_item).',';
+        $output .= $this->_item->language.',100,';
+        $output .= $this->_item->emote.',0,';
+        $output .= $this->_item->sound.',"'.addslashes($this->_parent->npcName).'"),'.PHP_EOL;
         
         $this->_parent->updateTalkActions($this->_eaiEntry, $this->groupId);
 

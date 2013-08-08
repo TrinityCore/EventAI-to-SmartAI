@@ -221,20 +221,20 @@ class Utils
 
         for ($i = 1; $i <= 3; $i++)
         {
-            $eaiAction = $eaiItem->{'action'  . $i . '_type'};
+            $eaiAction = $eaiItem->{'action'.$i.'_type'};
 
             if ($eaiAction == 0)
                 break;
             
-            $param1 = $eaiItem->{'action'  . $i . '_param1'};
-            $param2 = $eaiItem->{'action'  . $i . '_param2'};
-            $param3 = $eaiItem->{'action'  . $i . '_param3'};
+            $param1 = $eaiItem->{'action'.$i.'_param1'};
+            $param2 = $eaiItem->{'action'.$i.'_param2'};
+            $param3 = $eaiItem->{'action'.$i.'_param3'};
 
             switch ($eaiAction)
             {
                 case ACTION_T_TEXT:
                     $result[$i] = array(
-                        'extraData'   => Factory::createOrGetDBHandler()->query("SELECT * FROM `creature_ai_texts` WHERE `entry` IN (" . $param1 . "," . $param2 . "," . $param3 . ")")->fetchAll(PDO::FETCH_OBJ),
+                        'extraData'   => Factory::createOrGetDBHandler()->query("SELECT * FROM `creature_ai_texts` WHERE `entry` IN (".$param1.",".$param2.",".$param3.")")->fetchAll(PDO::FETCH_OBJ),
                         'SAIAction'   => SMART_ACTION_TALK,
                         'params'      => array($param1, $param2, $param3, 0, 0, 0),
                         'commentType' => "_npcName_ - _eventName_ - Say Line _lineEntry_"
@@ -244,28 +244,28 @@ class Utils
                     $result[$i] = array(
                         'SAIAction'   => SMART_ACTION_SET_FACTION,
                         'params'      => array($param1, $param2, $param3, 0, 0, 0),
-                        'commentType' => "_npcName_ - _eventName_ - Set Faction " . $param1
+                        'commentType' => "_npcName_ - _eventName_ - Set Faction ".$param1
                     );
                     break;
                 case ACTION_T_MORPH_TO_ENTRY_OR_MODEL:
                     $result[$i] = array(
                         'SAIAction'   => SMART_ACTION_MORPH_TO_ENTRY_OR_MODEL,
                         'params'      => array($param1, $param2, $param3, 0, 0, 0),
-                        'commentType' => "_npcName_ - _eventName_ - Morph Into " . $param1
+                        'commentType' => "_npcName_ - _eventName_ - Morph Into ".$param1
                     );
                     break;
                 case ACTION_T_SOUND:
                     $result[$i] = array(
                         'SAIAction'   => SMART_ACTION_SOUND,
                         'params'      => array($param1, max(0, min($param2, 1)), 0, 0, 0, 0), // param2 = 0: self, else all in vis range
-                        'commentType' => "_npcName_ - _eventName_ - Play Sound " . $param1
+                        'commentType' => "_npcName_ - _eventName_ - Play Sound ".$param1
                     );
                     break;
                 case ACTION_T_EMOTE:
                     $result[$i] = array(
                         'SAIAction'  => SMART_ACTION_PLAY_EMOTE,
                         'params'     => array($param1, 0, 0, 0, 0, 0),
-                        'commentType' => "_npcName_ - _eventName_ - Play Emote " . $param1
+                        'commentType' => "_npcName_ - _eventName_ - Play Emote ".$param1
                     );
                     break;
                 case ACTION_T_RANDOM_EMOTE:
@@ -298,9 +298,9 @@ class Utils
                         $result[$i]['target'] = $target;
 
                     if ($param1 < 0)
-                        $result[$i]['commentType'] .= "Remove " . (- $param1) . '% Threat';
+                        $result[$i]['commentType'] .= "Remove ".(- $param1).'% Threat';
                     else // if ($param1 > 0)
-                        $result[$i]['commentType'] .= "Add " . (- $param1) . '% Threat';
+                        $result[$i]['commentType'] .= "Add ".(- $param1).'% Threat';
 
                     break;
                 case ACTION_T_QUEST_EVENT_ALL:
@@ -334,7 +334,7 @@ class Utils
                         'SAIAction'  => SMART_ACTION_SET_UNIT_FIELD_BYTES_1,
                         'params'     => array($param2, 0, 0, 0, 0, 0),
                         'target'     => $param3 + 1,
-                        'commentType' => "_npcName_ - _eventName_ - Set Bytes1 " . $param2
+                        'commentType' => "_npcName_ - _eventName_ - Set Bytes1 ".$param2
                     );
                     break;
                 case ACTION_T_SET_UNIT_FLAG:
@@ -342,7 +342,7 @@ class Utils
                         'SAIAction'  => SMART_ACTION_SET_UNIT_FLAG,
                         'params'     => array($param1, 0, 0, 0, 0, 0),
                         'target'     => $param2 + 1,
-                        'commentType' => "_npcName_ - _eventName_ - Set unit_flag " . $param1
+                        'commentType' => "_npcName_ - _eventName_ - Set unit_flag ".$param1
                     );
                     break;
                 case ACTION_T_REMOVE_UNIT_FLAG:
@@ -350,7 +350,7 @@ class Utils
                         'SAIAction'  => SMART_ACTION_REMOVE_UNIT_FLAG,
                         'params'     => array($param1, 0, 0, 0, 0, 0),
                         'target'     => $param2 + 1,
-                        'commentType' => "_npcName_ - _eventName_ - Remove unit_flag " . $param1
+                        'commentType' => "_npcName_ - _eventName_ - Remove unit_flag ".$param1
                     );
                     break;
                 case ACTION_T_AUTO_ATTACK:
@@ -371,7 +371,7 @@ class Utils
                     $result[$i] = array(
                         'SAIAction'  => SMART_ACTION_SET_EVENT_PHASE,
                         'params'     => array($param1, 0, 0, 0, 0, 0),
-                        'commentType' => "_npcName_ - _eventName_ - Set Event Phase " . $param1
+                        'commentType' => "_npcName_ - _eventName_ - Set Event Phase ".$param1
                     );
                     break;
                 case ACTION_T_INC_PHASE:
@@ -448,16 +448,16 @@ class Utils
                         'SAIAction'     => SMART_ACTION_SUMMON_CREATURE,
                         'params'        => array($param1, 1, $param3, 0, 0, 0),
                         'target'        => $param2 + 1,
-                        'commentType'   => "_npcName_ - _eventName_ - Summon Creature " . Factory::createOrGetDBHandler()->query("SELECT `name` FROM `creature_template` WHERE `entry`=${param1}")->fetch(PDO::FETCH_OBJ)->name
+                        'commentType'   => "_npcName_ - _eventName_ - Summon Creature ".Factory::createOrGetDBHandler()->query("SELECT `name` FROM `creature_template` WHERE `entry`=${param1}")->fetch(PDO::FETCH_OBJ)->name
                     );
                     break;
                 case ACTION_T_SUMMON_ID:
                     //! Forcing SummonType to 1 as EAI doesnt handle it
                     $result[$i] = array(
-                        'extraData'     => Factory::createOrGetDBHandler()->query("SELECT * FROM `creature_ai_summons` WHERE `id`=" . $param3)->fetch(PDO::FETCH_OBJ),
+                        'extraData'     => Factory::createOrGetDBHandler()->query("SELECT * FROM `creature_ai_summons` WHERE `id`=".$param3)->fetch(PDO::FETCH_OBJ),
                         'SAIAction'     => SMART_ACTION_SUMMON_CREATURE,
                         'params'        => array($param1, 1, 0, 0, 0, 0),
-                        'commentType'   => "_npcName_ - _eventName_ - Summon Creature " . Factory::createOrGetDBHandler()->query("SELECT `name` FROM `creature_template` WHERE `entry`=${param1}")->fetch(PDO::FETCH_OBJ)->name,
+                        'commentType'   => "_npcName_ - _eventName_ - Summon Creature ".Factory::createOrGetDBHandler()->query("SELECT `name` FROM `creature_template` WHERE `entry`=${param1}")->fetch(PDO::FETCH_OBJ)->name,
                         'isSpecialHandler' => true
                     );
                     break;
@@ -488,7 +488,7 @@ class Utils
                     $result[$i] = array(
                         'SAIAction'  => SMART_ACTION_UPDATE_TEMPLATE,
                         'params'     => array($param1, $param2, 0, 0, 0, 0),
-                        'commentType' => "_npcName_ - _eventName_ - Update Template To " . Factory::createOrGetDBHandler()->query("SELECT `name` FROM `creature_template` WHERE `entry`=${param1}")->fetch(PDO::FETCH_OBJ)->name
+                        'commentType' => "_npcName_ - _eventName_ - Update Template To ".Factory::createOrGetDBHandler()->query("SELECT `name` FROM `creature_template` WHERE `entry`=${param1}")->fetch(PDO::FETCH_OBJ)->name
                     );
                     break;
                 case ACTION_T_DIE:
@@ -576,7 +576,7 @@ class Utils
                     $result[$i] = array(
                         'SAIAction'  => SMART_ACTION_SET_INGAME_PHASE_MASK,
                         'params'     => array($param1, 0, 0, 0, 0, 0),
-                        'commentType' => "_npcName_ - _eventName_ - Set Phasemask " . $param1
+                        'commentType' => "_npcName_ - _eventName_ - Set Phasemask ".$param1
                     );
                     break;
                 case ACTION_T_SET_STAND_STATE:
@@ -598,14 +598,14 @@ class Utils
                     $result[$i] = array(
                         'SAIAction'  => SMART_ACTION_SET_VISIBILITY,
                         'params'     => array($param1, 0, 0, 0, 0, 0),
-                        'commentType' => "_npcName_ - _eventName_ - Set Visiblity " . $param1 == 0 ? "Off" : "On"
+                        'commentType' => "_npcName_ - _eventName_ - Set Visiblity ".$param1 == 0 ? "Off" : "On"
                     );
                     break;
                 case ACTION_T_SET_ACTIVE:
                     $result[$i] = array(
                         'SAIAction'  => SMART_ACTION_SET_ACTIVE,
                         'params'     => array($param1, 0, 0, 0, 0, 0),
-                        'commentType' => "_npcName_ - _eventName_ - Set Active " . $param1 == 0 ? "Off" : "On"
+                        'commentType' => "_npcName_ - _eventName_ - Set Active ".$param1 == 0 ? "Off" : "On"
                     );
                     break;
                 case ACTION_T_SET_AGGRESSIVE:
@@ -634,7 +634,7 @@ class Utils
                     $result[$i] = array(
                         'SAIAction'  => SMART_ACTION_SUMMON_GO,
                         'params'     => array($param1, $param2, 0, 0, 0, 0),
-                        'commentType' => "_npcName_ - _eventName_ - Summon Gameobject " . Factory::createOrGetDBHandler()->query("SELECT name FROM gameobject_template WHERE entry = ${param1}")->fetch(PDO::FETCH_OBJ)->name
+                        'commentType' => "_npcName_ - _eventName_ - Summon Gameobject ".Factory::createOrGetDBHandler()->query("SELECT name FROM gameobject_template WHERE entry = ${param1}")->fetch(PDO::FETCH_OBJ)->name
                     );
                     break;
                 case ACTION_T_NONE:
@@ -727,14 +727,14 @@ class sLog
 
     static function outString($msg) {
         if ($handle = fopen('dbErrors.log', 'a')) {
-            fwrite($handle, date('d/m/Y H:i:s :: ') . $msg . PHP_EOL);
+            fwrite($handle, date('d/m/Y H:i:s :: ').$msg.PHP_EOL);
             fclose($handle);
         }
     }
 
     static function outInfo($msg) {
         if ($handle = fopen('workProgress.log', 'a')) {
-            fwrite($handle, date('d/m/Y H:i:s :: ') . $msg . PHP_EOL);
+            fwrite($handle, date('d/m/Y H:i:s :: ').$msg.PHP_EOL);
             fclose($handle);
         }
     }

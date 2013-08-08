@@ -27,7 +27,7 @@ class Factory
     public static function createOrGetDBHandler() {
         if (!isset(self::$dbHandler)) {
             $pdoOptions[PDO::ATTR_ERRMODE] = PDO::ERRMODE_EXCEPTION;
-            self::$dbHandler = new PDO('mysql:host=' . self::$hostName . ';dbname=' . self::$dbName, self::$username, self::$password, $pdoOptions);
+            self::$dbHandler = new PDO('mysql:host='.self::$hostName.';dbname='.self::$dbName, self::$username, self::$password, $pdoOptions);
         }
         return self::$dbHandler;
     }
@@ -42,7 +42,7 @@ class Factory
     public static function getSpellNameForLoc($spellId, $locIndex) {
         if (!self::$_isDbcOn)
             return $spellId;
-        return self::$dbcWorker->getRecordById($spellId)->get('SpellNameLang' . $locIndex, DBC::STRING);
+        return self::$dbcWorker->getRecordById($spellId)->get('SpellNameLang'.$locIndex, DBC::STRING);
     }
     
     public static function toggleDbcWorker($apply) { self::$_isDbcOn = $apply; }

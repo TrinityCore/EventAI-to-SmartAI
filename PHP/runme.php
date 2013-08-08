@@ -8,39 +8,39 @@ require_once('./factory.php');
 
 // Cosmetic useless shit at different places here
 ob_start();
-echo PHP_EOL . " ______                       __" . PHP_EOL;
-echo "/\\__  _\\       __          __/\\ \\__" . PHP_EOL;
-echo "\\/_/\\ \\/ _ __ /\\_\\    ___ /\\_\\ \\, _\\  __  __" . PHP_EOL;
-echo "   \\ \\ \\/\\`'__\\/\\ \\ /' _ `\\/\\ \\ \\ \\/ /\\ \\/\\ \\" . PHP_EOL;
-echo "    \\ \\ \\ \\ \\/ \\ \\ \\/\\ \\/\\ \\ \\ \\ \\ \\_\\ \\ \\_\\ \\" . PHP_EOL;
-echo "     \\ \\_\\ \\_\\  \\ \\_\\ \\_\\ \\_\\ \\_\\ \\__\\\\/`____ \\" . PHP_EOL;
-echo "      \\/_/\\/_/   \\/_/\\/_/\\/_/\\/_/\\/__/ `/___/> \\" . PHP_EOL;
-echo "                                 C O R E  /\\___/" . PHP_EOL;
-echo "http://TrinityCore.org                    \\/__/\n" . PHP_EOL;
+echo PHP_EOL." ______                       __".PHP_EOL;
+echo "/\\__  _\\       __          __/\\ \\__".PHP_EOL;
+echo "\\/_/\\ \\/ _ __ /\\_\\    ___ /\\_\\ \\, _\\  __  __".PHP_EOL;
+echo "   \\ \\ \\/\\`'__\\/\\ \\ /' _ `\\/\\ \\ \\ \\/ /\\ \\/\\ \\".PHP_EOL;
+echo "    \\ \\ \\ \\ \\/ \\ \\ \\/\\ \\/\\ \\ \\ \\ \\ \\_\\ \\ \\_\\ \\".PHP_EOL;
+echo "     \\ \\_\\ \\_\\  \\ \\_\\ \\_\\ \\_\\ \\_\\ \\__\\\\/`____ \\".PHP_EOL;
+echo "      \\/_/\\/_/   \\/_/\\/_/\\/_/\\/_/\\/__/ `/___/> \\".PHP_EOL;
+echo "                                 C O R E  /\\___/".PHP_EOL;
+echo "http://TrinityCore.org                    \\/__/\n".PHP_EOL;
 ob_end_flush();
 
 
 if ($iniFile = parse_ini_file('config.ini')) {
     Factory::setDbData($iniFile['hostname'], $iniFile['userName'], $iniFile['password'], $iniFile['worldDatabase']);
 
-    echo '>> Config file found and parsed sucessfully.' . PHP_EOL;
+    echo '>> Config file found and parsed sucessfully.'.PHP_EOL;
 
     $dumpSpellNames = (isset($iniFile['dumpSpellNames']) && $iniFile['dumpSpellNames'] == 1);
     if ($dumpSpellNames)
-        echo PHP_EOL . '>> Spell.dbc will be parsed.' . PHP_EOL;
+        echo PHP_EOL.'>> Spell.dbc will be parsed.'.PHP_EOL;
     Factory::toggleDbcWorker($dumpSpellNames);
 }
 
 ob_start();
-echo PHP_EOL . 'Selecting all EventAIs from the database ...' . PHP_EOL;
+echo PHP_EOL.'Selecting all EventAIs from the database ...'.PHP_EOL;
 ob_end_flush();
 
 $oldDate = microtime(true);
 $EAIDataSet = Factory::createOrGetDBHandler()->query("SELECT * FROM creature_ai_scripts ORDER BY id")->fetchAll(PDO::FETCH_OBJ);
 
 ob_start();
-echo '>> Gotten ' . count($EAIDataSet) . ' entries in ' . round(microtime(true) - $oldDate, 4) . ' ms' . PHP_EOL;
-echo PHP_EOL . 'Grouping entries by NPC ...' . PHP_EOL;
+echo '>> Gotten '.count($EAIDataSet).' entries in '.round(microtime(true) - $oldDate, 4).' ms'.PHP_EOL;
+echo PHP_EOL.'Grouping entries by NPC ...'.PHP_EOL;
 ob_end_flush();
 
 $npcName   = "";  // Save the last iterated NPC name
@@ -53,7 +53,7 @@ $oldDate   = microtime(true);
 foreach ($EAIDataSet as $eaiItem) {
     if ($npcId != $eaiItem->creature_id) {
         # New NPC. Create a corresponding NPC class instance.
-        $npcName   = Factory::createOrGetDBHandler()->query('SELECT name FROM creature_template WHERE entry = ' . $eaiItem->creature_id)->fetch(PDO::FETCH_OBJ)->name;
+        $npcName   = Factory::createOrGetDBHandler()->query('SELECT name FROM creature_template WHERE entry = '.$eaiItem->creature_id)->fetch(PDO::FETCH_OBJ)->name;
         $npcId     = $eaiItem->creature_id;
         $npcStore[$npcId] = new NPC($npcId, $npcName);
     }
@@ -75,7 +75,7 @@ if (file_exists('smart_scripts.sql'))
     unlink('smart_scripts.sql');
 
 ob_start();
-echo '>> ' . $storeSize . ' different NPC EAIs detected in ' . round(microtime(true) - $oldDate, 4) . ' ms !' . PHP_EOL . PHP_EOL;
+echo '>> '.$storeSize.' different NPC EAIs detected in '.round(microtime(true) - $oldDate, 4).' ms !'.PHP_EOL.PHP_EOL;
 printf('Converting [%3.3d%%] ', 0);
 ob_end_flush();
 
@@ -96,12 +96,12 @@ foreach ($npcStore as $npcId => $npcObj)
     ob_start();
     $pct = (++$itr) * 100 / $storeSize;
     if (is_int($pct / 5))
-        printf(PHP_EOL . 'Converting [%3.3d%%] ', $pct);
+        printf(PHP_EOL.'Converting [%3.3d%%] ', $pct);
     ob_end_flush();
 }
 
 unset($pct, $itr, $npcObj, $npcId, $npcStore);
 
-echo PHP_EOL . 'Finished parsing data in ' . round(microtime(true) - $oldDate, 4) . ' ms!' . PHP_EOL;
+echo PHP_EOL.'Finished parsing data in '.round(microtime(true) - $oldDate, 4).' ms!'.PHP_EOL;
 
 unset($oldDate);
