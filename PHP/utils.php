@@ -654,6 +654,9 @@ class Utils
                     break;
             }
 
+            if (!isset($result[$i]['extraData']))
+                $result[$i]['extraData'] = 0;
+
             if (!isset($result[$i]['isSpecialHandler']))
                 $result[$i]['isSpecialHandler'] = false;
 
