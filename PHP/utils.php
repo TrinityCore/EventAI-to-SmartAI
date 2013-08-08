@@ -452,7 +452,7 @@ class Utils
                     $result[$i] = array(
                         'extraData'     => Factory::createOrGetDBHandler()->query("SELECT * FROM `creature_ai_summons` WHERE `id`=" . $param3)->fetch(PDO::FETCH_OBJ),
                         'SAIAction'     => SMART_ACTION_SUMMON_CREATURE,
-                        'params'        => array($param1, 0, 0, 0, 0, 0),
+                        'params'        => array($param1, 1, 0, 0, 0, 0),
                         'commentType'   => "_npcName_ - _eventName_ - Summon Creature " . Factory::createOrGetDBHandler()->query("SELECT `name` FROM `creature_template` WHERE `entry`=${param1}")->fetch(PDO::FETCH_OBJ)->name,
                         'isSpecialHandler' => true
                     );
