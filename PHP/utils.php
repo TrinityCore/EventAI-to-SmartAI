@@ -689,69 +689,25 @@ class Utils
 
         return $result;
     }
-    
-    static function getSplitPhaseInBits($decimal)
-    {
-        $decimal2 = $decimal;
-        $log2 = 0;
-        $arrayPhases = array();
-        
-        while ($decimal2 >= 2)
-        {
-            $decimal2 /= 2;
-            $log2++;
-        }
-
-        for ($i = $log2; $i >= 0; $i--)
-        {
-            $power = pow(2, $i);
-            
-            if ($decimal >= $power)
-            {
-                $decimal -= $power;
-                array_push($arrayPhases, $power);
-            }
-        }
-        
-        return $arrayPhases;
-    }
 
     static function EAIPhaseToSAI($eaiPhase)
     {
-        //! Not sure if this how it should behave. EAI uses phases to force events NOT TO happen in phases. It means they happen in ~$phase to me.
-        //! Except for 0. (Seems kind of idiot for an event to never happen.) If 0, even always happen.
-        //! Sample output: 0b100 inverted is 0b011 (4 => 3)
+        //! EAI phase on 0 means the same as SAI phase on 0, be it reversed or not.
         if ($eaiPhase == 0)
             return 0;
 
-        $arrayPhases = Utils::getSplitPhaseInBits($eaiPhase);
-        $highestPhase = array_shift(array_values($arrayPhases)); //! Get first element of array (always highest)...
-        $splitPhase = $highestPhase;
-        $phaseNotInArray;
+        $invertedMask = 0;
 
-        while ($splitPhase >= 2)
+        for ($i=0; $i<=32; $i++)
         {
-            $splitPhaseFound = false;
-
-            for ($i = 0; $i < sizeof($arrayPhases); $i++)
+            if (pow(2, $i) > $eaiPhase)
             {
-                if ($arrayPhases[$i] == $splitPhase)
-                {
-                    $splitPhaseFound = true;
-                    break;
-                }
+                $invertedMask = (~$eaiPhase)+pow(2, $i);
+                break;
             }
-
-            if ($splitPhaseFound == false)
-                $phaseNotInArray = $splitPhase;
-            
-            $splitPhase /= 2;
         }
 
-        if (!isset($phaseNotInArray))
-            $phaseNotInArray = $highestPhase * 2;
-            
-        return $phaseNotInArray;
+        return $invertedMask;
     }
     
     // Not used, here as remnant to understand how targets are converted.

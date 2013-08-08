@@ -421,7 +421,7 @@ class EAI
             'spawnTimeSecs' => 0
         );
 
-        $saiData['event_phase']  = Utils::EAIPhaseToSAI($this->_eaiItem->event_inverse_phase_mask);
+        $saiData['event_phase']  = Utils::EAIPhaseToSAI(intval($this->_eaiItem->event_inverse_phase_mask));
 
         $saiData['saiEntries'] = 0;
         for ($i = 1; $i < 4; $i++)
