@@ -255,9 +255,10 @@ class Utils
                     );
                     break;
                 case ACTION_T_SOUND:
+                    //! Param2 means we 'onlySelf' (0 = only self, 1 = everybody around). In EAI this is 0 by default.
                     $result[$i] = array(
                         'SAIAction'   => SMART_ACTION_SOUND,
-                        'params'      => array($param1, max(0, min($param2, 1)), 0, 0, 0, 0), // param2 = 0: self, else all in vis range
+                        'params'      => array($param1, 0, 0, 0, 0, 0),
                         'commentType' => "_npcName_ - _eventName_ - Play Sound ".$param1
                     );
                     break;
