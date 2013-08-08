@@ -382,9 +382,13 @@ class Utils
                     );
 
                     if ($param1 < 0)
-                        $result[$i]['params'][1] = -$param1;
-                    else // if ($param1 > 0)
-                        $result[$i]['params'][0] = $param1;
+                    {
+                        //! -$param1 because it's negative in EAI and should be positive in SAI (double negative = positive).
+                        $result[$i]['params'] = array(0, -$param1, 0, 0, 0, 0);
+                        $result[$i]['commentType'] = "_npcName_ - _eventName_ - Decrement Event Phase";
+                    }
+                    else
+                        $result[$i]['params'] = array($param1, 0, 0, 0, 0, 0);
 
                     break;
                 case ACTION_T_EVADE:
@@ -698,11 +702,11 @@ class Utils
 
         $invertedMask = 0;
 
-        for ($i=0; $i<=32; $i++)
+        for ($i=0; $i <= 32; $i++)
         {
             if (pow(2, $i) > $eaiPhase)
             {
-                $invertedMask = (~$eaiPhase)+pow(2, $i);
+                $invertedMask = (~$eaiPhase) + pow(2, $i);
                 break;
             }
         }
