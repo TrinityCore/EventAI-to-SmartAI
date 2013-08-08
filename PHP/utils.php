@@ -98,6 +98,7 @@ class Utils
         $param2 = $params[2];
         $param3 = $params[3];
         $param4 = $params[4];
+
         switch ($eventType)
         {
             case SMART_EVENT_UPDATE_IC:
@@ -194,7 +195,7 @@ class Utils
                 $data[4] = $eaiItem->event_param4;
                 break;
             case EVENT_T_FRIENDLY_HP:
-                $data[1] = 0;
+                $data[1] = 0; //! For some reason this is always a value of a few thousand in EAI... Makes no sense to me.
                 $data[2] = $eaiItem->event_param2;
                 $data[3] = $eaiItem->event_param3;
                 $data[4] = $eaiItem->event_param4;
@@ -448,6 +449,7 @@ class Utils
                     );
                     break;
                 case ACTION_T_SUMMON_ID:
+                    //! Forcing SummonType to 1 as EAI doesnt handle it
                     // Todo: empty creature_ai_summons based on id of param1 here.
                     $result[$i] = array(
                         'extraData'     => Factory::createOrGetDBHandler()->query("SELECT * FROM `creature_ai_summons` WHERE `id`=" . $param3)->fetch(PDO::FETCH_OBJ),
@@ -687,8 +689,34 @@ class Utils
 
         return $result;
     }
+    
+    static function getSplitPhaseInBits($decimal)
+    {
+        $decimal2 = $decimal;
+        $log2 = 0;
+        $arrayPhases = array();
+        
+        while ($decimal2 >= 2)
+        {
+            $decimal2 /= 2;
+            $log2++;
+        }
 
-    static function generateSAIPhase($eaiPhase)
+        for ($i = $log2; $i >= 0; $i--)
+        {
+            $power = pow(2, $i);
+            
+            if ($decimal >= $power)
+            {
+                $decimal -= $power;
+                array_push($arrayPhases, $power);
+            }
+        }
+        
+        return $arrayPhases;
+    }
+
+    static function EAIPhaseToSAI($eaiPhase)
     {
         //! Not sure if this how it should behave. EAI uses phases to force events NOT TO happen in phases. It means they happen in ~$phase to me.
         //! Except for 0. (Seems kind of idiot for an event to never happen.) If 0, even always happen.
@@ -696,8 +724,34 @@ class Utils
         if ($eaiPhase == 0)
             return 0;
 
-        $saiPhase = decbin(~$eaiPhase);
-        return bindec(substr($saiPhase, -strlen(decbin($eaiPhase))));
+        $arrayPhases = Utils::getSplitPhaseInBits($eaiPhase);
+        $highestPhase = array_shift(array_values($arrayPhases)); //! Get first element of array (always highest)...
+        $splitPhase = $highestPhase;
+        $phaseNotInArray;
+
+        while ($splitPhase >= 2)
+        {
+            $splitPhaseFound = false;
+
+            for ($i = 0; $i < sizeof($arrayPhases); $i++)
+            {
+                if ($arrayPhases[$i] == $splitPhase)
+                {
+                    $splitPhaseFound = true;
+                    break;
+                }
+            }
+
+            if ($splitPhaseFound == false)
+                $phaseNotInArray = $splitPhase;
+            
+            $splitPhase /= 2;
+        }
+
+        if (!isset($phaseNotInArray))
+            $phaseNotInArray = $highestPhase * 2;
+            
+        return $phaseNotInArray;
     }
     
     // Not used, here as remnant to understand how targets are converted.
