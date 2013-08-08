@@ -93,7 +93,8 @@ class NPC
             $saiItem->updateTalkActions($eaiEntry, $saiEntry);
     }
 
-    public function getSmartScripts($write = true) {
+    public function getSmartScripts($write = true)
+    {
         if (!$write)
         {
             foreach ($this->sai as $itr => $item)
@@ -108,17 +109,36 @@ class NPC
         $output = '-- ' . $this->npcName . ' SAI' . PHP_EOL;
         $output .= 'SET @ENTRY := ' . $this->npcId . ';' . PHP_EOL;
         $output .= 'UPDATE `creature_template` SET `AIName`=\'SmartAI\' WHERE `entry`=@ENTRY;' . PHP_EOL;
-        $output .= 'DELETE FROM `creature_ai_scripts` WHERE `creature_id`=@ENTRY;' . PHP_EOL;
-        
-        //if ($this->data['actions'][$i]['SAIAction'] == SMART_ACTION_SUMMON_CREATURE && $this->data['actions'][$i]['isSpecialHandler'])
-        //    $output .= '_deleteCreatureAiSummonEntry_' . PHP_EOL;
-        
-        $output .= 'DELETE FROM `smart_scripts` WHERE `entryorguid`=@ENTRY AND `source_type`=0;' . PHP_EOL; # The reason default source_type is 0 is because EventAI doesn't support timed actionlists.
+        $output .= 'DELETE FROM `creature_ai_scripts` WHERE `creature_id`=@ENTRY;';
+        $output .= '_deleteCreatureAiSummonEntry_' . PHP_EOL;
+        $output .= 'DELETE FROM `smart_scripts` WHERE `entryorguid`=@ENTRY AND `source_type`=0;' . PHP_EOL; # The reason default source_type is 0 is because EventAI doesn't support anything else than creature AI.
         $output .= 'INSERT INTO `smart_scripts` (`entryorguid`,`source_type`,`id`,`link`,`event_type`,`event_phase_mask`,`event_chance`,`event_flags`,`event_param1`,`event_param2`,`event_param3`,`event_param4`,`action_type`,`action_param1`,`action_param2`,`action_param3`,`action_param4`,`action_param5`,`action_param6`,`target_type`,`target_param1`,`target_param2`,`target_param3`,`target_x`,`target_y`,`target_z`,`target_o`,`comment`) VALUES' . PHP_EOL;
 
         foreach ($this->sai as $item)
             $output .= $item->toSQL();
 
+        $_break = false;
+
+        foreach ($this->sai as $saiItem)
+        {
+            for ($i = 1; $i < count($saiItem->data['actions']); $i++)
+            {
+                if ($saiItem->data['actions'][$i]['SAIAction'] == SMART_ACTION_SUMMON_CREATURE && $saiItem->data['actions'][$i]['extraData'])
+                {
+                    $output = str_replace(
+                        '_deleteCreatureAiSummonEntry_',
+                        PHP_EOL . 'DELETE FROM `creature_ai_summons` WHERE `id`='.$saiItem->data['actions'][$i]['extraData']->id.';',
+                        $output);
+                    $_break = true;
+                    break;
+                }
+            }
+
+            if ($_break)
+                break;
+        }
+
+        $output = str_replace('_deleteCreatureAiSummonEntry_', '', $output);
         unset($item);
         return substr($output, 0, - strlen(PHP_EOL) - 1) . ';' . PHP_EOL . PHP_EOL;
     }

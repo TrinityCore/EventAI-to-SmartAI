@@ -436,7 +436,6 @@ class Utils
                     );
                     break;
                 case ACTION_T_RANDOM_PHASE_RANGE:
-                    //! TODO: Check if EAI is inclusive or exclusive (like SAI)
                     $result[$i] = array(
                         'SAIAction'  => SMART_ACTION_RANDOM_PHASE_RANGE,
                         'params'     => array($param1, $param2, 0, 0, 0, 0),
@@ -454,7 +453,6 @@ class Utils
                     break;
                 case ACTION_T_SUMMON_ID:
                     //! Forcing SummonType to 1 as EAI doesnt handle it
-                    // Todo: empty creature_ai_summons based on id of param1 here.
                     $result[$i] = array(
                         'extraData'     => Factory::createOrGetDBHandler()->query("SELECT * FROM `creature_ai_summons` WHERE `id`=" . $param3)->fetch(PDO::FETCH_OBJ),
                         'SAIAction'     => SMART_ACTION_SUMMON_CREATURE,
@@ -702,7 +700,7 @@ class Utils
 
         $invertedMask = 0;
 
-        for ($i=0; $i <= 32; $i++)
+        for ($i = 0; $i <= 32; $i++)
         {
             if (pow(2, $i) > $eaiPhase)
             {
