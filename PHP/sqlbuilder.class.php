@@ -381,6 +381,38 @@ class SAI
                 $commentType = str_replace('_spellHitSpellId_', $this->data['event_params'][1] . " (Not found in DBCs!)", $commentType);
         }
 
+        if ($this->data['event_flags'] != 0)
+        {
+            if ($this->data['event_flags'] & SMART_EVENT_FLAG_DIFFICULTY_0 && $this->data['event_flags'] & SMART_EVENT_FLAG_DIFFICULTY_1 &&
+                $this->data['event_flags'] & SMART_EVENT_FLAG_DIFFICULTY_2 && $this->data['event_flags'] & SMART_EVENT_FLAG_DIFFICULTY_3)
+                $commentType .= " (Dungeon & Raid Only)";
+            else
+            {
+                if ($this->data['event_flags'] & SMART_EVENT_FLAG_DIFFICULTY_0 && $this->data['event_flags'] & SMART_EVENT_FLAG_DIFFICULTY_1)
+                    $commentType .= " (Dungeon Only)";
+                else
+                {
+                    if ($this->data['event_flags'] & SMART_EVENT_FLAG_DIFFICULTY_0)
+                        $commentType .= " (Normal Dungeon Only)";
+                    elseif ($this->data['event_flags'] & SMART_EVENT_FLAG_DIFFICULTY_1)
+                        $commentType .= " (Heroic Dungeon Only)";
+                }
+
+                if ($this->data['event_flags'] & SMART_EVENT_FLAG_DIFFICULTY_2 && $this->data['event_flags'] & SMART_EVENT_FLAG_DIFFICULTY_3)
+                    $commentType .= " (Raid Only)";
+                else
+                {
+                    if ($this->data['event_flags'] & SMART_EVENT_FLAG_DIFFICULTY_2)
+                        $commentType .= " (Normal Raid Only)";
+                    elseif ($this->data['event_flags'] & SMART_EVENT_FLAG_DIFFICULTY_3)
+                        $commentType .= " (Heroic Raid Only)";
+                }
+            }
+
+            if ($this->data['event_flags'] & SMART_EVENT_FLAG_DEBUG_ONLY)
+                $commentType .= " (Debug Only)";
+        }
+        
         // Some other parsing and fixing may be needed here
         return $commentType;
     }
