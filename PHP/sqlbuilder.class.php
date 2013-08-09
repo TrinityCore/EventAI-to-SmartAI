@@ -58,7 +58,7 @@ class NPC
     public function resetSaiIndex()       { $this->saiItemId = 0; }
 
     public function getLinkIndex()        { return $this->linkItr; }
-    public function increaseLinkIndex()   { $this->linkItr += 1; }
+    public function increaseLinkIndex()   { $this->linkItr += 1; return $this->linkItr; }
     public function setLinkIndex($val)    { $this->linkItr = $val; }
 
     public function addEventToCache($event) {
@@ -117,7 +117,7 @@ class NPC
         foreach ($this->sai as $item)
             $output .= $item->toSQL();
 
-        $_break = false;
+        $foundSummonAction = false;
 
         foreach ($this->sai as $saiItem)
         {
@@ -129,21 +129,25 @@ class NPC
                         '_deleteCreatureAiSummonEntry_',
                         PHP_EOL.'DELETE FROM `creature_ai_summons` WHERE `id`='.$saiItem->data['actions'][$i]['extraData']->id.';',
                         $output);
-                    $_break = true;
+
+                    $foundSummonAction = true;
                     break;
                 }
             }
 
-            if ($_break)
+            if ($foundSummonAction)
                 break;
         }
 
-        $output = str_replace('_deleteCreatureAiSummonEntry_', '', $output);
+        if (!$foundSummonAction)
+            $output = str_replace('_deleteCreatureAiSummonEntry_', '', $output);
+
         unset($item);
         return substr($output, 0, - strlen(PHP_EOL) - 1).';'.PHP_EOL.PHP_EOL;
     }
 
-    public function getCreatureText() {
+    public function getCreatureText()
+    {
         $qty = count($this->texts);
         foreach ($this->texts as $textItem)
             if ($textItem->isFleeEmote())
@@ -169,13 +173,16 @@ class NPC
 
 class SAI
 {
-    public function __construct($array, $parent) {
+    public function __construct($array, $parent)
+    {
         $this->data = $array;
         $this->_parent = $parent;
     }
 
-    public function updateTalkActions($eaiValue, $saiValue) {
-        for ($i = 1; $i <= 3 ; $i++) {
+    public function updateTalkActions($eaiValue, $saiValue)
+    {
+        for ($i = 1; $i <= 3 ; $i++)
+        {
             if (!isset($this->data['actions'][$i]))
                 continue;
 
@@ -190,9 +197,11 @@ class SAI
         unset($eaiValue, $saiValue); // Save some memory
     }
 
-    public function setFleeingEmoteState($apply) {
+    public function setFleeingEmoteState($apply)
+    {
         $size = count($this->data['actions']);
-        for ($i = 1; $i < $size; $i++) {
+        for ($i = 1; $i < $size; $i++)
+        {
             $action = &$this->data['actions'][$i];
             if (count($action) == 0)
                 break;
@@ -240,7 +249,7 @@ class SAI
 
         foreach ($this->data['actions'] as $i => $action)
         {
-            // Found an empty action. Means no action's following.
+            //! Found an empty action. Means no action's following.
             //! Note: Invalid for TWO EAIs. Fix them by hand before running this script.
             //! SELECT * FROM creature_ai_scripts WHERE action1_type= 0 AND (action2_type != 0 OR action3_type != 0);
             if (count($action) == 0)
@@ -251,15 +260,17 @@ class SAI
             $outputString .= $this->_parent->getSaiIndex().',';
 
             $linked = false;
+
             if ($this->_parent->hasEventInCache($this->data) || (isset($this->data['actions'][$i + 1]) && count($this->data['actions'][$i + 1]) != 0))
             {
-                $this->_parent->increaseLinkIndex();
-                $outputString .= $this->_parent->getLinkIndex().','.$this->data['event_type'].',';
+                $linkIndex = $this->_parent->increaseLinkIndex();
+                $outputString .= $linkIndex.','.$this->data['event_type'].',';
                 $linked = true;
             }
             else
             {
                 $this->_parent->setLinkIndex($this->_parent->getSaiIndex() + 1); // +1 because index is not yet updated
+
                 if (count($this->data['actions']) == 1)
                     $outputString .= '0,'.$this->data['event_type'].',';
                 else
@@ -268,6 +279,7 @@ class SAI
                         $outputString .= '0,'.$this->data['event_type'].',';
                     else
                         $outputString .= '0,'.SMART_EVENT_LINK.',';
+
                     $linked = ($i != 1);
                 }
             }
@@ -322,10 +334,7 @@ class SAI
             }
 
             # Build the comment, and we're done.
-            $outputString .= '"'.$this->buildComment($action['commentType'], $i).'"';
-
-            $outputString .= '),'.PHP_EOL;
-
+            $outputString .= '"'.$this->buildComment($action['commentType'], $i).'"),'.PHP_EOL;
             $this->_parent->increaseSaiIndex();
         }
 
@@ -541,17 +550,16 @@ class CreatureText
         $content = str_replace($this->_parent->npcName, "%s", $content);
 
         $output .= '"'.str_replace("\'", "'", $content).'",';
-        $output .= $this->typeToSAI($this->_item).',';
+        $output .= $this->textTypeToSAI($this->_item).',';
         $output .= $this->_item->language.',100,';
         $output .= $this->_item->emote.',0,';
         $output .= $this->_item->sound.',"'.addslashes($this->_parent->npcName).'"),'.PHP_EOL;
         
         $this->_parent->updateTalkActions($this->_eaiEntry, $this->groupId);
-
         return $output;
     }
 
-    private function typeToSAI($item)
+    private function textTypeToSAI($item)
     {
         // Too lazy to add enums here.
         switch ($item->type)

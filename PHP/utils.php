@@ -116,7 +116,7 @@ class Utils
             case SMART_EVENT_OOC_LOS:
                 return "On LOS Out Of Combat";
             case SMART_EVENT_IC_LOS:
-                return "On LOS In Combat"
+                return "On LOS In Combat";
             case SMART_EVENT_RESPAWN:
                 return "On Respawn";
             case SMART_EVENT_TARGET_CASTING:

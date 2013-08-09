@@ -20,7 +20,8 @@ echo "http://TrinityCore.org                    \\/__/\n".PHP_EOL;
 ob_end_flush();
 
 
-if ($iniFile = parse_ini_file('config.ini')) {
+if ($iniFile = parse_ini_file('config.ini'))
+{
     Factory::setDbData($iniFile['hostname'], $iniFile['userName'], $iniFile['password'], $iniFile['worldDatabase']);
 
     echo '>> Config file found and parsed sucessfully.'.PHP_EOL;
@@ -50,8 +51,10 @@ $npcStore  = array();
 
 $oldDate   = microtime(true);
 
-foreach ($EAIDataSet as $eaiItem) {
-    if ($npcId != $eaiItem->creature_id) {
+foreach ($EAIDataSet as $eaiItem)
+{
+    if ($npcId != $eaiItem->creature_id)
+    {
         # New NPC. Create a corresponding NPC class instance.
         $npcName   = Factory::createOrGetDBHandler()->query('SELECT name FROM creature_template WHERE entry = '.$eaiItem->creature_id)->fetch(PDO::FETCH_OBJ)->name;
         $npcId     = $eaiItem->creature_id;
@@ -92,11 +95,12 @@ foreach ($npcStore as $npcId => $npcObj)
     
     // Free memory on the fly
     unset($npcStore[$npcId], $npcId, $npcObj);
-
     ob_start();
     $pct = (++$itr) * 100 / $storeSize;
+
     if (is_int($pct / 5))
         printf(PHP_EOL.'Converting [%3.3d%%] ', $pct);
+
     ob_end_flush();
 }
 
