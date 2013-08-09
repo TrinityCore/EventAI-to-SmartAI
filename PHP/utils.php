@@ -105,10 +105,6 @@ class Utils
                 return "In Combat";
             case SMART_EVENT_UPDATE_OOC:
                 return "Out Of Combat";
-            case SMART_EVENT_HEALT_PCT:
-                return "Between ${param1}-${param2}% Health";
-            case SMART_EVENT_MANA_PCT:
-                return "Between ${param1}-${param2}% Mana";
             case SMART_EVENT_AGGRO:
                 return "On Aggro";
             case SMART_EVENT_KILL:
@@ -117,28 +113,20 @@ class Utils
                 return "On Death";
             case SMART_EVENT_EVADE:
                 return "On Evade";
-            case SMART_EVENT_SPELLHIT:
-                return "On Spellhit _spellHitSpellId_";
-            case SMART_EVENT_RANGE:
-                return "Between ${param1}-${param2} Range";
             case SMART_EVENT_OOC_LOS:
                 return "On LOS Out Of Combat";
+            case SMART_EVENT_IC_LOS:
+                return "On LOS In Combat"
             case SMART_EVENT_RESPAWN:
                 return "On Respawn";
-            case SMART_EVENT_TARGET_HEALTH_PCT:
-                return "On Target Between ${param1}-${param2}% Health";
             case SMART_EVENT_TARGET_CASTING:
                 return "On Target Casting";
-            case SMART_EVENT_FRIENDLY_HEALTH:
-                return "On Friendly Unit Between ${param1}-${param2}% Health";
             case SMART_EVENT_FRIENDLY_IS_CC:
-                return "On Friendly Unit In CC";
+                return "On Friendly Unit CC'd";
             case SMART_EVENT_FRIENDLY_MISSING_BUFF:
-                return "On Friendly Buff Missing";
+                return "On Friendly Unit Buff Missing";
             case SMART_EVENT_SUMMONED_UNIT:
                 return "On Summoned Unit";
-            case SMART_EVENT_TARGET_MANA_PCT:
-                return "On Target Between ${param1}-${param2}% Mana";
             case SMART_EVENT_ACCEPTED_QUEST:
                 return "On Quest Accept";
             case SMART_EVENT_REWARD_QUEST:
@@ -147,17 +135,10 @@ class Utils
                 return "Just Reached Home";
             case SMART_EVENT_RECEIVE_EMOTE:
                 return "Received Emote";
-            case SMART_EVENT_HAS_AURA:
-                if ($param1 < 0)
-                    return "On Aura _hasAuraSpellId_ Not Present";
-                    
-                return "On Aura _hasAuraSpellId_ Present";
             case SMART_EVENT_TARGET_BUFFED:
                 return "On Target Buffed";
             case SMART_EVENT_RESET:
                 return "On Reset";
-            case SMART_EVENT_IC_LOS:
-                return "On LOS In Combat";
             case SMART_EVENT_PASSENGER_BOARDED:
                 return "On Passenger Boarded";
             case SMART_EVENT_PASSENGER_REMOVED:
@@ -166,16 +147,35 @@ class Utils
                 return "On Charmed";
             case SMART_EVENT_CHARMED_TARGET:
                 return "On Target Charmed";
-            case SMART_EVENT_SPELLHIT_TARGET:
-                return "On Spell Hit Target";
             case SMART_EVENT_MOVEMENTINFORM:
                 return "On Movement Inform";
             case SMART_EVENT_SUMMON_DESPAWNED:
                 return "On Summoned Unit Despawn";
             case SMART_EVENT_CORPSE_REMOVED:
                 return "On Corpse Removed";
+            case SMART_EVENT_SPELLHIT:
+                return "On Spellhit _spellHitSpellId_";
+            case SMART_EVENT_SPELLHIT_TARGET:
+                return "On Target Spellhit By _spellHitSpellId_";
+            case SMART_EVENT_RANGE:
+                return "Between ${param1}-${param2} Range";
+            case SMART_EVENT_HEALT_PCT:
+                return "Between ${param1}-${param2}% Health";
+            case SMART_EVENT_MANA_PCT:
+                return "Between ${param1}-${param2}% Mana";
+            case SMART_EVENT_TARGET_HEALTH_PCT:
+                return "On Target Between ${param1}-${param2}% Health";
+            case SMART_EVENT_FRIENDLY_HEALTH:
+                return "On Friendly Unit Between ${param1}-${param2}% Health";
+            case SMART_EVENT_TARGET_MANA_PCT:
+                return "On Target Between ${param1}-${param2}% Mana";
+            case SMART_EVENT_HAS_AURA:
+                if ($param1 < 0)
+                    return "On Aura _hasAuraSpellId_ Not Present";
+                    
+                return "On Aura _hasAuraSpellId_ Present";
             default:
-                return "Fixme -- Add case";
+                return "Fixme - Add case";
         }
     }
 
