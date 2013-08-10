@@ -671,8 +671,25 @@ class Utils
                     $result[$i] = array(
                         'SAIAction'  => SMART_ACTION_SET_REACT_STATE,
                         'params'     => array($param1, 0, 0, 0, 0, 0),
-                        'commentType' => "_npcName_ - _eventName_ - Set React Aggressive"
+                        'commentType' => "_npcName_ - _eventName_ - Set Reactstate "
                     );
+
+                    switch ($param1)
+                    {
+                        case 0:
+                            $result[$i]['commentType'] .= "Passive";
+                            break;
+                        case 1:
+                            $result[$i]['commentType'] .= "Defensive";
+                            break;
+                        case 2:
+                            $result[$i]['commentType'] .= "Aggressive";
+                            break;
+                        default:
+                            $result[$i]['commentType'] .= "UNKNOWN";
+                            break;
+                    }
+
                     break;
                 case ACTION_T_ATTACK_START_PULSE:
                     //! ACTION_T_ATTACK_START_PULSE by default targets closest enemy within given range (param1), which we
