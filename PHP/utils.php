@@ -237,21 +237,21 @@ class Utils
                     $result[$i] = array(
                         'extraData'   => Factory::createOrGetDBHandler()->query("SELECT * FROM `creature_ai_texts` WHERE `entry` IN (".$param1.",".$param2.",".$param3.")")->fetchAll(PDO::FETCH_OBJ),
                         'SAIAction'   => SMART_ACTION_TALK,
-                        'params'      => array($param1, $param2, $param3, 0, 0, 0),
+                        'params'      => array($param1, 0, 0, 0, 0, 0),
                         'commentType' => "_npcName_ - _eventName_ - Say Line _lineEntry_"
                     );
                     break;
                 case ACTION_T_SET_FACTION:
                     $result[$i] = array(
                         'SAIAction'   => SMART_ACTION_SET_FACTION,
-                        'params'      => array($param1, $param2, $param3, 0, 0, 0),
+                        'params'      => array($param1, 0, 0, 0, 0, 0),
                         'commentType' => "_npcName_ - _eventName_ - Set Faction ".$param1
                     );
                     break;
                 case ACTION_T_MORPH_TO_ENTRY_OR_MODEL:
                     $result[$i] = array(
                         'SAIAction'   => SMART_ACTION_MORPH_TO_ENTRY_OR_MODEL,
-                        'params'      => array($param1, $param2, $param3, 0, 0, 0),
+                        'params'      => array($param1, $param2, 0, 0, 0, 0),
                         'commentType' => "_npcName_ - _eventName_ - Set Displayid ".$param1
                     );
                     break;
@@ -290,6 +290,7 @@ class Utils
                 case ACTION_T_THREAT_ALL_PCT:
                     //! Wiki is wrong here, we can have two arguments. First is added threat, second is removed threat.
                     //! Threat addition has priority over threat reduction!
+                    //! Wiki updated.
                     $result[$i] = array(
                         'SAIAction'  => ($eaiAction == ACTION_T_THREAT_SINGLE_PCT ? SMART_ACTION_THREAT_SINGLE_PCT : SMART_ACTION_THREAT_ALL_PCT),
                         'params'     => array(max(0, $param1), max(0, -$param1), 0, 0, 0, 0),
@@ -300,9 +301,9 @@ class Utils
                         $result[$i]['target'] = $target;
 
                     if ($param1 < 0)
-                        $result[$i]['commentType'] .= "Remove ".(- $param1).'% Threat';
+                        $result[$i]['commentType'] .= "Remove ".(-$param1).'% Threat';
                     else // if ($param1 > 0)
-                        $result[$i]['commentType'] .= "Add ".(- $param1).'% Threat';
+                        $result[$i]['commentType'] .= "Add ".(-$param1).'% Threat';
 
                     break;
                 case ACTION_T_QUEST_EVENT_ALL:
@@ -677,11 +678,11 @@ class Utils
                     //! ACTION_T_ATTACK_START_PULSE by default targets closest enemy within given range (param1), which we
                     //! therefore pass on as target_param1 for SMART_TARGET_CLOSEST_ENEMY.
                     $result[$i] = array(
-                        'SAIAction'  => SMART_ACTION_ATTACK_START,
-                        'params'     => array(0, 0, 0, 0, 0, 0),
-                        'target'     => SMART_TARGET_CLOSEST_ENEMY,
+                        'SAIAction'     => SMART_ACTION_ATTACK_START,
+                        'params'        => array(0, 0, 0, 0, 0, 0),
+                        'target'        => SMART_TARGET_CLOSEST_ENEMY,
                         'target_param1' => $param1,
-                        'commentType' => "_npcName_ - _eventName_ - Attack Start"
+                        'commentType'   => "_npcName_ - _eventName_ - Attack Start"
                     );
                     break;
                 case ACTION_T_SUMMON_GO:

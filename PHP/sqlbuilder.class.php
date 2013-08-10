@@ -106,7 +106,7 @@ class NPC
 
         $this->resetSaiIndex();
 
-        $output = '-- '.$this->npcName.' SAI'.PHP_EOL;
+        $output =  '-- '.$this->npcName.' SAI'.PHP_EOL;
         $output .= 'SET @ENTRY := '.$this->npcId.';'.PHP_EOL;
         $output .= 'UPDATE `creature_template` SET `AIName`=\'SmartAI\' WHERE `entry`=@ENTRY;'.PHP_EOL;
         $output .= 'DELETE FROM `creature_ai_scripts` WHERE `creature_id`=@ENTRY;';
