@@ -2,6 +2,7 @@
 require_once('./sqlbuilder.class.php');
 require_once('./eai.def.php');
 require_once('./sai.def.php');
+require_once('./gen.def.php');
 
 define('__FIXME__',  -1);
 
@@ -251,7 +252,7 @@ class Utils
                     $result[$i] = array(
                         'SAIAction'   => SMART_ACTION_MORPH_TO_ENTRY_OR_MODEL,
                         'params'      => array($param1, $param2, $param3, 0, 0, 0),
-                        'commentType' => "_npcName_ - _eventName_ - Morph Into ".$param1
+                        'commentType' => "_npcName_ - _eventName_ - Set Displayid ".$param1
                     );
                     break;
                 case ACTION_T_SOUND:
@@ -329,14 +330,66 @@ class Utils
 
                     break;
                 case ACTION_T_SET_UNIT_FIELD:
-                    //! Not a  100% sure on this, requires deeper research. (Horn's comments based)
-                    //! Not sure if it's param1 or param2!
-                    $result[$i] = array(
-                        'SAIAction'  => SMART_ACTION_SET_UNIT_FIELD_BYTES_1,
-                        'params'     => array($param2, 0, 0, 0, 0, 0),
-                        'target'     => $param3 + 1,
-                        'commentType' => "_npcName_ - _eventName_ - Set Bytes1 ".$param2
-                    );
+                    //! Parameter 1 is index of field
+                    //! Parameter 2 is new value of field
+                    //! Parameter 3 is target of some kind
+                    switch ($param1)
+                    {
+                        case 25: //! UNIT_FIELD_POWER1 (set mana to $param2)
+                            $result[$i] = array(
+                                'SAIAction'   => SMART_ACTION_SET_POWER,
+                                'params'      => array(0, $param2, 0, 0, 0, 0),
+                                'target'     => $param3 + 1,
+                                'commentType' => "_npcName_ - _eventName_ - Set Mana To ".$param2
+                            );
+                            break;
+                        case 55: //! UNIT_FIELD_FACTIONTEMPLATE (set faction to $param2)
+                            $result[$i] = array(
+                                'SAIAction'   => SMART_ACTION_SET_FACTION,
+                                'params'      => array($param2, 0, 0, 0, 0, 0),
+                                'target'     => $param3 + 1,
+                                'commentType' => "_npcName_ - _eventName_ - Set Faction ".$param2
+                            );
+                            break;
+                        case 67: //! UNIT_FIELD_DISPLAYID (set displayid to $param2)
+                            $result[$i] = array(
+                                'SAIAction'   => SMART_ACTION_MORPH_TO_ENTRY_OR_MODEL,
+                                'params'      => array($param2, 0, 0, 0, 0, 0),
+                                'target'     => $param3 + 1,
+                                'commentType' => "_npcName_ - _eventName_ - Set Displayid ".$param2
+                            );
+                            break;
+                        case 69:
+                            //! UNIT_FIELD_MOUNTDISPLAYID (set mount display to $param2)
+                            //! Becomes SMART_ACTION_MOUNT_TO_ENTRY_OR_MODEL (which sets UNIT_FIELD_MOUNTDISPLAYID)
+                            $result[$i] = array(
+                                'SAIAction'  => SMART_ACTION_MOUNT_TO_ENTRY_OR_MODEL,
+                                'params'     => array(0, $param2, 0, 0, 0, 0),
+                                'target'     => $param3 + 1,
+                                'commentType' => "_npcName_ - _eventName_ - Mount Up Model ".$param2
+                            );
+
+                            if ($param2 == 0)
+                                $result[$i]['commentType'] = "_npcName_ - _eventName_ - Dismount";
+
+                            break;
+                        case 74: //! UNIT_FIELD_BYTES_1 (set bytes1 to $param2)
+                            $result[$i] = array(
+                                'SAIAction'  => SMART_ACTION_SET_UNIT_FIELD_BYTES_1,
+                                'params'     => array($param2, 0, 0, 0, 0, 0),
+                                'target'     => $param3 + 1,
+                                'commentType' => "_npcName_ - _eventName_ - ".Utils::getCommentForByte1Flag($param2)
+                            );
+                            break;
+                        default: //! None...
+                            $result[$i] = array(
+                                'SAIAction'  => __FIXME__,
+                                'params'     => array(__FIXME__, __FIXME__, __FIXME__, __FIXME__, __FIXME__, __FIXME__),
+                                'commentType' => "_npcName_ - _eventName_ - Unsupported unit field id ".$param2
+                            );
+                            break;
+                    }
+
                     break;
                 case ACTION_T_SET_UNIT_FLAG:
                     $result[$i] = array(
@@ -585,7 +638,7 @@ class Utils
                         'SAIAction'  => SMART_ACTION_SET_UNIT_FIELD_BYTES_1,
                         'params'     => array(0, 0, 0, 0, 0, 0),
                         'target'     => SMART_TARGET_SELF,
-                        'commentType' => "_npcName_ - _eventName_ - Stand Up"
+                        'commentType' => "_npcName_ - _eventName_ - ".Utils::getCommentForByte1Flag($param2)
                     );
                     break;
                 case ACTION_T_MOVE_RANDOM_POINT:
@@ -718,6 +771,35 @@ class Utils
     {
         //! Targets are the same, except SAI has then offsetted by +1.
         return $eaiTarget + 1;
+    }
+
+    static function getCommentForByte1Flag($newByte1Flag)
+    {
+        switch ($newByte1Flag)
+        {
+            case UNIT_STAND_STATE_STAND:
+                return "Set Standstate Stand Up";
+            case UNIT_STAND_STATE_SIT:
+                return "Set Standstate Sit Down";
+            case UNIT_STAND_STATE_SIT_CHAIR:
+                return "Set Standstate Sit Down Chair";
+            case UNIT_STAND_STATE_SLEEP:
+                return "Set Standstate Sleep";
+            case UNIT_STAND_STATE_SIT_LOW_CHAIR:
+                return "Set Standstate Sit Low Chair";
+            case UNIT_STAND_STATE_SIT_MEDIUM_CHAIR:
+                return "Set Standstate Sit Medium Chair";
+            case UNIT_STAND_STATE_SIT_HIGH_CHAIR:
+                return "Set Standstate Sit High Chair";
+            case UNIT_STAND_STATE_DEAD:
+                return "Set Standstate Dead";
+            case UNIT_STAND_STATE_KNEEL:
+                return "Set Standstate Kneel";
+            case UNIT_STAND_STATE_SUBMERGED:
+                return "Set Standstate Submerged";
+            default:
+                return "Set Bytes1 ".$param2;
+        }
     }
 }
 
