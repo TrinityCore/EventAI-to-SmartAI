@@ -238,6 +238,7 @@ class Utils
                         'extraData'   => Factory::createOrGetDBHandler()->query("SELECT * FROM `creature_ai_texts` WHERE `entry` IN (".$param1.",".$param2.",".$param3.")")->fetchAll(PDO::FETCH_OBJ),
                         'SAIAction'   => SMART_ACTION_TALK,
                         'params'      => array($param1, 0, 0, 0, 0, 0),
+                        'target'      => SMART_TARGET_ACTION_INVOKER,
                         'commentType' => "_npcName_ - _eventName_ - Say Line _lineEntry_"
                     );
                     break;
@@ -256,7 +257,7 @@ class Utils
                     );
                     break;
                 case ACTION_T_SOUND:
-                    //! Param2 means we 'onlySelf' (0 = only self, 1 = everybody around). In EAI this is 0 by default.
+                    //! Second parameter in SAI means we 'onlySelf' (0 = only self, 1 = everybody around). In EAI this is 0 by default.
                     $result[$i] = array(
                         'SAIAction'   => SMART_ACTION_SOUND,
                         'params'      => array($param1, 0, 0, 0, 0, 0),
