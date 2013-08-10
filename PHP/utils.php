@@ -234,14 +234,27 @@ class Utils
             switch ($eaiAction)
             {
                 case ACTION_T_TEXT:
+                    $creatureAiTextEntry = Factory::createOrGetDBHandler()->query("SELECT * FROM `creature_ai_texts` WHERE `entry` IN (".$param1.",".$param2.",".$param3.")")->fetchAll(PDO::FETCH_OBJ);
+
                     $result[$i] = array(
-                        'extraData'   => Factory::createOrGetDBHandler()->query("SELECT * FROM `creature_ai_texts` WHERE `entry` IN (".$param1.",".$param2.",".$param3.")")->fetchAll(PDO::FETCH_OBJ),
+                        'extraData'   => $creatureAiTextEntry,
                         'eaiActionParams' => array($param1, $param2, $param3),
                         'SAIAction'   => SMART_ACTION_TALK,
                         'params'      => array($param1, 0, 0, 0, 0, 0),
-                        'target'      => SMART_TARGET_ACTION_INVOKER,
+                        'target'      => SMART_TARGET_SELF,
                         'commentType' => "_npcName_ - _eventName_ - Say Line _lineEntry_"
                     );
+
+                    for ($x = 0; $x < sizeof($creatureAiTextEntry); $x++)
+                    {
+                        $content_default = $creatureAiTextEntry[$x]->content_default;
+
+                        if (strpos($content_default, '$C') !== false || strpos($content_default, '$c') !== false || strpos($content_default, '$R') !== false || strpos($content_default, '$r') !== false ||
+                            strpos($content_default, '$N') !== false || strpos($content_default, '$n') !== false || strpos($content_default, '$T') !== false || strpos($content_default, '$t') !== false ||
+                            strpos($content_default, '$G') !== false || strpos($content_default, '$g') !== false || strpos($content_default, '%T') !== false || strpos($content_default, '%t') !== false)
+                            $result[$i]['target'] = SMART_TARGET_ACTION_INVOKER;
+                    }
+
                     break;
                 case ACTION_T_SET_FACTION:
                     $result[$i] = array(
@@ -719,9 +732,6 @@ class Utils
                     );
                     break;
                 //! Need to be handled by random action scripts (thus scripted by hand).
-                case ACTION_T_RANDOM_SOUND:
-                case ACTION_T_RANDOM_SAY:
-                case ACTION_T_RANDOM_YELL:
                 case ACTION_T_RANDOM_TEXTEMOTE:
                 default:
                     $result[$i] = array(

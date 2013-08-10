@@ -256,8 +256,6 @@ class SAI
         foreach ($this->data['actions'] as $i => $action)
         {
             //! Found an empty action. Means no action's following.
-            //! Note: Invalid for TWO EAIs. Fix them by hand before running this script.
-            //! SELECT * FROM creature_ai_scripts WHERE action1_type= 0 AND (action2_type != 0 OR action3_type != 0);
             if (count($action) == 0)
                 break;
 
