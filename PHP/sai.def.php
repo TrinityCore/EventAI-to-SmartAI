@@ -198,6 +198,14 @@ define('SMART_ACTION_JUMP_TO_POS',                        97); // speedXY, speed
 define('SMART_ACTION_SEND_GOSSIP_MENU',                   98); // menuId, optionId
 define('SMART_ACTION_GO_SET_LOOT_STATE',                  99); // state
 define('SMART_ACTION_SEND_TARGET_TO_TARGET',              100);// id
+define('SMART_ACTION_SET_HOME_POS',                       101);// none
+define('SMART_ACTION_SET_HEALTH_REGEN',                   102);// 0/1
+define('SMART_ACTION_SET_ROOT',                           103);// off/on
+define('SMART_ACTION_SET_GO_FLAG',                        104);// Flags
+define('SMART_ACTION_ADD_GO_FLAG',                        105);// Flags
+define('SMART_ACTION_REMOVE_GO_FLAG',                     106);// Flags
+define('SMART_ACTION_SUMMON_CREATURE_GROUP',              107);// Group, attackInvoker
+define('SMART_ACTION_SET_POWER',                          108);// PowerType, newPower
 define('SMART_ACTION_END',                                101);
 
 define("SMART_TARGET_NONE",                   0);   // 
