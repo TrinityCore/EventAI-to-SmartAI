@@ -81,7 +81,7 @@ define('SMART_EVENT_DUMMY_EFFECT',            66);   // spellId, effectIndex
 define('SMART_EVENT_IS_BEHIND_TARGET',        67);   // cooldownMin, CooldownMax
 define('SMART_EVENT_GAME_EVENT_START',        68);   // game_event.Entry
 define('SMART_EVENT_GAME_EVENT_END',          69);   // game_event.Entry
-define('SMART_EVENT_GO_STATE_CHANGED',        70);   //                 go state
+define('SMART_EVENT_GO_STATE_CHANGED',        70);   // go state
 define('SMART_EVENT_END',                     71);
 
 define('SMART_EVENT_FLAG_NOT_REPEATABLE',     0x001); // Event can not repeat
@@ -206,7 +206,7 @@ define('SMART_ACTION_ADD_GO_FLAG',                        105);// Flags
 define('SMART_ACTION_REMOVE_GO_FLAG',                     106);// Flags
 define('SMART_ACTION_SUMMON_CREATURE_GROUP',              107);// Group, attackInvoker
 define('SMART_ACTION_SET_POWER',                          108);// PowerType, newPower
-define('SMART_ACTION_END',                                101);
+define('SMART_ACTION_END',                                109);
 
 define("SMART_TARGET_NONE",                   0);   // 
 define("SMART_TARGET_SELF",                   1);   // Self cast
