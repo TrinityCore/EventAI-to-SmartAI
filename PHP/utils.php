@@ -252,7 +252,10 @@ class Utils
                         if (strpos($content_default, '$C') !== false || strpos($content_default, '$c') !== false || strpos($content_default, '$R') !== false || strpos($content_default, '$r') !== false ||
                             strpos($content_default, '$N') !== false || strpos($content_default, '$n') !== false || strpos($content_default, '$T') !== false || strpos($content_default, '$t') !== false ||
                             strpos($content_default, '$G') !== false || strpos($content_default, '$g') !== false || strpos($content_default, '%T') !== false || strpos($content_default, '%t') !== false)
+                        {
                             $result[$i]['target'] = SMART_TARGET_ACTION_INVOKER;
+                            break;
+                        }
                     }
 
                     break;
@@ -282,8 +285,94 @@ class Utils
                     $result[$i] = array(
                         'SAIAction'  => SMART_ACTION_PLAY_EMOTE,
                         'params'     => array($param1, 0, 0, 0, 0, 0),
-                        'commentType' => "_npcName_ - _eventName_ - Play Emote ".$param1
+                        'commentType' => "_npcName_ - _eventName_ - Emote "
                     );
+
+                    switch ($param1)
+                    {
+                        case EMOTE_ONESHOT_WAVE_NO_SHEATHE:
+                        case EMOTE_ONESHOT_WAVE:            $result[$i]['commentType'] .= "Wave"; break;
+                        case EMOTE_ONESHOT_CHEER_NO_SHEATHE:
+                        case EMOTE_ONESHOT_CHEER:           $result[$i]['commentType'] .= "Cheer"; break;
+                        case EMOTE_ONESHOT_LAUGH_NO_SHEATHE:
+                        case EMOTE_ONESHOT_LAUGH:           $result[$i]['commentType'] .= "Laugh"; break;
+                        case EMOTE_ONESHOT_EAT_NO_SHEATHE:
+                        case EMOTE_ONESHOT_EAT:             $result[$i]['commentType'] .= "Eat"; break;
+                        case EMOTE_STATE_STUN_NO_SHEATHE:
+                        case EMOTE_STATE_STUN:              $result[$i]['commentType'] .= "Stunned"; break;
+                        case EMOTE_ONESHOT_SALUTE_NO_SHEATH:
+                        case EMOTE_ONESHOT_SALUTE:          $result[$i]['commentType'] .= "Salute"; break;
+                        case EMOTE_STATE_USE_STANDING_NO_SHEATHE:
+                        case EMOTE_STATE_USE_STANDING:      $result[$i]['commentType'] .= "State Standing"; break;
+                        case EMOTE_ONESHOT_TALK_NO_SHEATHE:
+                        case EMOTE_ONESHOT_TALK:            $result[$i]['commentType'] .= "Talk"; break;
+                        case EMOTE_ONESHOT_POINT_NO_SHEATHE:
+                        case EMOTE_ONESHOT_POINT:           $result[$i]['commentType'] .= "Point"; break;
+                        case EMOTE_STATE_EAT_NO_SHEATHE:
+                        case EMOTE_STATE_EAT: $result[$i]['commentType'] .= "State Eating"; break;
+
+                        case EMOTE_ONESHOT_BOW:             $result[$i]['commentType'] .= "Bow"; break;
+                        case EMOTE_ONESHOT_EXCLAMATION:     $result[$i]['commentType'] .= "Exclamation"; break;
+                        case EMOTE_ONESHOT_QUESTION:        $result[$i]['commentType'] .= "Question"; break;
+                        case EMOTE_STATE_DANCE:             $result[$i]['commentType'] .= "State Dance"; break;
+                        case EMOTE_STATE_SLEEP:             $result[$i]['commentType'] .= "State Sleep"; break;
+                        case EMOTE_STATE_SIT:               $result[$i]['commentType'] .= "State Sit"; break;
+                        case EMOTE_ONESHOT_RUDE:            $result[$i]['commentType'] .= "Rude"; break;
+                        case EMOTE_ONESHOT_ROAR:            $result[$i]['commentType'] .= "Roar"; break;
+                        case EMOTE_ONESHOT_KNEEL:           $result[$i]['commentType'] .= "Kneel"; break;
+                        case EMOTE_ONESHOT_KISS:            $result[$i]['commentType'] .= "Kiss"; break;
+                        case EMOTE_ONESHOT_CRY:             $result[$i]['commentType'] .= "Cry"; break;
+                        case EMOTE_ONESHOT_CHICKEN:         $result[$i]['commentType'] .= "Chicken"; break;
+                        case EMOTE_ONESHOT_BEG:             $result[$i]['commentType'] .= "Beg"; break;
+                        case EMOTE_ONESHOT_APPLAUD:         $result[$i]['commentType'] .= "Applaud"; break;
+                        case EMOTE_ONESHOT_SHOUT:           $result[$i]['commentType'] .= "Shout"; break;
+                        case EMOTE_ONESHOT_FLEX:            $result[$i]['commentType'] .= "Flex"; break;
+                        case EMOTE_ONESHOT_SHY:             $result[$i]['commentType'] .= "Shy"; break;
+                        case EMOTE_STATE_STAND:             $result[$i]['commentType'] .= "State Stand"; break;
+                        case EMOTE_STATE_READY_UNARMED:     $result[$i]['commentType'] .= "State Ready Unarmed"; break;
+                        case EMOTE_STATE_WORK_SHEATHED:     $result[$i]['commentType'] .= "State Sheathed"; break;
+                        case EMOTE_STATE_POINT:             $result[$i]['commentType'] .= "State Point"; break;
+                        case EMOTE_ONESHOT_WOUND:           $result[$i]['commentType'] .= "Wounded"; break;
+                        case EMOTE_ONESHOT_WOUND_CRITICAL:  $result[$i]['commentType'] .= "Wounded Critical"; break;
+                        case EMOTE_ONESHOT_ATTACK_UNARMED:  $result[$i]['commentType'] .= "Attack Unarmed"; break;
+                        case EMOTE_ONESHOT_ATTACK1H:        $result[$i]['commentType'] .= "Attack One-Handed"; break;
+                        case EMOTE_ONESHOT_ATTACK2HTIGHT:   $result[$i]['commentType'] .= "Attack Two-Handed Tight"; break;
+                        case EMOTE_ONESHOT_ATTACK2H_LOOSE:  $result[$i]['commentType'] .= "Attack Two-Handed Loose"; break;
+                        case EMOTE_ONESHOT_PARRY_UNARMED:   $result[$i]['commentType'] .= "Parry Unarmed"; break;
+                        case EMOTE_ONESHOT_PARRY_SHIELD: $result[$i]['commentType'] .= "Parry Shield"; break;
+                        case EMOTE_ONESHOT_READY_UNARMED: $result[$i]['commentType'] .= "Ready Unarmed"; break;
+                        case EMOTE_ONESHOT_READY1H: $result[$i]['commentType'] .= "Ready One-Handed"; break;
+                        case EMOTE_ONESHOT_READY_BOW: $result[$i]['commentType'] .= "Ready Bow"; break;
+                        case EMOTE_ONESHOT_KICK: $result[$i]['commentType'] .= "Kick"; break;
+                        case EMOTE_STATE_DEAD: $result[$i]['commentType'] .= "Dead"; break;
+                        case EMOTE_STATE_KNEEL: $result[$i]['commentType'] .= "State Kneel"; break;
+                        case EMOTE_ONESHOT_DANCE: $result[$i]['commentType'] .= "Dance"; break;
+                        case EMOTE_ONESHOT_READY_RIFLE: $result[$i]['commentType'] .= "Ready Rifle"; break;
+                        case EMOTE_STATE_READY_RIFLE: $result[$i]['commentType'] .= "State Ready Rifle"; break;
+                        case EMOTE_STATE_WORK_MINING: $result[$i]['commentType'] .= "State Mining"; break;
+                        case EMOTE_STATE_WORK_CHOPWOOD: $result[$i]['commentType'] .= "State Chopping Wood"; break;
+                        case EMOTE_STATE_APPLAUD: $result[$i]['commentType'] .= "State Applauding"; break;
+                        case EMOTE_ONESHOT_YES: $result[$i]['commentType'] .= "Nod"; break;
+                        case EMOTE_ONESHOT_NO: $result[$i]['commentType'] .= "No"; break;
+                        case EMOTE_ONESHOT_TRAIN: $result[$i]['commentType'] .= "Train"; break;
+                        case EMOTE_STATE_SUBMERGED: $result[$i]['commentType'] .= "State Submerged"; break;
+                        case EMOTE_ONESHOT_SUBMERGE: $result[$i]['commentType'] .= "Submerge"; break;
+                        case EMOTE_STATE_TALK: $result[$i]['commentType'] .= "State Talking"; break;
+                        case EMOTE_STATE_FISHING: $result[$i]['commentType'] .= "State Fishing"; break;
+                        case EMOTE_ONESHOT_FISHING: $result[$i]['commentType'] .= "Fish"; break;
+                        case EMOTE_ONESHOT_LOOT: $result[$i]['commentType'] .= "Loot"; break;
+                        case EMOTE_STATE_DROWNED: $result[$i]['commentType'] .= "State Drown"; break;
+                        case EMOTE_ONESHOT_DROWN: $result[$i]['commentType'] .= "Drown"; break;
+                        case EMOTE_STATE_ROAR: $result[$i]['commentType'] .= "State Roar"; break;
+                        case EMOTE_STATE_LAUGH: $result[$i]['commentType'] .= "State Laughing"; break;
+                        case EMOTE_ONESHOT_CREATURE_SPECIAL: $result[$i]['commentType'] .= "Creature Special"; break;
+                        case EMOTE_STATE_CANNIBALIZE: $result[$i]['commentType'] .= "State Cannibalize"; break;
+                        case EMOTE_STATE_LOOT: $result[$i]['commentType'] .= "State Looting"; break;
+                        case EMOTE_ONESHOT_COWER: $result[$i]['commentType'] .= "Cower"; break;
+                        case EMOTE_STATE_COWER: $result[$i]['commentType'] .= "State Cowering"; break;
+                        default: $result[$i]['commentType'] .= $param1; break;
+                    }
+
                     break;
                 case ACTION_T_RANDOM_EMOTE:
                     $result[$i] = array(
