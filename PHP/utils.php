@@ -620,7 +620,7 @@ class Utils
                     $result[$i] = array(
                         'SAIAction'  => SMART_ACTION_MOUNT_TO_ENTRY_OR_MODEL,
                         'params'     => array($param1, $param2, 0, 0, 0, 0),
-                        'commentType' => "_npcName_ - _eventName_ - Mount Up Model ".$param1
+                        'commentType' => "_npcName_ - _eventName_ - Mount Up ".($param1 ? "Entry" : "Model").$param1
                     );
 
                     if ($param1 == 0 && $param2 == 0)
