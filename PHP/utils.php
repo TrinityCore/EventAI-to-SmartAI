@@ -236,6 +236,7 @@ class Utils
                 case ACTION_T_TEXT:
                     $result[$i] = array(
                         'extraData'   => Factory::createOrGetDBHandler()->query("SELECT * FROM `creature_ai_texts` WHERE `entry` IN (".$param1.",".$param2.",".$param3.")")->fetchAll(PDO::FETCH_OBJ),
+                        'eaiActionParams' => array($param1, $param2, $param3),
                         'SAIAction'   => SMART_ACTION_TALK,
                         'params'      => array($param1, 0, 0, 0, 0, 0),
                         'target'      => SMART_TARGET_ACTION_INVOKER,
@@ -733,6 +734,9 @@ class Utils
 
             if (!isset($result[$i]['extraData']))
                 $result[$i]['extraData'] = 0;
+
+            if (!isset($result[$i]['eaiActionParams']))
+                $result[$i]['eaiActionParams'] = 0;
 
             if (!isset($result[$i]['isSpecialHandler']))
                 $result[$i]['isSpecialHandler'] = false;

@@ -2,9 +2,9 @@
 
 class NPC
 {
-    private $sai = array();
-    private $eai = array();
-    private $texts = array();
+    public $sai = array();
+    public $eai = array();
+    public $texts = array();
 
     public  $npcId;
     public  $npcName;
@@ -33,27 +33,30 @@ class NPC
             $saiItem->setFleeingEmoteState($apply);
     }
 
-    public function addSAI($sai) {
+    public function addSAI($sai)
+    {
         $this->sai[] = $sai;
     }
 
-    public function addEAI($eai) {
+    public function addEAI($eai)
+    {
         $this->eai[] = new EAI($eai, $this);
     }
 
-    public function addText($item) {
-        $textObj = new CreatureText($item, $this);
+    public function addText($item, $eaiActionParams)
+    {
+        $textObj = new CreatureText($item, $eaiActionParams, $this);
         $this->texts[] = $textObj;
         return $textObj;
     }
 
     public function increaseTextGroupId() { $this->resetTextId(); $this->textGroupId++; return $this; }
-    public function getGroupId()   { return $this->textGroupId; }
+    public function getGroupId()          { return $this->textGroupId; }
 
     public function resetTextId()         { $this->textId = 0; }
-    public function getTextId()    { $this->textId++; return $this->textId - 1; }
+    public function getTextId()           { $this->textId++; return $this->textId - 1; }
 
-    public function getSaiIndex()  { return $this->saiItemId; }
+    public function getSaiIndex()         { return $this->saiItemId; }
     public function increaseSaiIndex()    { $this->saiItemId++; return $this; }
     public function resetSaiIndex()       { $this->saiItemId = 0; }
 
@@ -61,7 +64,8 @@ class NPC
     public function increaseLinkIndex()   { $this->linkItr += 1; return $this->linkItr; }
     public function setLinkIndex($val)    { $this->linkItr = $val; }
 
-    public function addEventToCache($event) {
+    public function addEventToCache($event)
+    {
         $item = array(
             'type'    => $event['event_type'],
             'phase'   => $event['event_phase'],
@@ -71,7 +75,8 @@ class NPC
         );
     }
 
-    public function hasEventInCache($event) {
+    public function hasEventInCache($event)
+    {
         foreach ($this->eventCache as $item)
             if ($item['type']         == $event['event_type']      && $item['phase']     == $event['event_phase']
                 && ($item['flags']    == $event['event_flags']     || $item['flags']     <= 1)
@@ -109,7 +114,7 @@ class NPC
         $output =  '-- '.$this->npcName.' SAI'.PHP_EOL;
         $output .= 'SET @ENTRY := '.$this->npcId.';'.PHP_EOL;
         $output .= 'UPDATE `creature_template` SET `AIName`=\'SmartAI\' WHERE `entry`=@ENTRY;'.PHP_EOL;
-        $output .= 'DELETE FROM `creature_ai_scripts` WHERE `creature_id`=@ENTRY;';
+        $output .= 'DELETE FROM `creature_ai_scripts` WHERE `creature_id`=@ENTRY;'; //! No PHP_EOL on purpose.
         $output .= '_deleteCreatureAiSummonEntry_'.PHP_EOL;
         $output .= 'DELETE FROM `smart_scripts` WHERE `entryorguid`=@ENTRY AND `source_type`=0;'.PHP_EOL; # The reason default source_type is 0 is because EventAI doesn't support anything else than creature AI.
         $output .= 'INSERT INTO `smart_scripts` (`entryorguid`,`source_type`,`id`,`link`,`event_type`,`event_phase_mask`,`event_chance`,`event_flags`,`event_param1`,`event_param2`,`event_param3`,`event_param4`,`action_type`,`action_param1`,`action_param2`,`action_param3`,`action_param4`,`action_param5`,`action_param6`,`target_type`,`target_param1`,`target_param2`,`target_param3`,`target_x`,`target_y`,`target_z`,`target_o`,`comment`) VALUES'.PHP_EOL;
@@ -230,12 +235,13 @@ class SAI
                 if ($action['SAIAction'] == SMART_ACTION_TALK)
                 {
                     foreach ($action['extraData'] as $text)
-                        $this->_parent->addText($text)->setGroupId($this->_parent->getGroupId())->setTextId($this->_parent->getTextId());
+                        $this->_parent->addText($text, $action['eaiActionParams'])->setGroupId($this->_parent->getGroupId())->setTextId($this->_parent->getTextId());
                         
                     $this->_parent->increaseTextGroupId();
                     unset($text); // Save some memory
                 }
             }
+
             return;
         }
 
@@ -499,11 +505,12 @@ class CreatureText
     public $groupId = -1;
     public $textId  = -1;
 
-    public function __construct($item, $parentNpc)
+    public function __construct($item, $eaiActionParams, $parentNpc)
     {
-        $this->_item     = $item;
-        $this->_parent   = $parentNpc;
-        $this->_eaiEntry = $item->entry;
+        $this->_item            = $item;
+        $this->_eaiActionParams = $eaiActionParams;
+        $this->_parent          = $parentNpc;
+        $this->_eaiEntry        = $item->entry;
     }
 
     public function isGroupIdSet()
@@ -551,7 +558,32 @@ class CreatureText
 
         $output .= '"'.str_replace("\'", "'", $content).'",';
         $output .= $this->textTypeToSAI($this->_item).',';
-        $output .= $this->_item->language.',100,';
+        $output .= $this->_item->language.',';
+
+        if ($this->_eaiActionParams[0] == $this->_eaiActionParams[1] && $this->_eaiActionParams[0] && $this->_eaiActionParams[1])
+        {
+            if ($this->_eaiActionParams[0] == $this->_item->entry || $this->_eaiActionParams[1] == $this->_item->entry)
+                $output .= '66,';
+            else
+                $output .= '33,';
+        }
+        elseif ($this->_eaiActionParams[1] == $this->_eaiActionParams[2] && $this->_eaiActionParams[1] && $this->_eaiActionParams[2])
+        {
+            if ($this->_eaiActionParams[1] == $this->_item->entry || $this->_eaiActionParams[2] == $this->_item->entry)
+                $output .= '66,';
+            else
+                $output .= '33,';
+        }
+        elseif ($this->_eaiActionParams[0] == $this->_eaiActionParams[2] && $this->_eaiActionParams[0] && $this->_eaiActionParams[2])
+        {
+            if ($this->_eaiActionParams[0] == $this->_item->entry || $this->_eaiActionParams[2] == $this->_item->entry)
+                $output .= '66,';
+            else
+                $output .= '33,';
+        }
+        else
+            $output .= '100,';
+
         $output .= $this->_item->emote.',0,';
         $output .= $this->_item->sound.',"'.addslashes($this->_parent->npcName).'"),'.PHP_EOL;
         
