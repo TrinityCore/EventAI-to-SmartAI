@@ -637,7 +637,7 @@ class Utils
                 case ACTION_T_SET_STAND_STATE:
                     $result[$i] = array(
                         'SAIAction'  => SMART_ACTION_SET_UNIT_FIELD_BYTES_1,
-                        'params'     => array(0, 0, 0, 0, 0, 0),
+                        'params'     => array(0, $param1, 0, 0, 0, 0),
                         'target'     => SMART_TARGET_SELF,
                         'commentType' => "_npcName_ - _eventName_ - ".Utils::getCommentForByte1Flag($param2)
                     );
