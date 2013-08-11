@@ -321,8 +321,11 @@ class SAI
 
     private function buildComment($commentType, $actionIndex)
     {
+        $npcName = $this->_parent->npcName;
+        $npcName = str_replace('"', "'", $npcName);
+
         $match = array(
-            '_npcName_' => $this->_parent->npcName,
+            '_npcName_' => $npcName,
             '_eventName_' => Utils::GetEventString($this->data['event_type'], $this->data['event_params'])
         );
 
