@@ -82,6 +82,10 @@ define('SMART_EVENT_IS_BEHIND_TARGET',        67);   // cooldownMin, CooldownMax
 define('SMART_EVENT_GAME_EVENT_START',        68);   // game_event.Entry
 define('SMART_EVENT_GAME_EVENT_END',          69);   // game_event.Entry
 define('SMART_EVENT_GO_STATE_CHANGED',        70);   // go state
+define('SMART_EVENT_GO_EVENT_INFORM',         71);   // eventId
+define('SMART_EVENT_ACTION_DONE',              72);   // eventId (SharedDefines.EventId)
+define('SMART_EVENT_ON_SPELLCLICK',           73);   // clicker (unit)
+define('SMART_EVENT_FRIENDLY_HEALTH_PCT',     74);   // minHpPct, maxHpPct, repeatMin, repeatMax
 define('SMART_EVENT_END',                     71);
 
 define('SMART_EVENT_FLAG_NOT_REPEATABLE',     0x001); // Event can not repeat
@@ -113,7 +117,7 @@ define('SMART_ACTION_SUMMON_CREATURE',                    12); // CreatureID, su
 define('SMART_ACTION_THREAT_SINGLE_PCT',                  13); // Threat%
 define('SMART_ACTION_THREAT_ALL_PCT',                     14); // Threat%
 define('SMART_ACTION_CALL_AREAEXPLOREDOREVENTHAPPENS',    15); // QuestID
-define('SMART_ACTION_UNUSED_16',              			  16); // UNUSED
+define('SMART_ACTION_UNUSED_16',                            16); // UNUSED
 define('SMART_ACTION_SET_EMOTE_STATE',                    17); // emoteID
 define('SMART_ACTION_SET_UNIT_FLAG',                      18); // Flags (may be more than one field OR'd together), Target
 define('SMART_ACTION_REMOVE_UNIT_FLAG',                   19); // Flags (may be more than one field OR'd together), Target
