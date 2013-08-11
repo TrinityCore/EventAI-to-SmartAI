@@ -129,13 +129,13 @@ class Utils
             case SMART_EVENT_SUMMONED_UNIT:
                 return "On Summoned Unit";
             case SMART_EVENT_ACCEPTED_QUEST:
-                return "On Quest Accept";
+                return "On Quest Accepted";
             case SMART_EVENT_REWARD_QUEST:
-                return "On Quest Reward";
+                return "On Quest Rewarded";
             case SMART_EVENT_REACHED_HOME:
-                return "Just Reached Home";
+                return "On Just Reached Home";
             case SMART_EVENT_RECEIVE_EMOTE:
-                return "Received Emote";
+                return "On Received Emote";
             case SMART_EVENT_TARGET_BUFFED:
                 return "On Target Buffed";
             case SMART_EVENT_RESET:
@@ -151,11 +151,11 @@ class Utils
             case SMART_EVENT_MOVEMENTINFORM:
                 return "On Movement Inform";
             case SMART_EVENT_SUMMON_DESPAWNED:
-                return "On Summoned Unit Despawn";
+                return "On Summoned Unit Despawned";
             case SMART_EVENT_CORPSE_REMOVED:
                 return "On Corpse Removed";
             case SMART_EVENT_SPELLHIT:
-                return "On Spellhit _spellHitSpellId_";
+                return "On Spellhit By _spellHitSpellId_";
             case SMART_EVENT_SPELLHIT_TARGET:
                 return "On Target Spellhit By _spellHitSpellId_";
             case SMART_EVENT_RANGE:
@@ -166,10 +166,10 @@ class Utils
                 return "Between ${param1}-${param2}% Mana";
             case SMART_EVENT_TARGET_HEALTH_PCT:
                 return "On Target Between ${param1}-${param2}% Health";
-            case SMART_EVENT_FRIENDLY_HEALTH:
-                return "On Friendly Unit Between ${param1}-${param2}% Health";
             case SMART_EVENT_TARGET_MANA_PCT:
                 return "On Target Between ${param1}-${param2}% Mana";
+            case SMART_EVENT_FRIENDLY_HEALTH:
+                return "On Friendly Unit Between ${param1}-${param2}% Health";
             case SMART_EVENT_HAS_AURA:
                 if ($param1 < 0)
                     return "On Aura _hasAuraSpellId_ Not Present";
@@ -411,16 +411,20 @@ class Utils
 
                     break;
                 case ACTION_T_QUEST_EVENT_ALL:
+                    $result[$i] = array(
+                        'SAIAction'  => SMART_ACTION_CALL_GROUPEVENTHAPPENS,
+                        'params'     => array($param1, 0, 0, 0, 0, 0),
+                        'target'     => SMART_TARGET_ACTION_INVOKER,
+                        'commentType' => "_npcName_ - _eventName_ - Quest Credit Group"
+                    );
+                    break;
                 case ACTION_T_QUEST_EVENT:
                     $result[$i] = array(
                         'SAIAction'  => SMART_ACTION_CALL_AREAEXPLOREDOREVENTHAPPENS,
                         'params'     => array($param1, 0, 0, 0, 0, 0),
+                        'target'     => $param2 + 1,
                         'commentType' => "_npcName_ - _eventName_ - Quest Credit"
                     );
-
-                    if ($eaiAction == ACTION_T_QUEST_EVENT)
-                        $result[$i]['target' ] = $param2 + 1;
-
                     break;
                 case ACTION_T_CAST_EVENT_ALL:
                 case ACTION_T_CAST_EVENT:
