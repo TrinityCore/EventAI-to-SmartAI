@@ -125,7 +125,7 @@ class Utils
             case SMART_EVENT_FRIENDLY_IS_CC:
                 return "On Friendly Unit CC'd";
             case SMART_EVENT_FRIENDLY_MISSING_BUFF:
-                return "On Friendly Unit Buff Missing";
+                return "On Friendly Unit Missing Buff _spellNameFirstParam_";
             case SMART_EVENT_SUMMONED_UNIT:
                 return "On Summoned Unit";
             case SMART_EVENT_ACCEPTED_QUEST:
@@ -155,9 +155,9 @@ class Utils
             case SMART_EVENT_CORPSE_REMOVED:
                 return "On Corpse Removed";
             case SMART_EVENT_SPELLHIT:
-                return "On Spellhit By _spellHitSpellId_";
+                return "On Spellhit By _spellNameFirstParam_";
             case SMART_EVENT_SPELLHIT_TARGET:
-                return "On Target Spellhit By _spellHitSpellId_";
+                return "On Target Spellhit By _spellNameFirstParam_";
             case SMART_EVENT_RANGE:
                 return "Between ${param1}-${param2} Range";
             case SMART_EVENT_HEALT_PCT:

@@ -367,12 +367,12 @@ class SAI
                 if ($this->data['event_params'][1] != 0)
                 {
                     $commentType = str_replace(
-                        '_spellHitSpellId_',
+                        '_spellNameFirstParam_',
                         Factory::getSpellNameForLoc($this->data['event_params'][1], 0),
                         $commentType);
                 }
                 else
-                    $commentType = str_replace(' _spellHitSpellId_', '', $commentType);
+                    $commentType = str_replace(' _spellNameFirstParam_', '', $commentType);
             }
             elseif ($this->data['event_type'] == SMART_EVENT_HAS_AURA)
             {
@@ -410,7 +410,7 @@ class SAI
                 $commentType = str_replace('_removeAuraSpell_', $this->data['actions'][$actionIndex]['params'][0]." (Not found in DBCs!)", $commentType);
 
             if ($this->data['event_type'] == SMART_EVENT_SPELLHIT || $this->data['event_type'] == SMART_EVENT_SPELLHIT_TARGET)
-                $commentType = str_replace('_spellHitSpellId_', $this->data['event_params'][1]." (Not found in DBCs!)", $commentType);
+                $commentType = str_replace('_spellNameFirstParam_', $this->data['event_params'][1]." (Not found in DBCs!)", $commentType);
         }
 
         if ($this->data['event_flags'] != 0)
