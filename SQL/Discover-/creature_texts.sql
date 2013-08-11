@@ -362,13 +362,6 @@ DELETE FROM `creature_text` WHERE `entry`=@ENTRY;
 INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`probability`,`emote`,`duration`,`sound`,`comment`) VALUES
 (@ENTRY,0,0,"%s goes into a frenzy!",16,0,100,0,0,0,"Stonevault Ambusher");
 
--- Texts for Witch Doctor Zum'rah
-SET @ENTRY := 7271;
-DELETE FROM `creature_text` WHERE `entry`=@ENTRY;
-INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`probability`,`emote`,`duration`,`sound`,`comment`) VALUES
-(@ENTRY,0,0,"Sands consume you!",14,0,100,0,0,5872,"Witch Doctor Zum\'rah"),
-(@ENTRY,1,0,"Aaaahhhhhh!",14,0,100,0,0,5873,"Witch Doctor Zum\'rah");
-
 -- Texts for Galgann Firehammer
 SET @ENTRY := 7291;
 DELETE FROM `creature_text` WHERE `entry`=@ENTRY;
@@ -1606,19 +1599,6 @@ DELETE FROM `creature_text` WHERE `entry`=@ENTRY;
 INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`probability`,`emote`,`duration`,`sound`,`comment`) VALUES
 (@ENTRY,0,0,"%s goes into a frenzy!",16,0,100,0,0,0,"Maggoc");
 
--- Texts for Dalliah the Doomsayer
-SET @ENTRY := 20885;
-DELETE FROM `creature_text` WHERE `entry`=@ENTRY;
-INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`probability`,`emote`,`duration`,`sound`,`comment`) VALUES
-(@ENTRY,0,0,"It is unwise to anger me.",14,0,100,0,0,0,"Dalliah the Doomsayer"),
-(@ENTRY,1,0,"You chose the wrong opponent.",14,0,100,0,0,11088,"Dalliah the Doomsayer"),
-(@ENTRY,1,1,"Completely ineffective. Just like someone else I know.",14,0,100,0,0,11087,"Dalliah the Doomsayer"),
-(@ENTRY,2,0,"Now I'm really... angry...",14,0,100,0,0,11093,"Dalliah the Doomsayer"),
-(@ENTRY,3,0,"I'll cut you to pieces!",12,0,100,0,0,0,"Dalliah the Doomsayer"),
-(@ENTRY,3,1,"Reap the Whirlwind!",14,0,100,0,0,0,"Dalliah the Doomsayer"),
-(@ENTRY,4,0,"Ahh... Just what I needed.",12,0,100,0,0,0,"Dalliah the Doomsayer"),
-(@ENTRY,4,1,"Ahh... That is much better.",14,0,100,0,0,0,"Dalliah the Doomsayer");
-
 -- Texts for Wrath-Scryer Soccothrates
 SET @ENTRY := 20886;
 DELETE FROM `creature_text` WHERE `entry`=@ENTRY;
@@ -1804,13 +1784,6 @@ SET @ENTRY := 23083;
 DELETE FROM `creature_text` WHERE `entry`=@ENTRY;
 INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`probability`,`emote`,`duration`,`sound`,`comment`) VALUES
 (@ENTRY,0,0,"%s becomes enraged!",16,0,100,0,0,0,"Shadowmoon Riding Hound");
-
--- Texts for Vakkiz the Windrager
-SET @ENTRY := 23162;
-DELETE FROM `creature_text` WHERE `entry`=@ENTRY;
-INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`probability`,`emote`,`duration`,`sound`,`comment`) VALUES
-(@ENTRY,0,0,"Furious winds envelop Vakkiz as he writhes menacingly towards you.",16,0,100,0,0,0,"Vakkiz the Windrager"),
-(@ENTRY,1,0,"%s's flesh shatters in an unearthly rage!",16,0,100,0,0,0,"Vakkiz the Windrager");
 
 -- Texts for Gezzarak the Huntress
 SET @ENTRY := 23163;
@@ -2300,17 +2273,6 @@ INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`pr
 (@ENTRY,1,0,"You have some fight in you. I'm impressed.",12,0,100,0,0,0,"Sapph"),
 (@ENTRY,2,0,"Welcome to the world of the unliving!",12,0,100,0,0,0,"Sapph"),
 (@ENTRY,3,0,"Well fought...",12,0,100,0,0,0,"Sapph");
-
--- Texts for Fallen Hero's Spirit
-SET @ENTRY := 32149;
-DELETE FROM `creature_text` WHERE `entry`=@ENTRY;
-INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`probability`,`emote`,`duration`,`sound`,`comment`) VALUES
-(@ENTRY,0,0,"I can't hear the screams anymore. Is this the end?",12,0,100,0,0,0,"Fallen Hero\'s Spirit"),
-(@ENTRY,0,1,"At last... now I can rest",12,0,100,0,0,0,"Fallen Hero\'s Spirit"),
-(@ENTRY,0,2,"It was awful.. I dreamt I was fighting against my friends",12,0,100,0,0,0,"Fallen Hero\'s Spirit"),
-(@ENTRY,1,0,"My nightmare, is it finally over?",12,0,100,0,0,0,"Fallen Hero\'s Spirit"),
-(@ENTRY,1,1,"I'm so tired. Just let me rest for a moment",12,0,100,0,0,0,"Fallen Hero\'s Spirit"),
-(@ENTRY,1,2,"It was awful.. I dreamt I was fighting against my friends",12,0,100,0,0,0,"Fallen Hero\'s Spirit");
 
 -- Texts for Orabus the Helmsman
 SET @ENTRY := 32576;

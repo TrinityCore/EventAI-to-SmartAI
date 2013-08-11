@@ -604,7 +604,7 @@ class Utils
                     $result[$i] = array(
                         'SAIAction'  => SMART_ACTION_RANDOM_PHASE_RANGE,
                         'params'     => array($param1, $param2, 0, 0, 0, 0),
-                        'commentType' => "_npcName_ - _eventName_ - Random Phase Range (${param1}-${param2})" // Because i'm tired of concatenating
+                        'commentType' => "_npcName_ - _eventName_ - Random Phase Range (${param1}-${param2})"
                     );
                     break;
                 case ACTION_T_SUMMON:
@@ -619,7 +619,6 @@ class Utils
                 case ACTION_T_SUMMON_ID:
                     //! Forcing SummonType to 1 as EAI doesnt handle it
                     $result[$i] = array(
-                        'extraData'     => Factory::createOrGetDBHandler()->query("SELECT * FROM `creature_ai_summons` WHERE `id`=".$param3)->fetch(PDO::FETCH_OBJ),
                         'SAIAction'     => SMART_ACTION_SUMMON_CREATURE,
                         'params'        => array($param1, 1, 0, 0, 0, 0),
                         'commentType'   => "_npcName_ - _eventName_ - Summon Creature ".Factory::createOrGetDBHandler()->query("SELECT `name` FROM `creature_template` WHERE `entry`=${param1}")->fetch(PDO::FETCH_OBJ)->name,
