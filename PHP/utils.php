@@ -427,6 +427,7 @@ class Utils
                     );
                     break;
                 case ACTION_T_CAST_EVENT_ALL:
+                    $target = SMART_TARGET_THREAT_LIST; //! This is basically the only difference between the two action types...
                 case ACTION_T_CAST_EVENT:
                     $result[$i] = array(
                         'SAIAction'  => SMART_ACTION_SEND_CASTCREATUREORGO,
@@ -434,7 +435,12 @@ class Utils
                         'commentType' => "_npcName_ - _eventName_ - Quest Credit"
                     );
 
-                    if ($eaiAction == ACTION_T_CAST_EVENT)
+                    if (isset($target))
+                    {
+                        $result[$i]['target'] = $target;
+                        $result[$i]['commentType'] .= " Threathlist";
+                    }
+                    else
                         $result[$i]['target' ] = $param3 + 1;
 
                     break;
