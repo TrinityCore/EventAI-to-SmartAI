@@ -361,7 +361,7 @@ class SAI
         if (Factory::hasDbcWorker())
         {
             // Place event precessors here
-            if ($this->data['event_type'] == SMART_EVENT_SPELLHIT || $this->data['event_type'] == SMART_EVENT_SPELLHIT_TARGET)
+            if ($this->data['event_type'] == SMART_EVENT_SPELLHIT || $this->data['event_type'] == SMART_EVENT_SPELLHIT_TARGET || $this->data['event_type'] == SMART_EVENT_FRIENDLY_MISSING_BUFF)
             {
                 // For some bitch reason, some spellhit events have 0 as the spell hitter
                 if ($this->data['event_params'][1] != 0)
