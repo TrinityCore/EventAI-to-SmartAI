@@ -186,4 +186,35 @@
     define('EMOTE_STATE_HOLD_JOUST',               475);
     define('EMOTE_ONESHOT_CRY_JAINA',              476);
 
+    define('UNIT_FLAG_SERVER_CONTROLLED',      1);           // set only when unit movement is controlled by server - by SPLINE/MONSTER_MOVE packets); together with UNIT_FLAG_STUNNED; only set to units controlled by client; client function CGUnit_C::IsClientControlled returns false when set for owner
+    define('UNIT_FLAG_NON_ATTACKABLE',         2);           // not attackable
+    define('UNIT_FLAG_DISABLE_MOVE',           4);
+    define('UNIT_FLAG_PVP_ATTACKABLE',         8);           // allow apply pvp rules to attackable state in addition to faction dependent state
+    define('UNIT_FLAG_RENAME',                 16);
+    define('UNIT_FLAG_PREPARATION',            32);           // don't take reagents for spells with SPELL_ATTR5_NO_REAGENT_WHILE_PREP
+    define('UNIT_FLAG_UNK_6',                  64);
+    define('UNIT_FLAG_NOT_ATTACKABLE_1',       128);           // ?? (UNIT_FLAG_PVP_ATTACKABLE | UNIT_FLAG_NOT_ATTACKABLE_1) is NON_PVP_ATTACKABLE
+    define('UNIT_FLAG_IMMUNE_TO_PC',           256);           // disables combat/assistance with PlayerCharacters (PC) - see Unit::_IsValidAttackTarget); Unit::_IsValidAssistTarget
+    define('UNIT_FLAG_IMMUNE_TO_NPC',          512);           // disables combat/assistance with NonPlayerCharacters (NPC) - see Unit::_IsValidAttackTarget); Unit::_IsValidAssistTarget
+    define('UNIT_FLAG_LOOTING',                1024);           // loot animation
+    define('UNIT_FLAG_PET_IN_COMBAT',          2048);           // in combat?); 2.0.8
+    define('UNIT_FLAG_PVP',                    4096);           // changed in 3.0.3
+    define('UNIT_FLAG_SILENCED',               8192);           // silenced); 2.1.1
+    define('UNIT_FLAG_UNK_14',                 16384);           // 2.0.8
+    define('UNIT_FLAG_UNK_15',                 32768);
+    define('UNIT_FLAG_UNK_16',                 65536);
+    define('UNIT_FLAG_PACIFIED',               131072);           // 3.0.3 ok
+    define('UNIT_FLAG_STUNNED',                262144);           // 3.0.3 ok
+    define('UNIT_FLAG_IN_COMBAT',              524288);
+    define('UNIT_FLAG_TAXI_FLIGHT',            1048576);           // disable casting at client side spell not allowed by taxi flight (mounted?)); probably used with 0x4 flag
+    define('UNIT_FLAG_DISARMED',               2097152);           // 3.0.3); disable melee spells casting...); "Required melee weapon" added to melee spells tooltip.
+    define('UNIT_FLAG_CONFUSED',               4194304);
+    define('UNIT_FLAG_FLEEING',                8388608);
+    define('UNIT_FLAG_PLAYER_CONTROLLED',      16777216);           // used in spell Eyes of the Beast for pet... let attack by controlled creature
+    define('UNIT_FLAG_NOT_SELECTABLE',         33554432);
+    define('UNIT_FLAG_SKINNABLE',              67108864);
+    define('UNIT_FLAG_MOUNT',                  134217728);
+    define('UNIT_FLAG_UNK_28',                 268435456);
+    define('UNIT_FLAG_UNK_29',                 536870912);           // used in Feing Death spell
+    define('UNIT_FLAG_SHEATHE',                1073741824);
 ?>

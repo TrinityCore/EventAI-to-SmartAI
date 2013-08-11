@@ -507,8 +507,35 @@ class Utils
                         'SAIAction'  => SMART_ACTION_SET_UNIT_FLAG,
                         'params'     => array($param1, 0, 0, 0, 0, 0),
                         'target'     => $param2 + 1,
-                        'commentType' => "_npcName_ - _eventName_ - Set unit_flag ".$param1
+                        'commentType' => "_npcName_ - _eventName_ - Set "
                     );
+
+                    if ($param1 & UNIT_FLAG_SERVER_CONTROLLED)  $result[$i]['commentType'] .= "Server Controlled & ";
+                    if ($param1 & UNIT_FLAG_NON_ATTACKABLE)     $result[$i]['commentType'] .= "Not Attackable & ";
+                    if ($param1 & UNIT_FLAG_DISABLE_MOVE)       $result[$i]['commentType'] .= "Disable Movement & ";
+                    if ($param1 & UNIT_FLAG_PVP_ATTACKABLE)     $result[$i]['commentType'] .= "Pvp Attackable & ";
+                    if ($param1 & UNIT_FLAG_RENAME)             $result[$i]['commentType'] .= "Rename & ";
+                    if ($param1 & UNIT_FLAG_PREPARATION)        $result[$i]['commentType'] .= "Preparation & ";
+                    if ($param1 & UNIT_FLAG_NOT_ATTACKABLE_1)   $result[$i]['commentType'] .= "Not Attackable & ";
+                    if ($param1 & UNIT_FLAG_IMMUNE_TO_PC)       $result[$i]['commentType'] .= "Immune To Players & ";
+                    if ($param1 & UNIT_FLAG_IMMUNE_TO_NPC)      $result[$i]['commentType'] .= "Immune To NPC's & ";
+                    if ($param1 & UNIT_FLAG_LOOTING)            $result[$i]['commentType'] .= "Looting & ";
+                    if ($param1 & UNIT_FLAG_PET_IN_COMBAT)      $result[$i]['commentType'] .= "Pet In Combat & ";
+                    if ($param1 & UNIT_FLAG_PVP)                $result[$i]['commentType'] .= "PvP & ";
+                    if ($param1 & UNIT_FLAG_SILENCED)           $result[$i]['commentType'] .= "Silenced & ";
+                    if ($param1 & UNIT_FLAG_PACIFIED)           $result[$i]['commentType'] .= "Pacified & ";
+                    if ($param1 & UNIT_FLAG_STUNNED)            $result[$i]['commentType'] .= "Stunned & ";
+                    if ($param1 & UNIT_FLAG_IN_COMBAT)          $result[$i]['commentType'] .= "In Combat & ";
+                    if ($param1 & UNIT_FLAG_DISARMED)           $result[$i]['commentType'] .= "Disarmed & ";
+                    if ($param1 & UNIT_FLAG_CONFUSED)           $result[$i]['commentType'] .= "Confused & ";
+                    if ($param1 & UNIT_FLAG_FLEEING)            $result[$i]['commentType'] .= "Fleeing & ";
+                    if ($param1 & UNIT_FLAG_PLAYER_CONTROLLED)  $result[$i]['commentType'] .= "Player Controlled & ";
+                    if ($param1 & UNIT_FLAG_NOT_SELECTABLE)     $result[$i]['commentType'] .= "Not Selectable & ";
+                    if ($param1 & UNIT_FLAG_SKINNABLE)          $result[$i]['commentType'] .= "Skinnable & ";
+                    if ($param1 & UNIT_FLAG_MOUNT)              $result[$i]['commentType'] .= "Mounted & ";
+                    if ($param1 & UNIT_FLAG_SHEATHE)            $result[$i]['commentType'] .= "Sheathed & ";
+
+                    $result[$i]['commentType'] = rtrim($result[$i]['commentType'], ' & ');
                     break;
                 case ACTION_T_REMOVE_UNIT_FLAG:
                     $result[$i] = array(
