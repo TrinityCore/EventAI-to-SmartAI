@@ -816,7 +816,7 @@ class Utils
                         'SAIAction'     => SMART_ACTION_ATTACK_START,
                         'params'        => array(0, 0, 0, 0, 0, 0),
                         'target'        => SMART_TARGET_CLOSEST_ENEMY,
-                        'target_param1' => $param1,
+                        'target_params' => array($param1, 0, 0),
                         'commentType'   => "_npcName_ - _eventName_ - Attack Start"
                     );
                     break;
@@ -857,26 +857,11 @@ class Utils
             if (!isset($result[$i]['target']))
                 $result[$i]['target'] = SMART_TARGET_SELF;
 
-            if (!isset($result[$i]['target_param1']))
-                $result[$i]['target_param1'] = 0;
+            if (!isset($result[$i]['target_params']))
+                $result[$i]['target_params'] = array(0, 0, 0);
 
-            if (!isset($result[$i]['target_param2']))
-                $result[$i]['target_param2'] = 0;
-
-            if (!isset($result[$i]['target_param3']))
-                $result[$i]['target_param3'] = 0;
-
-            if (!isset($result[$i]['target_paramX']))
-                $result[$i]['target_paramX'] = 0;
-
-            if (!isset($result[$i]['target_paramY']))
-                $result[$i]['target_paramY'] = 0;
-
-            if (!isset($result[$i]['target_paramZ']))
-                $result[$i]['target_paramZ'] = 0;
-
-            if (!isset($result[$i]['target_paramO']))
-                $result[$i]['target_paramO'] = 0;
+            if (!isset($result[$i]['target_paramCoords']))
+                $result[$i]['target_paramCoords'] = array(0, 0, 0, 0);
         }
 
         return $result;

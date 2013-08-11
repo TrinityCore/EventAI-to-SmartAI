@@ -328,13 +328,12 @@ class SAI
             {
                 //! Default values of all of these is 0, so we can safely use them like this.
                 $outputString .= $this->data['actions'][$i]['target'].',';
-                $outputString .= $this->data['actions'][$i]['target_param1'].',';
-                $outputString .= $this->data['actions'][$i]['target_param2'].',';
-                $outputString .= $this->data['actions'][$i]['target_param3'].',';
-                $outputString .= $this->data['actions'][$i]['target_paramX'].',';
-                $outputString .= $this->data['actions'][$i]['target_paramY'].',';
-                $outputString .= $this->data['actions'][$i]['target_paramZ'].',';
-                $outputString .= $this->data['actions'][$i]['target_paramO'].',';
+
+                for ($x = 0; $x < 3; $x++)
+                    $outputString .= $this->data['actions'][$i]['target_params'][$x].',';
+
+                for ($x = 0; $x < 4; $x++)
+                    $outputString .= $this->data['actions'][$i]['target_paramCoords'][$x].',';
             }
 
             # Build the comment, and we're done.
