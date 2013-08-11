@@ -686,19 +686,22 @@ class Utils
                     $result[$i] = array(
                         'SAIAction'  => SMART_ACTION_SET_SHEATH,
                         'params'     => array($param1, 0, 0, 0, 0, 0),
-                        'commentType' => "_npcName_ - _eventName_ - "
+                        'commentType' => "_npcName_ - _eventName_ - Set Sheath "
                     );
 
                     switch ($param1) 
                     {
                         case 0: // No melee weapon
-                            $result[$i]['commentType'] .= 'Set Sheath Unarmed';
+                            $result[$i]['commentType'] .= 'Unarmed';
                             break;
                         case 1: // Melee weapon
-                            $result[$i]['commentType'] .= 'Set Sheath Melee';
+                            $result[$i]['commentType'] .= 'Melee';
                             break;
                         case 2: // Ranged
-                            $result[$i]['commentType'] .= 'Set Sheath Ranged';
+                            $result[$i]['commentType'] .= 'Ranged';
+                            break;
+                        default:
+                            $result[$i]['commentType'] .= 'UNKNOWN';
                             break;
                     }
                     break;
@@ -768,14 +771,14 @@ class Utils
                     $result[$i] = array(
                         'SAIAction'  => SMART_ACTION_SET_VISIBILITY,
                         'params'     => array($param1, 0, 0, 0, 0, 0),
-                        'commentType' => "_npcName_ - _eventName_ - Set Visiblity ".$param1 == 0 ? "Off" : "On"
+                        'commentType' => "_npcName_ - _eventName_ - Set Visiblity ".($param1 == 0 ? "Off" : "On")
                     );
                     break;
                 case ACTION_T_SET_ACTIVE:
                     $result[$i] = array(
                         'SAIAction'  => SMART_ACTION_SET_ACTIVE,
                         'params'     => array($param1, 0, 0, 0, 0, 0),
-                        'commentType' => "_npcName_ - _eventName_ - Set Active ".$param1 == 0 ? "Off" : "On"
+                        'commentType' => "_npcName_ - _eventName_ - Set Active ".($param1 == 0 ? "Off" : "On")
                     );
                     break;
                 case ACTION_T_SET_AGGRESSIVE:
