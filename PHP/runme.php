@@ -85,13 +85,6 @@ ob_end_flush();
 $itr = 0;
 $oldDate = microtime(true);
 
-$smartScriptsOutput =  "-- Some quick hardcode fixes. Something went wrong with ACTION_T_SET_UNIT_FIELD's first param, should be incremented by one.".PHP_EOL;
-$smartScriptsOutput .= 'UPDATE `creature_ai_scripts` SET `action1_param1`=`action1_param1` + 1 WHERE `id`=1526201'.PHP_EOL;
-$smartScriptsOutput .= 'UPDATE `creature_ai_scripts` SET `action1_param1`=`action1_param1` + 1 WHERE `action1_type`=17'.PHP_EOL;
-$smartScriptsOutput .= 'UPDATE `creature_ai_scripts` SET `action2_param1`=`action2_param1` + 1 WHERE `action2_type`=17'.PHP_EOL;
-$smartScriptsOutput .= 'UPDATE `creature_ai_scripts` SET `action3_param1`=`action3_param1` + 1 WHERE `action3_type`=17'.PHP_EOL.PHP_EOL;
-sLog::outSpecificFile('smart_scripts.sql', $smartScriptsOutput);
-
 foreach ($npcStore as $npcId => $npcObj)
 {
     $npcObj->convertAllToSAI();

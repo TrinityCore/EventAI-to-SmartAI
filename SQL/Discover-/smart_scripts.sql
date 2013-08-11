@@ -1,9 +1,3 @@
--- Some quick hardcode fixes. Something went wrong with ACTION_T_SET_UNIT_FIELD's first param, should be incremented by one.
-UPDATE `creature_ai_scripts` SET `action1_param1`=`action1_param1` + 1 WHERE `id`=1526201
-UPDATE `creature_ai_scripts` SET `action1_param1`=`action1_param1` + 1 WHERE `action1_type`=17
-UPDATE `creature_ai_scripts` SET `action2_param1`=`action2_param1` + 1 WHERE `action2_type`=17
-UPDATE `creature_ai_scripts` SET `action3_param1`=`action3_param1` + 1 WHERE `action3_type`=17
-
 -- Defias Renegade Mage SAI
 SET @ENTRY := 450;
 UPDATE `creature_template` SET `AIName`='SmartAI' WHERE `entry`=@ENTRY;
