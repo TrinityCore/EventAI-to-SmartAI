@@ -949,6 +949,32 @@ class Utils
         $commentToReturn = rtrim($commentToReturn, ' & '); //! Trim last ' & ' from the comment..
         return $commentToReturn;
     }
+
+    static function getInversedPhasesInArray($decimal)
+    {
+        $arrayOfSplitPhases = array();
+        $decimal2 = $decimal;
+        $log2 = 0;
+
+        while ($decimal2 >= 2)
+        {
+            $decimal2 /= 2;
+            $log2++;
+        }
+
+        for ($l2 = $log2; $l2 >= 0; $l2--)
+        {
+            $power = pow(2, $l2);
+
+            if ($decimal >= $power)
+            {
+                $decimal -= $power;
+                array_push($arrayOfSplitPhases, $power);
+            }
+        }
+
+        return $arrayOfSplitPhases;
+    }
 }
 
 

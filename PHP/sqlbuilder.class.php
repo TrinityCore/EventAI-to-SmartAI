@@ -423,7 +423,20 @@ class SAI
         }
 
         if ($this->data['event_phase'] != 0)
-            $commentType .= " (Phase ".$this->data['event_phase'].")";
+        {
+            $phaseSplit = Utils::getInversedPhasesInArray($this->data['event_phase']);
+
+            if (sizeof($phaseSplit) > 1)
+                $commentType .= " (Phases ";
+            else
+                $commentType .= " (Phase ";
+
+            for ($x = 0; $x < sizeof($phaseSplit); $x++)
+                $commentType .= $phaseSplit[$x]." & ";
+
+            $commentType = rtrim($commentType, ' & '); //! Trim last ' & ' from the comment..
+            $commentType .= ")";
+        }
 
         return $commentType;
     }
