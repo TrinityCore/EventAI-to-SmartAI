@@ -421,8 +421,10 @@ class SAI
             if ($this->data['event_flags'] & SMART_EVENT_FLAG_DEBUG_ONLY)
                 $commentType .= " (Debug)";
         }
-        
-        // Some other parsing and fixing may be needed here
+
+        if ($this->data['event_phase'] != 0)
+            $commentType .= " (Phase ".$this->data['event_phase'].")";
+
         return $commentType;
     }
 }
