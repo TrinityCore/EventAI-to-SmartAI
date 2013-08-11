@@ -443,6 +443,7 @@ class Utils
                     else
                         $result[$i]['target' ] = $param3 + 1;
 
+                    $result[$i]['commentType'] .= " ".Factory::createOrGetDBHandler()->query("SELECT `Title` FROM `quest_template` WHERE `Id`=${param1}")->fetch(PDO::FETCH_OBJ)->Title;
                     break;
                 case ACTION_T_SET_UNIT_FIELD:
                     //! Parameter 1 is index of field
