@@ -169,14 +169,14 @@ class Utils
             case SMART_EVENT_TARGET_MANA_PCT:
                 return "On Target Between ${param1}-${param2}% Mana";
             case SMART_EVENT_FRIENDLY_HEALTH:
-                return "On Friendly Unit Between ${param1}-${param2}% Health";
+                return "On Friendly Unit At ${param1} Health Within ${param2} Range";
             case SMART_EVENT_HAS_AURA:
                 if ($param1 < 0)
                     return "On Aura _hasAuraSpellId_ Not Present";
                     
                 return "On Aura _hasAuraSpellId_ Present";
             default:
-                return "Fixme - Add case";
+                return "Fixme: Add case";
         }
     }
 
@@ -195,12 +195,6 @@ class Utils
                 $data[3] = $eaiItem->event_param3;
                 $data[4] = $eaiItem->event_param4;
                 break;
-            case EVENT_T_FRIENDLY_HP:
-                $data[1] = 0; //! For some reason this is always a value of a few thousand in EAI... Makes no sense to me.
-                $data[2] = $eaiItem->event_param2;
-                $data[3] = $eaiItem->event_param3;
-                $data[4] = $eaiItem->event_param4;
-                break;
             case EVENT_T_RECEIVE_EMOTE: // SAI'S SMART_EVENT_RECEIVE_EMOTE doesn't have the same structure at all. Fixme!
                 $data[1] = $eaiItem->event_param1;
                 $data[2] = $data[3] = 1000;
@@ -213,6 +207,7 @@ class Utils
                 $data[4] = $eaiItem->event_param4;
                 break;
         }
+
         return array_map('intval', $data);
     }
     
