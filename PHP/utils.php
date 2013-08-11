@@ -501,7 +501,7 @@ class Utils
                             $result[$i] = array(
                                 'SAIAction'  => __FIXME__,
                                 'params'     => array(__FIXME__, __FIXME__, __FIXME__, __FIXME__, __FIXME__, __FIXME__),
-                                'commentType' => "_npcName_ - _eventName_ - Unsupported unit field id ".$param2
+                                'commentType' => "_npcName_ - _eventName_ - Unsupported unit field id ".$param1
                             );
                             break;
                     }
