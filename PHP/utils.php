@@ -430,7 +430,7 @@ class Utils
                     $target = SMART_TARGET_THREAT_LIST; //! This is basically the only difference between the two action types...
                 case ACTION_T_CAST_EVENT:
                     $result[$i] = array(
-                        'SAIAction'  => SMART_ACTION_SEND_CASTCREATUREORGO,
+                        'SAIAction'  => SMART_ACTION_CALL_CASTEDCREATUREORGO,
                         'params'     => array($param1, $param2, 0, 0, 0, 0),
                         'commentType' => "_npcName_ - _eventName_ - Quest Credit"
                     );

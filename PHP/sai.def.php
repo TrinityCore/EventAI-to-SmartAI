@@ -113,7 +113,7 @@ define('SMART_ACTION_SUMMON_CREATURE',                    12); // CreatureID, su
 define('SMART_ACTION_THREAT_SINGLE_PCT',                  13); // Threat%
 define('SMART_ACTION_THREAT_ALL_PCT',                     14); // Threat%
 define('SMART_ACTION_CALL_AREAEXPLOREDOREVENTHAPPENS',    15); // QuestID
-define('SMART_ACTION_SEND_CASTCREATUREORGO',              16); // QuestID, SpellId
+define('SMART_ACTION_UNUSED_16',              			  16); // UNUSED
 define('SMART_ACTION_SET_EMOTE_STATE',                    17); // emoteID
 define('SMART_ACTION_SET_UNIT_FLAG',                      18); // Flags (may be more than one field OR'd together), Target
 define('SMART_ACTION_REMOVE_UNIT_FLAG',                   19); // Flags (may be more than one field OR'd together), Target
