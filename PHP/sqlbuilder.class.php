@@ -12,9 +12,7 @@ class NPC
     private $textGroupId = 0;
     private $textId      = 0;
     private $saiItemId   = 0;
-    private $linkItr     = 0;
-    private $eventCache  = array();
-
+    
     public function __construct($npcId, $npcName) {
         $this->npcId      = $npcId;
         $this->npcName    = $npcName;
@@ -59,33 +57,6 @@ class NPC
     public function getSaiIndex()         { return $this->saiItemId; }
     public function increaseSaiIndex()    { $this->saiItemId++; return $this; }
     public function resetSaiIndex()       { $this->saiItemId = 0; }
-
-    public function getLinkIndex()        { return $this->linkItr; }
-    public function increaseLinkIndex()   { $this->linkItr += 1; return $this->linkItr; }
-    public function setLinkIndex($val)    { $this->linkItr = $val; }
-
-    public function addEventToCache($event)
-    {
-        $item = array(
-            'type'    => $event['event_type'],
-            'phase'   => $event['event_phase'],
-            'flags'   => $event['event_flags'],
-            'chance'  => $event['event_chance'],
-            'params'  => $event['event_params']
-        );
-    }
-
-    public function hasEventInCache($event)
-    {
-        foreach ($this->eventCache as $item)
-            if ($item['type']         == $event['event_type']      && $item['phase']     == $event['event_phase']
-                && ($item['flags']    == $event['event_flags']     || $item['flags']     <= 1)
-                && $item['chance']    == $event['event_chance']
-                && $item['params'][1] == $event['event_params'][1] && $item['params'][2] == $event['event_params'][2]
-                && $item['params'][3] == $event['event_params'][3] && $item['params'][4] == $event['event_params'][4])
-                return true;
-            return false;
-    }
 
     public function convertAllToSAI() {
         foreach ($this->eai as $eaiItem)
@@ -239,7 +210,7 @@ class SAI
 
             $linked = false;
 
-            if ($this->_parent->hasEventInCache($this->data) || (isset($this->data['actions'][$i + 1]) && count($this->data['actions'][$i + 1]) != 0))
+            /*if ($this->_parent->hasEventInCache($this->data) || (isset($this->data['actions'][$i + 1]) && count($this->data['actions'][$i + 1]) != 0))
             {
                 $linkIndex = $this->_parent->increaseLinkIndex();
                 $outputString .= $linkIndex.','.$this->data['event_type'].',';
@@ -260,13 +231,13 @@ class SAI
 
                     $linked = ($i != 1);
                 }
-            }
+            }*/
 
             # Writing event type, phase, chance, flags and parameters
-            if (!$linked)
-                $outputString .= $this->data['event_phase'].','.$this->data['event_chance'].','.$this->data['event_flags'].',';
-            else // Linked events cannot happen on their own, avoid unnecessary checks core-side.
-                $outputString .= '0,100,0,';
+            //if (!$linked)
+            $outputString .= $this->data['event_phase'].','.$this->data['event_chance'].','.$this->data['event_flags'].',';
+            //else // Linked events cannot happen on their own, avoid unnecessary checks core-side.
+            //    $outputString .= '0,100,0,';
 
             #! All EAI actions that have the same event are linked. The first one triggers the second, which triggers the third.
             #! Extra linking, based on parameters sharing between events, should be implemented (See Hogger (448))
