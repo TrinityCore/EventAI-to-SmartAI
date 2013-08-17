@@ -103,8 +103,11 @@ class NPC
             foreach ($saiRows as $prevRowId => $prevRow)
             {
                 if ($prevRowId == $currRowId)
+                {
+                    $stopLink = true;
                     break; // Reached current event, no need to go further
-                    
+                }
+
                 $originalPrevRow = $prevRow;
                 while ($prevRow[3] == SMART_EVENT_LINK)
                     $prevRow = $saiRows[$prevRow[2]];
