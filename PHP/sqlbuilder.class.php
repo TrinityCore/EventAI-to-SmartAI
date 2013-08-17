@@ -140,16 +140,7 @@ class NPC
         }
         
         foreach ($saiRows as $index => &$item)
-        {
-            if (count($item) <= 1)
-            {
-                var_dump($item);
-                sleep(10);
-                continue;
-            }
-
             $output .= '(@ENTRY,' . implode(',',$item) . '),' . PHP_EOL;
-        }
 
         unset($item);
         // Remove last ",PHP_EOL"
@@ -267,7 +258,6 @@ class SAI
             $outputData[] = array();
             $currentRecord = &$outputData[count($outputData) - 1];
 
-            $outputData[] = '(@ENTRY,';
             $currentRecord[] = $this->data['source_type'];
             $currentRecord[] = $this->_parent->getSaiIndex();
             $currentRecord[] = 0; // LINK INDEX, #2
