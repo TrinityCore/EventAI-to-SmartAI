@@ -91,7 +91,7 @@ class NPC
 
         $saiRows = array();
         foreach ($this->sai as $item)
-            foreach($item->toSQL() as $row);
+            foreach($item->toSQL() as $row)
                 $saiRows[] = $row;
                 
         foreach ($saiRows as $currRowId => &$currRow)
