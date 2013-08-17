@@ -112,20 +112,23 @@ class NPC
                 while ($prevRow[3] == SMART_EVENT_LINK)
                     $prevRow = $saiRows[$prevRow[2]];
                     
-                if ($revRow[3] != $currRow[3])
+                if ($prevRow[3] != $currRow[3])
                     break; // Different event type
-                if (!($revRow[4] & $currRow[4]))
+
+                if (!($prevRow[4] & $currRow[4]))
                     break; // Different event phase (?)
-                if ($revRow[5] != $currRow[5])
+
+                if ($prevRow[5] != $currRow[5])
                     break; // Different event chance
-                if (!($revRow[6] & $currRow[6]))
+
+                if (!($prevRow[6] & $currRow[6]))
                     break; // Different event flags (?)
                 
                 // Link events
                 $currRow[3] = SMART_EVENT_LINK;
-                $currRow[4] = 0; // linked events happen in all phase
-                $currRow[5] = 100; // no need to bother with coreside checks (?)
-                $currRow[6] = 0; // no need to bother with flags (?)
+                $currRow[4] = 0; // TODO: pass on phase here
+                $currRow[5] = 100; // no need to bother with coreside checks
+                $currRow[6] = 0; // no need to bother with flags
                 
                 $saiRows[$prevRowId][2] = $currRowId;
                 $stopLink = true;
@@ -136,8 +139,17 @@ class NPC
                 break;
         }
         
-        foreach ($saiRows as $index=> &$item)
+        foreach ($saiRows as $index => &$item)
+        {
+            if (count($item) <= 1)
+            {
+                var_dump($item);
+                sleep(10);
+                continue;
+            }
+
             $output .= '(@ENTRY,' . implode(',',$item) . '),' . PHP_EOL;
+        }
 
         unset($item);
         // Remove last ",PHP_EOL"
@@ -255,9 +267,9 @@ class SAI
             $outputData[] = array();
             $currentRecord = &$outputData[count($outputData) - 1];
 
-            $outputString .= '(@ENTRY,';
-            $currentRecord[] = $this->data['source_type'].',';
-            $currentRecord[] = $this->_parent->getSaiIndex().',';
+            $outputData[] = '(@ENTRY,';
+            $currentRecord[] = $this->data['source_type'];
+            $currentRecord[] = $this->_parent->getSaiIndex();
             $currentRecord[] = 0; // LINK INDEX, #2
 
             $currentRecord[] = $this->data['event_type'];
@@ -286,17 +298,17 @@ class SAI
             else
             {
                 //! Default values of all of these is 0, so we can safely use them like this.
-                $currentRecord[] = $this->data['actions'][$i]['target']
+                $currentRecord[] = $this->data['actions'][$i]['target'];
 
                 for ($x = 0; $x < 3; $x++)
-                    $currentRecord[] = $this->data['actions'][$i]['target_params'][$x]
+                    $currentRecord[] = $this->data['actions'][$i]['target_params'][$x];
 
                 for ($x = 0; $x < 4; $x++)
                     $currentRecord[] = $this->data['actions'][$i]['target_paramCoords'][$x];
             }
 
             # Build the comment, and we're done.
-            $currentRecord[] = ' "'.$this->buildComment($action['commentType'], $i).'"';
+            $currentRecord[] = '"'.$this->buildComment($action['commentType'], $i).'"';
             $this->_parent->increaseSaiIndex();
         }
 
