@@ -127,7 +127,7 @@ class NPC
                 $currRow[5] = 100; // no need to bother with coreside checks (?)
                 $currRow[6] = 0; // no need to bother with flags (?)
                 
-                $originalPrevRow[2] = $currRowId;
+                $saiRows[$prevRowId][2] = $currRowId;
                 $stopLink = true;
                 break;
             }
