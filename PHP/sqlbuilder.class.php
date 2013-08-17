@@ -89,10 +89,55 @@ class NPC
         $output .= 'DELETE FROM `smart_scripts` WHERE `entryorguid`=@ENTRY AND `source_type`=0;'.PHP_EOL; # The reason default source_type is 0 is because EventAI doesn't support anything else than creature AI.
         $output .= 'INSERT INTO `smart_scripts` (`entryorguid`,`source_type`,`id`,`link`,`event_type`,`event_phase_mask`,`event_chance`,`event_flags`,`event_param1`,`event_param2`,`event_param3`,`event_param4`,`action_type`,`action_param1`,`action_param2`,`action_param3`,`action_param4`,`action_param5`,`action_param6`,`target_type`,`target_param1`,`target_param2`,`target_param3`,`target_x`,`target_y`,`target_z`,`target_o`,`comment`) VALUES'.PHP_EOL;
 
+        $saiRows = array();
         foreach ($this->sai as $item)
-            $output .= $item->toSQL();
+            foreach($item->toSQL() as $row);
+                $saiRows[] = $row;
+                
+        foreach ($saiRows as $currRowId => &$currRow)
+        {
+            if ($currRowId == 0)
+                continue; // We want to start from #1
+                
+            $stopLink = false;
+            foreach ($saiRows as $prevRowId => $prevRow)
+            {
+                if ($prevRowId == $currRowId)
+                    break; // Reached current event, no need to go further
+                    
+                $originalPrevRow = $prevRow;
+                while ($prevRow[3] == SMART_EVENT_LINK)
+                    $prevRow = $saiRows[$prevRow[2]];
+                    
+                if ($revRow[3] != $currRow[3])
+                    break; // Different event type
+                if (!($revRow[4] & $currRow[4]))
+                    break; // Different event phase (?)
+                if ($revRow[5] != $currRow[5])
+                    break; // Different event chance
+                if (!($revRow[6] & $currRow[6]))
+                    break; // Different event flags (?)
+                
+                // Link events
+                $currRow[3] = SMART_EVENT_LINK;
+                $currRow[4] = 0; // linked events happen in all phase
+                $currRow[5] = 100; // no need to bother with coreside checks (?)
+                $currRow[6] = 0; // no need to bother with flags (?)
+                
+                $originalPrevRow[2] = $currRowId;
+                $stopLink = true;
+                break;
+            }
+            
+            if ($stopLink)
+                break;
+        }
+        
+        foreach ($saiRows as $index=> &$item)
+            $output .= '(@ENTRY,' . implode(',',$item) . '),' . PHP_EOL;
 
         unset($item);
+        // Remove last ",PHP_EOL"
         return substr($output, 0, - strlen(PHP_EOL) - 1).';'.PHP_EOL.PHP_EOL;
     }
 
@@ -190,7 +235,7 @@ class SAI
             return;
         }
 
-        $outputString = '';
+        $outputData = array();
 
         // Fast-remove all flee emotes
         // Need to be done before processing, else linking is fooked
@@ -203,91 +248,56 @@ class SAI
             //! Found an empty action. Means no action's following.
             if (count($action) == 0)
                 break;
+                
+            $outputData[] = array();
+            $currentRecord = &$outputData[count($outputData) - 1];
 
             $outputString .= '(@ENTRY,';
-            $outputString .= $this->data['source_type'].',';
-            $outputString .= $this->_parent->getSaiIndex().',';
+            $currentRecord[] = $this->data['source_type'].',';
+            $currentRecord[] = $this->_parent->getSaiIndex().',';
+            $currentRecord[] = 0; // LINK INDEX, #2
 
-            $linked = false;
+            $currentRecord[] = $this->data['event_type'];
+            $currentRecord[] = $this->data['event_phase'];
+            $currentRecord[] = $this->data['event_chance'];
+            $currentRecord[] = $this->data['event_flags'];
 
-            /*if ($this->_parent->hasEventInCache($this->data) || (isset($this->data['actions'][$i + 1]) && count($this->data['actions'][$i + 1]) != 0))
-            {
-                $linkIndex = $this->_parent->increaseLinkIndex();
-                $outputString .= $linkIndex.','.$this->data['event_type'].',';
-                $linked = true;
-            }
-            else
-            {
-                $this->_parent->setLinkIndex($this->_parent->getSaiIndex() + 1); // +1 because index is not yet updated
-
-                if (count($this->data['actions']) == 1)
-                    $outputString .= '0,'.$this->data['event_type'].',';
-                else
-                {
-                    if ($i == 1)
-                        $outputString .= '0,'.$this->data['event_type'].',';
-                    else
-                        $outputString .= '0,'.SMART_EVENT_LINK.',';
-
-                    $linked = ($i != 1);
-                }
-            }*/
-
-            # Writing event type, phase, chance, flags and parameters
-            //if (!$linked)
-            $outputString .= $this->data['event_phase'].','.$this->data['event_chance'].','.$this->data['event_flags'].',';
-            //else // Linked events cannot happen on their own, avoid unnecessary checks core-side.
-            //    $outputString .= '0,100,0,';
-
-            #! All EAI actions that have the same event are linked. The first one triggers the second, which triggers the third.
-            #! Extra linking, based on parameters sharing between events, should be implemented (See Hogger (448))
-            if ($i == 1)
-            {
-                for ($j = 1; $j <= 4; $j++)
-                {
-                    if ($j == 2 && ($this->data['event_type'] == SMART_EVENT_SPELLHIT || $this->data['event_type'] == SMART_EVENT_SPELLHIT_TARGET))
-                        $outputString .= '0,';
-                    else
-                        $outputString .= $this->data['event_params'][$j].',';
-                }
-            }
-            else
-                $outputString .= '0,0,0,0,';
+            for ($j = 1; $j <= 4; $j++)
+                $currentRecord[] = $this->data['event_params'][$j];
 
             # Writing action parameters
-            $outputString .= $this->data['actions'][$i]['SAIAction'].',';
+            $currentRecord[] = $this->data['actions'][$i]['SAIAction'];
 
             for ($j = 0; $j < 6; $j++)
-                $outputString .= (isset($this->data['actions'][$i]['params'][$j]) ? $this->data['actions'][$i]['params'][$j] : 0).',';
+                $currentRecord[] = (isset($this->data['actions'][$i]['params'][$j]) ? $this->data['actions'][$i]['params'][$j] : 0);
 
             if ($this->data['actions'][$i]['SAIAction'] == SMART_ACTION_SUMMON_CREATURE && $this->data['actions'][$i]['isSpecialHandler'])
             {
                 $summonData = $this->data['actions'][$i]['extraData'];
-                $outputString .= SMART_TARGET_POSITION.',0,0,0,';
-                $outputString .= $summonData->position_x.',';
-                $outputString .= $summonData->position_y.',';
-                $outputString .= $summonData->position_z.',';
-                $outputString .= $summonData->orientation.',';
+                $currentRecord[] = SMART_TARGET_POSITION.',0,0,0';
+                $currentRecord[] = $summonData->position_x;
+                $currentRecord[] = $summonData->position_y;
+                $currentRecord[] = $summonData->position_z;
+                $currentRecord[] = $summonData->orientation;
             }
             else
             {
                 //! Default values of all of these is 0, so we can safely use them like this.
-                $outputString .= $this->data['actions'][$i]['target'].',';
+                $currentRecord[] = $this->data['actions'][$i]['target']
 
                 for ($x = 0; $x < 3; $x++)
-                    $outputString .= $this->data['actions'][$i]['target_params'][$x].',';
+                    $currentRecord[] = $this->data['actions'][$i]['target_params'][$x]
 
                 for ($x = 0; $x < 4; $x++)
-                    $outputString .= $this->data['actions'][$i]['target_paramCoords'][$x].',';
+                    $currentRecord[] = $this->data['actions'][$i]['target_paramCoords'][$x];
             }
 
             # Build the comment, and we're done.
-            $outputString .= '"'.$this->buildComment($action['commentType'], $i).'"),'.PHP_EOL;
+            $currentRecord[] = ' "'.$this->buildComment($action['commentType'], $i).'"';
             $this->_parent->increaseSaiIndex();
         }
 
-        $this->_parent->addEventToCache($this->data);
-        return $outputString;
+        return $outputData;
     }
 
     private function buildComment($commentType, $actionIndex)
