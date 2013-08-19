@@ -93,54 +93,40 @@ class NPC
         foreach ($this->sai as $item)
             foreach($item->toSQL() as $row)
                 $saiRows[] = $row;
-                
-        foreach ($saiRows as $currRowId => &$currRow)
-        {
-            if ($currRowId == 0)
-                continue; // We want to start from #1
-                
-            $stopLink = false;
-            foreach ($saiRows as $prevRowId => $prevRow)
-            {
-                if ($prevRowId == $currRowId)
-                {
-                    $stopLink = true;
-                    break; // Reached current event, no need to go further
-                }
 
-                $originalPrevRow = $prevRow;
+        for ($currRowId = 1, $l = count($saiRows); $currRowId < $l; ++$currRowId)
+        {
+            for ($prevRowId = 0; $prevRowId < $currRowId; ++$prevRowId)
+            {
+                $prevRow = $saiRows[$prevRowId];
                 while ($prevRow[3] == SMART_EVENT_LINK)
                     $prevRow = $saiRows[$prevRow[2]];
-                    
+
                 if ($prevRow[3] != $currRow[3])
-                    break; // Different event type
+                    continue; // Different event type
 
                 if (!($prevRow[4] & $currRow[4]))
-                    break; // Different event phase (?)
+                    continue; // Different event phase (?)
 
                 if ($prevRow[5] != $currRow[5])
-                    break; // Different event chance
+                    continue; // Different event chance
 
                 if (!($prevRow[6] & $currRow[6]))
-                    break; // Different event flags (?)
+                    continue; // Different event flags (?)
                 
                 // Link events
-                $currRow[3] = SMART_EVENT_LINK;
-                $currRow[4] = 0; // TODO: pass on phase here
-                $currRow[5] = 100; // no need to bother with coreside checks
-                $currRow[6] = 0; // no need to bother with flags
+                $saiRows[$currRowId][3] = SMART_EVENT_LINK;
+                $saiRows[$currRowId][4] = 0; // TODO: pass on phase here
+                $saiRows[$currRowId][5] = 100; // no need to bother with coreside checks
+                $saiRows[$currRowId][6] = 0; // no need to bother with flags
                 
                 $saiRows[$prevRowId][2] = $currRowId;
-                $stopLink = true;
                 break;
             }
-            
-            if ($stopLink)
-                break;
         }
         
         foreach ($saiRows as $index => &$item)
-            $output .= '(@ENTRY,' . implode(',',$item) . '),' . PHP_EOL;
+            $output .= '(@ENTRY,' . implode(',', $item) . '),' . PHP_EOL;
 
         unset($item);
         // Remove last ",PHP_EOL"
