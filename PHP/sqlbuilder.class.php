@@ -96,6 +96,7 @@ class NPC
 
         for ($currRowId = 1, $l = count($saiRows); $currRowId < $l; ++$currRowId)
         {
+            $currRow = $saiRows[$currRowId];
             for ($prevRowId = 0; $prevRowId < $currRowId; ++$prevRowId)
             {
                 $prevRow = $saiRows[$prevRowId];
