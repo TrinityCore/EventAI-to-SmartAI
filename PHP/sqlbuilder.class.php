@@ -97,9 +97,11 @@ class NPC
         for ($currRowId = 1, $l = count($saiRows); $currRowId < $l; ++$currRowId)
         {
             $currRow = $saiRows[$currRowId];
+
             for ($prevRowId = 0; $prevRowId < $currRowId; ++$prevRowId)
             {
                 $prevRow = $saiRows[$prevRowId];
+
                 while ($prevRow[3] == SMART_EVENT_LINK)
                     $prevRow = $saiRows[$prevRow[2]];
 
@@ -117,10 +119,9 @@ class NPC
                 
                 // Link events
                 $saiRows[$currRowId][3] = SMART_EVENT_LINK;
-                $saiRows[$currRowId][4] = 0; // TODO: pass on phase here
+                $saiRows[$currRowId][4] = $prevRow[4]; // We pass on phase here
                 $saiRows[$currRowId][5] = 100; // no need to bother with coreside checks
                 $saiRows[$currRowId][6] = 0; // no need to bother with flags
-                
                 $saiRows[$prevRowId][2] = $currRowId;
                 break;
             }
@@ -137,6 +138,7 @@ class NPC
     public function getCreatureText()
     {
         $qty = count($this->texts);
+
         foreach ($this->texts as $textItem)
             if ($textItem->isFleeEmote())
                 $qty--;
