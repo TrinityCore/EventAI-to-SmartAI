@@ -252,7 +252,7 @@ class SAI
             //! Found an empty action. Means no action's following.
             if (count($action) == 0)
                 break;
-                
+
             $outputData[] = array();
             $currentRecord = &$outputData[count($outputData) - 1];
 
