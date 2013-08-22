@@ -17,7 +17,6 @@ class NPC
         $this->npcId      = $npcId;
         $this->npcName    = $npcName;
         $this->saiItemId  = 0;
-        $this->dumpSpells = (Factory::createOrGetDBCWorker() !== false);
     }
 
     public function countSQLRows($isSAI = false) {
@@ -116,12 +115,22 @@ class NPC
 
                 if (!($prevRow[6] & $currRow[6]))
                     continue; // Different event flags (?)
+
+                // Parameters compliance check
+                $paramsMatch = true;
+                for ($paramIdx = 0; $paramsMatch && $paramIdx < 4; ++$paramIdx)
+                    if ($prevRow[7 + $paramIdx] != $currRow[7 + $paramIdx])
+                        $paramsMatch = false;
+
+                if (!$paramsMatch)
+                    continue;
                 
                 // Link events
                 $saiRows[$currRowId][3] = SMART_EVENT_LINK;
                 $saiRows[$currRowId][4] = $prevRow[4]; // We pass on phase here
                 $saiRows[$currRowId][5] = 100; // no need to bother with coreside checks
                 $saiRows[$currRowId][6] = 0; // no need to bother with flags
+
                 $saiRows[$prevRowId][2] = $currRowId;
                 break;
             }
@@ -139,7 +148,7 @@ class NPC
     {
         $qty = count($this->texts);
 
-        foreach ($this->texts as $textItem)
+        foreach ($this->texts as &$textItem)
             if ($textItem->isFleeEmote())
                 $qty--;
 
@@ -313,9 +322,10 @@ class SAI
         if (Factory::hasDbcWorker())
         {
             // Place event precessors here
-            if ($this->data['event_type'] == SMART_EVENT_SPELLHIT || $this->data['event_type'] == SMART_EVENT_SPELLHIT_TARGET || $this->data['event_type'] == SMART_EVENT_FRIENDLY_MISSING_BUFF)
+            if ($this->data['event_type'] == SMART_EVENT_SPELLHIT ||
+                $this->data['event_type'] == SMART_EVENT_SPELLHIT_TARGET ||
+                $this->data['event_type'] == SMART_EVENT_FRIENDLY_MISSING_BUFF)
             {
-                // For some bitch reason, some spellhit events have 0 as the spell hitter
                 if ($this->data['event_params'][1] != 0)
                 {
                     $commentType = str_replace(
@@ -323,7 +333,7 @@ class SAI
                         Factory::getSpellNameForLoc($this->data['event_params'][1], 0),
                         $commentType);
                 }
-                else
+                else // @TODO: Possibly inform of missing spell id.
                     $commentType = str_replace(' _spellNameFirstParam_', '', $commentType);
             }
             elseif ($this->data['event_type'] == SMART_EVENT_HAS_AURA)
@@ -335,7 +345,7 @@ class SAI
                         Factory::getSpellNameForLoc($this->data['event_params'][1], 0),
                         $commentType);
                 }
-                else
+                else // @TODO: Possibly inform of missing spell id.
                     $commentType = str_replace(' _hasAuraSpellId_', '', $commentType);
             }
 
@@ -346,7 +356,8 @@ class SAI
                     Factory::getSpellNameForLoc($this->data['actions'][$actionIndex]['params'][0], 0),
                     $commentType);
             }
-            elseif ($this->data['actions'][$actionIndex]['SAIAction'] == SMART_ACTION_REMOVEAURASFROMSPELL && $this->data['actions'][$actionIndex]['params'][0] != 0)
+            elseif ($this->data['actions'][$actionIndex]['SAIAction'] == SMART_ACTION_REMOVEAURASFROMSPELL &&
+                $this->data['actions'][$actionIndex]['params'][0] != 0)
             {
                 $commentType = str_replace(
                     '_removeAuraSpell_',
@@ -358,21 +369,22 @@ class SAI
         {
             if ($this->data['actions'][$actionIndex]['SAIAction'] == SMART_ACTION_CAST)
                 $commentType = str_replace('_castSpellId_', $this->data['actions'][$actionIndex]['params'][0]." (Not found in DBCs!)", $commentType);
-            elseif ($this->data['actions'][$actionIndex]['SAIAction'] == SMART_ACTION_REMOVEAURASFROMSPELL && $this->data['actions'][$actionIndex]['params'][0] != 0)
+            elseif ($this->data['actions'][$actionIndex]['SAIAction'] == SMART_ACTION_REMOVEAURASFROMSPELL &&
+                $this->data['actions'][$actionIndex]['params'][0] != 0)
                 $commentType = str_replace('_removeAuraSpell_', $this->data['actions'][$actionIndex]['params'][0]." (Not found in DBCs!)", $commentType);
 
-            if ($this->data['event_type'] == SMART_EVENT_SPELLHIT || $this->data['event_type'] == SMART_EVENT_SPELLHIT_TARGET)
+            if ($this->data['event_type'] == SMART_EVENT_SPELLHIT ||
+                $this->data['event_type'] == SMART_EVENT_SPELLHIT_TARGET)
                 $commentType = str_replace('_spellNameFirstParam_', $this->data['event_params'][1]." (Not found in DBCs!)", $commentType);
         }
 
         if ($this->data['event_flags'] != 0)
         {
-            if ($this->data['event_flags'] & SMART_EVENT_FLAG_DIFFICULTY_0 && $this->data['event_flags'] & SMART_EVENT_FLAG_DIFFICULTY_1 &&
-                $this->data['event_flags'] & SMART_EVENT_FLAG_DIFFICULTY_2 && $this->data['event_flags'] & SMART_EVENT_FLAG_DIFFICULTY_3)
+            if ($this->data['event_flags'] & SMART_EVENT_FLAG_DIFFICULTY_ALL)
                 $commentType .= " (Dungeon & Raid Only)";
             else
             {
-                if ($this->data['event_flags'] & SMART_EVENT_FLAG_DIFFICULTY_0 && $this->data['event_flags'] & SMART_EVENT_FLAG_DIFFICULTY_1)
+                if ($this->data['event_flags'] & (SMART_EVENT_FLAG_DIFFICULTY_0 | SMART_EVENT_FLAG_DIFFICULTY_1))
                     $commentType .= " (Dungeon Only)";
                 else
                 {
@@ -382,7 +394,7 @@ class SAI
                         $commentType .= " (Heroic Dungeon)";
                 }
 
-                if ($this->data['event_flags'] & SMART_EVENT_FLAG_DIFFICULTY_2 && $this->data['event_flags'] & SMART_EVENT_FLAG_DIFFICULTY_3)
+                if ($this->data['event_flags'] & (SMART_EVENT_FLAG_DIFFICULTY_2 | SMART_EVENT_FLAG_DIFFICULTY_3))
                     $commentType .= " (Raid Only)";
                 else
                 {
@@ -401,16 +413,11 @@ class SAI
         {
             $phaseSplit = Utils::getInversedPhasesInArray($this->data['event_phase']);
 
-            if (sizeof($phaseSplit) > 1)
-                $commentType .= " (Phases ";
-            else
-                $commentType .= " (Phase ";
+            $commentType .= " (Phase";
+            if (count($phaseSplit) > 1)
+                $commentType .= "s";
 
-            for ($x = 0; $x < sizeof($phaseSplit); $x++)
-                $commentType .= $phaseSplit[$x]." & ";
-
-            $commentType = rtrim($commentType, ' & '); //! Trim last ' & ' from the comment..
-            $commentType .= ")";
+            $commentType .= " " . implode(" & ", $phaseSplit) . ")";
         }
 
         return $commentType;
@@ -441,7 +448,7 @@ class EAI
 
         if (!is_array($saiData['actions']))
         {
-            echo PHP_EOL.'FATAL ERROR! Utils::buildSAIAction() did NOT return an array... Shutting down the engine, cooling down the nuclear reactor'.PHP_EOL;
+            trigger_error('FATAL ERROR! Utils::buildSAIAction() did NOT return an array.', E_USER_ERROR);
             exit(1);
         }
 
