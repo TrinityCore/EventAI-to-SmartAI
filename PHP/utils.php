@@ -438,7 +438,12 @@ class Utils
                     else
                         $result[$i]['target' ] = $param3 + 1;
 
-                    $result[$i]['commentType'] .= " ".Factory::createOrGetDBHandler()->query("SELECT `Title` FROM `quest_template` WHERE `Id`=${param1}")->fetch(PDO::FETCH_OBJ)->Title;
+                    $row = Factory::createOrGetDBHandler()->query("SELECT `Title` FROM `quest_template` WHERE `Id`=${param1}")->fetch(PDO::FETCH_OBJ);
+
+                    if ($row)
+                        $result[$i]['commentType'] .= " ".$row->Title;
+                    else
+                        $result[$i]['commentType'] .= " <Unknown Quest Id>";
                     break;
                 case ACTION_T_SET_UNIT_FIELD:
                     //! Parameter 1 is index of field
