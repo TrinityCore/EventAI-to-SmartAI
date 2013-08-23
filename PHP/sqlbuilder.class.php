@@ -108,19 +108,25 @@ class NPC
                     continue; // Different event type
 
                 if (!($prevRow[4] & $currRow[4]))
-                    continue; // Different event phase (?)
+                    continue; // Different event phase
 
                 if ($prevRow[5] != $currRow[5])
                     continue; // Different event chance
 
                 if (!($prevRow[6] & $currRow[6]))
-                    continue; // Different event flags (?)
+                    continue; // Different event flags
 
                 // Parameters compliance check
                 $paramsMatch = true;
+
                 for ($paramIdx = 0; $paramsMatch && $paramIdx < 4; ++$paramIdx)
+                {
                     if ($prevRow[7 + $paramIdx] != $currRow[7 + $paramIdx])
+                    {
                         $paramsMatch = false;
+                        break;
+                    }
+                }
 
                 if (!$paramsMatch)
                     continue;
@@ -130,7 +136,6 @@ class NPC
                 $saiRows[$currRowId][4] = $prevRow[4]; // We pass on phase here
                 $saiRows[$currRowId][5] = 100; // no need to bother with coreside checks
                 $saiRows[$currRowId][6] = $prevRow[6]; // event_flags, ignored coreside but its more beautiful
-
                 $saiRows[$prevRowId][2] = $currRowId;
                 break;
             }
@@ -380,11 +385,12 @@ class SAI
 
         if ($this->data['event_flags'] != 0)
         {
-            if ($this->data['event_flags'] & SMART_EVENT_FLAG_DIFFICULTY_ALL)
+            if ($this->data['event_flags'] & SMART_EVENT_FLAG_DIFFICULTY_0 && $this->data['event_flags'] & SMART_EVENT_FLAG_DIFFICULTY_1 &&
+                $this->data['event_flags'] & SMART_EVENT_FLAG_DIFFICULTY_2 && $this->data['event_flags'] & SMART_EVENT_FLAG_DIFFICULTY_3)
                 $commentType .= " (Dungeon & Raid Only)";
             else
             {
-                if ($this->data['event_flags'] & (SMART_EVENT_FLAG_DIFFICULTY_0 | SMART_EVENT_FLAG_DIFFICULTY_1))
+                if ($this->data['event_flags'] & SMART_EVENT_FLAG_DIFFICULTY_0 && $this->data['event_flags'] & SMART_EVENT_FLAG_DIFFICULTY_1)
                     $commentType .= " (Dungeon Only)";
                 else
                 {
@@ -394,7 +400,7 @@ class SAI
                         $commentType .= " (Heroic Dungeon)";
                 }
 
-                if ($this->data['event_flags'] & (SMART_EVENT_FLAG_DIFFICULTY_2 | SMART_EVENT_FLAG_DIFFICULTY_3))
+                if ($this->data['event_flags'] & SMART_EVENT_FLAG_DIFFICULTY_2 && $this->data['event_flags'] & SMART_EVENT_FLAG_DIFFICULTY_3)
                     $commentType .= " (Raid Only)";
                 else
                 {
