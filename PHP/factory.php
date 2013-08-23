@@ -7,14 +7,16 @@ class Factory
 
     private static $hostName = 'localhost';
     private static $username = 'root';
-    private static $password = '';
-    private static $dbName   = '335_world';
+    private static $password = '123';
+    private static $port     = '3306';
+    private static $dbName   = 'trinitydb335';
     
     private static $_isDbcOn = true;
 
     private function __construct() { }
 
-    public static function createOrGetDBCWorker() {
+    public static function createOrGetDBCWorker()
+    {
         if (!self::$_isDbcOn)
             return null;
     
@@ -25,23 +27,28 @@ class Factory
     }
 
     public static function createOrGetDBHandler() {
-        if (!isset(self::$dbHandler)) {
+        if (!isset(self::$dbHandler))
+        {
             $pdoOptions[PDO::ATTR_ERRMODE] = PDO::ERRMODE_EXCEPTION;
-            self::$dbHandler = new PDO('mysql:host='.self::$hostName.';dbname='.self::$dbName, self::$username, self::$password, $pdoOptions);
+            self::$dbHandler = new PDO('mysql:host='.self::$hostName.';port='.self::$port.';dbname='.self::$dbName, self::$username, self::$password, $pdoOptions);
         }
         return self::$dbHandler;
     }
 
-    public static function setDbData($host, $nick, $pass, $database) {
+    public static function setDbData($host, $nick, $pass, $portId, $database)
+    {
         self::$hostName = $host;
         self::$username = $nick;
         self::$password = $pass;
+        self::$port     = $portId;
         self::$dbName   = $database;
     }
     
-    public static function getSpellNameForLoc($spellId, $locIndex) {
+    public static function getSpellNameForLoc($spellId, $locIndex)
+    {
         if (!self::$_isDbcOn)
             return $spellId;
+        
         return self::$dbcWorker->getRecordById($spellId)->get('SpellNameLang'.$locIndex, DBC::STRING);
     }
     

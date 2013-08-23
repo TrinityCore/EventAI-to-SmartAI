@@ -22,13 +22,15 @@ ob_end_flush();
 
 if ($iniFile = parse_ini_file('config.ini'))
 {
-    Factory::setDbData($iniFile['hostname'], $iniFile['userName'], $iniFile['password'], $iniFile['worldDatabase']);
+    Factory::setDbData($iniFile['hostname'], $iniFile['userName'], $iniFile['password'], $iniFile['port'], $iniFile['worldDatabase']);
 
     echo '>> Config file found and parsed sucessfully.'.PHP_EOL;
 
     $dumpSpellNames = (isset($iniFile['dumpSpellNames']) && $iniFile['dumpSpellNames'] == 1);
+
     if ($dumpSpellNames)
         echo PHP_EOL.'>> Spell.dbc will be parsed.'.PHP_EOL;
+
     Factory::toggleDbcWorker($dumpSpellNames);
 }
 
