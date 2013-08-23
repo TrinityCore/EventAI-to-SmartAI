@@ -444,6 +444,7 @@ class Utils
                         $result[$i]['commentType'] .= " ".$row->Title;
                     else
                         $result[$i]['commentType'] .= " <Unknown Quest Id>";
+
                     break;
                 case ACTION_T_SET_UNIT_FIELD:
                     //! Parameter 1 is index of field

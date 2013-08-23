@@ -129,7 +129,7 @@ class NPC
                 $saiRows[$currRowId][3] = SMART_EVENT_LINK;
                 $saiRows[$currRowId][4] = $prevRow[4]; // We pass on phase here
                 $saiRows[$currRowId][5] = 100; // no need to bother with coreside checks
-                $saiRows[$currRowId][6] = 0; // no need to bother with flags
+                $saiRows[$currRowId][6] = $prevRow[6]; // event_flags, ignored coreside but its more beautiful
 
                 $saiRows[$prevRowId][2] = $currRowId;
                 break;
