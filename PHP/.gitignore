@@ -1,3 +1,6 @@
 *.sql
+
+
 *.log
 dbErrors.log
+

@@ -7,9 +7,10 @@ will output UPDATE, INSERT, DELETE and TRUNCATE queries to *.sql files.
 
 HOW-TO-USE
 
-Head into the directory where you installed that script. Open `config.ini` with your
-favorite file editor and change your database settings accordingly to what is needed
-for the script to run on your database. Save the file, and close your editor.
+Head into the directory where you installed that script. Go to the 'Build' directory
+and copy the `config.ini` file from that directory to the PHP directory. Open the file
+with your favorite file editor and change your database settings accordingly to what
+is needed for the script to run on your database. Save the file, and close your editor.
 
 Add a directory called `dbcs` in the directory `dep` and parse a Spell.dbc file there.
 The Spell.dbc file must be English (at least that what it looks like), else spell names
