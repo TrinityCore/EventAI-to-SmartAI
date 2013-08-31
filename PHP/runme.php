@@ -19,7 +19,7 @@ echo "                                 C O R E  /\\___/".PHP_EOL;
 echo "http://TrinityCore.org                    \\/__/\n".PHP_EOL;
 ob_end_flush();
 
-
+$locale = 0;
 if ($iniFile = parse_ini_file('config.ini'))
 {
     Factory::setDbData($iniFile['hostname'], $iniFile['userName'], $iniFile['password'], $iniFile['port'], $iniFile['worldDatabase']);
@@ -32,7 +32,10 @@ if ($iniFile = parse_ini_file('config.ini'))
         echo PHP_EOL.'>> Spell.dbc will be parsed.'.PHP_EOL;
 
     Factory::toggleDbcWorker($dumpSpellNames);
+    $locale = $iniFile['spellNameLocal'];
 }
+
+define('LOCALE', $locale);
 
 ob_start();
 echo PHP_EOL.'Selecting all EventAIs from the database ...'.PHP_EOL;
