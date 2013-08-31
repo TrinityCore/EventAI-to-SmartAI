@@ -335,7 +335,7 @@ class SAI
                 {
                     $commentType = str_replace(
                         '_spellNameFirstParam_',
-                        Factory::getSpellNameForLoc($this->data['event_params'][1], 0),
+                        Factory::getSpellNameForLoc($this->data['event_params'][1], LOCALE),
                         $commentType);
                 }
                 else // @TODO: Possibly inform of missing spell id.
@@ -347,7 +347,7 @@ class SAI
                 {
                     $commentType = str_replace(
                         '_hasAuraSpellId_',
-                        Factory::getSpellNameForLoc($this->data['event_params'][1], 0),
+                        Factory::getSpellNameForLoc($this->data['event_params'][1], LOCALE),
                         $commentType);
                 }
                 else // @TODO: Possibly inform of missing spell id.
@@ -358,7 +358,7 @@ class SAI
             if ($this->data['actions'][$actionIndex]['SAIAction'] == SMART_ACTION_CAST) {
                 $commentType = str_replace(
                     '_castSpellId_',
-                    Factory::getSpellNameForLoc($this->data['actions'][$actionIndex]['params'][0], 0),
+                    Factory::getSpellNameForLoc($this->data['actions'][$actionIndex]['params'][0], LOCALE),
                     $commentType);
             }
             elseif ($this->data['actions'][$actionIndex]['SAIAction'] == SMART_ACTION_REMOVEAURASFROMSPELL &&
@@ -366,7 +366,7 @@ class SAI
             {
                 $commentType = str_replace(
                     '_removeAuraSpell_',
-                    Factory::getSpellNameForLoc($this->data['actions'][$actionIndex]['params'][0], 0),
+                    Factory::getSpellNameForLoc($this->data['actions'][$actionIndex]['params'][0], LOCALE),
                     $commentType);
             }
         }
