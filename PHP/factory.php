@@ -29,6 +29,16 @@ class Factory
     public static function createOrGetDBHandler() {
         if (!isset(self::$dbHandler))
         {
+            // Overwrite settings with OpenShift
+            if (getenv('OPENSHIFT_APP_NAME') !== false)
+            {
+                self::$dbName   = getenv('OPENSHIFT_APP_NAME');
+                self::$hostName = getenv('OPENSHIFT_MYSQL_DB_HOST');
+                self::$port     = getenv('OPENSHIFT_MYSQL_DB_PORT');
+                self::$username = getenv('OPENSHIFT_MYSQL_DB_USERNAME');
+                self::$password = getenv('OPENSHIFT_MYSQL_DB_PASSWORD');
+            }
+            
             $pdoOptions[PDO::ATTR_ERRMODE] = PDO::ERRMODE_EXCEPTION;
             self::$dbHandler = new PDO('mysql:host='.self::$hostName.';port='.self::$port.';dbname='.self::$dbName, self::$username, self::$password, $pdoOptions);
         }
