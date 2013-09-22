@@ -1599,6 +1599,19 @@ DELETE FROM `creature_text` WHERE `entry`=@ENTRY;
 INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`probability`,`emote`,`duration`,`sound`,`comment`) VALUES
 (@ENTRY,0,0,"%s goes into a frenzy!",16,0,100,0,0,0,"Maggoc");
 
+-- Texts for Dalliah the Doomsayer
+SET @ENTRY := 20885;
+DELETE FROM `creature_text` WHERE `entry`=@ENTRY;
+INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`probability`,`emote`,`duration`,`sound`,`comment`) VALUES
+(@ENTRY,0,0,"It is unwise to anger me.",14,0,100,0,0,0,"Dalliah the Doomsayer"),
+(@ENTRY,1,0,"You chose the wrong opponent.",14,0,100,0,0,11088,"Dalliah the Doomsayer"),
+(@ENTRY,1,1,"Completely ineffective. Just like someone else I know.",14,0,100,0,0,11087,"Dalliah the Doomsayer"),
+(@ENTRY,2,0,"Now I'm really... angry...",14,0,100,0,0,11093,"Dalliah the Doomsayer"),
+(@ENTRY,3,0,"I'll cut you to pieces!",12,0,100,0,0,0,"Dalliah the Doomsayer"),
+(@ENTRY,3,1,"Reap the Whirlwind!",14,0,100,0,0,0,"Dalliah the Doomsayer"),
+(@ENTRY,4,0,"Ahh... Just what I needed.",12,0,100,0,0,0,"Dalliah the Doomsayer"),
+(@ENTRY,4,1,"Ahh... That is much better.",14,0,100,0,0,0,"Dalliah the Doomsayer");
+
 -- Texts for Wrath-Scryer Soccothrates
 SET @ENTRY := 20886;
 DELETE FROM `creature_text` WHERE `entry`=@ENTRY;
