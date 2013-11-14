@@ -9,9 +9,9 @@ SET @ENTRY := 639;
 DELETE FROM `creature_text` WHERE `entry`=@ENTRY;
 INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`probability`,`emote`,`duration`,`sound`,`comment`) VALUES
 (@ENTRY,0,0,"None may challenge the Brotherhood!",14,0,100,0,0,5780,"Edwin VanCleef"),
-(@ENTRY,1,0,"Lap dogs, all of you!",14,0,100,0,0,5782,"Edwin VanCleef"),
+(@ENTRY,1,0,"Lapdogs, all of you!",14,0,100,0,0,5782,"Edwin VanCleef"),
 (@ENTRY,2,0,"%s calls more of his allies out of the shadows.",16,0,100,0,0,0,"Edwin VanCleef"),
-(@ENTRY,3,0,"Fools! our cause it righteous!",14,0,100,0,0,5783,"Edwin VanCleef"),
+(@ENTRY,3,0,"Fools! Our cause is righteous!",14,0,100,0,0,5783,"Edwin VanCleef"),
 (@ENTRY,4,0,"%s calls more of his allies out of the shadows.",16,0,100,0,0,0,"Edwin VanCleef"),
 (@ENTRY,5,0,"And stay down!",14,0,100,0,0,5781,"Edwin VanCleef"),
 (@ENTRY,6,0,"The Brotherhood will prevail!",14,0,100,0,0,5784,"Edwin VanCleef");
@@ -32,8 +32,8 @@ INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`pr
 SET @ENTRY := 1051;
 DELETE FROM `creature_text` WHERE `entry`=@ENTRY;
 INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`probability`,`emote`,`duration`,`sound`,`comment`) VALUES
-(@ENTRY,0,0,"Never cross a Dark Iron, $C.",12,0,100,0,0,0,"Dark Iron Dwarf"),
-(@ENTRY,0,1,"Time to die, $C!",12,0,100,0,0,0,"Dark Iron Dwarf"),
+(@ENTRY,0,0,"Never cross a Dark Iron, $c.",12,0,100,0,0,0,"Dark Iron Dwarf"),
+(@ENTRY,0,1,"Time to die, $c!",12,0,100,0,0,0,"Dark Iron Dwarf"),
 (@ENTRY,0,2,"Feel the power of the Dark Iron Dwarves!",12,0,100,0,0,0,"Dark Iron Dwarf");
 
 -- Texts for Dark Iron Saboteur
@@ -47,16 +47,16 @@ INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`pr
 SET @ENTRY := 1053;
 DELETE FROM `creature_text` WHERE `entry`=@ENTRY;
 INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`probability`,`emote`,`duration`,`sound`,`comment`) VALUES
-(@ENTRY,0,0,"Never cross a Dark Iron, $C.",12,0,100,0,0,0,"Dark Iron Tunneler"),
-(@ENTRY,0,1,"Time to die, $C!",12,0,100,0,0,0,"Dark Iron Tunneler"),
+(@ENTRY,0,0,"Never cross a Dark Iron, $c.",12,0,100,0,0,0,"Dark Iron Tunneler"),
+(@ENTRY,0,1,"Time to die, $c!",12,0,100,0,0,0,"Dark Iron Tunneler"),
 (@ENTRY,0,2,"Feel the power of the Dark Iron Dwarves!",12,0,100,0,0,0,"Dark Iron Tunneler");
 
 -- Texts for Dark Iron Demolitionist
 SET @ENTRY := 1054;
 DELETE FROM `creature_text` WHERE `entry`=@ENTRY;
 INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`probability`,`emote`,`duration`,`sound`,`comment`) VALUES
-(@ENTRY,0,0,"Never cross a Dark Iron, $C.",12,0,100,0,0,0,"Dark Iron Demolitionist"),
-(@ENTRY,0,1,"Time to die, $C!",12,0,100,0,0,0,"Dark Iron Demolitionist"),
+(@ENTRY,0,0,"Never cross a Dark Iron, $c.",12,0,100,0,0,0,"Dark Iron Demolitionist"),
+(@ENTRY,0,1,"Time to die, $c!",12,0,100,0,0,0,"Dark Iron Demolitionist"),
 (@ENTRY,0,2,"Feel the power of the Dark Iron Dwarves!",12,0,100,0,0,0,"Dark Iron Demolitionist");
 
 -- Texts for Dark Iron Sapper
@@ -73,7 +73,7 @@ INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`pr
 SET @ENTRY := 1364;
 DELETE FROM `creature_text` WHERE `entry`=@ENTRY;
 INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`probability`,`emote`,`duration`,`sound`,`comment`) VALUES
-(@ENTRY,0,0,"This land belongs to the Dark Iron Dwarves. Prepare to see the afterlife, $C!",12,6,100,0,0,0,"Balgaras the Foul");
+(@ENTRY,0,0,"This land belongs to the Dark Iron Dwarves. Prepare to see the afterlife, $c!",12,6,100,0,0,0,"Balgaras the Foul");
 
 -- Texts for Targorr the Dread
 SET @ENTRY := 1696;
@@ -98,52 +98,54 @@ INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`pr
 SET @ENTRY := 2015;
 DELETE FROM `creature_text` WHERE `entry`=@ENTRY;
 INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`probability`,`emote`,`duration`,`sound`,`comment`) VALUES
-(@ENTRY,0,0,"You will be easy prey, $C.",14,0,100,0,0,0,"Bloodfeather Harpy");
+(@ENTRY,0,0,"You will be easy prey, $c.",14,0,100,0,0,0,"Bloodfeather Harpy");
 
 -- Texts for Bloodfeather Rogue
 SET @ENTRY := 2017;
 DELETE FROM `creature_text` WHERE `entry`=@ENTRY;
 INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`probability`,`emote`,`duration`,`sound`,`comment`) VALUES
-(@ENTRY,0,0,"A fine trophy your head will make, $R.",12,0,100,0,0,0,"Bloodfeather Rogue");
+(@ENTRY,0,0,"A fine trophy your head will make, $r.",12,0,100,0,0,0,"Bloodfeather Rogue"),
+(@ENTRY,0,1,"My talons will shred your puny body, $r.",12,0,100,0,0,0,"Bloodfeather Rogue"),
+(@ENTRY,0,2,"You will be easy prey, $c.",14,0,100,0,0,0,"Bloodfeather Rogue");
 
 -- Texts for Bloodfeather Sorceress
 SET @ENTRY := 2018;
 DELETE FROM `creature_text` WHERE `entry`=@ENTRY;
 INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`probability`,`emote`,`duration`,`sound`,`comment`) VALUES
-(@ENTRY,0,0,"A fine trophy your head will make, $R.",12,0,100,0,0,0,"Bloodfeather Sorceress"),
-(@ENTRY,0,1,"My talons will shred your puny body, $R.",12,0,100,0,0,0,"Bloodfeather Sorceress"),
-(@ENTRY,0,2,"You will be easy prey, $C.",14,0,100,0,0,0,"Bloodfeather Sorceress");
+(@ENTRY,0,0,"A fine trophy your head will make, $r.",12,0,100,0,0,0,"Bloodfeather Sorceress"),
+(@ENTRY,0,1,"My talons will shred your puny body, $r.",12,0,100,0,0,0,"Bloodfeather Sorceress"),
+(@ENTRY,0,2,"You will be easy prey, $c.",14,0,100,0,0,0,"Bloodfeather Sorceress");
 
 -- Texts for Chieftain Nek'rosh
 SET @ENTRY := 2091;
 DELETE FROM `creature_text` WHERE `entry`=@ENTRY;
 INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`probability`,`emote`,`duration`,`sound`,`comment`) VALUES
-(@ENTRY,0,0,"Your bones will break under my boot, $R!",12,1,100,0,0,0,"Chieftain Nek\'rosh"),
-(@ENTRY,0,1,"Long live the Dragonmaw! Die you worthless $R!",12,1,100,0,0,0,"Chieftain Nek\'rosh"),
+(@ENTRY,0,0,"Your bones will break under my boot, $r!",12,1,100,0,0,0,"Chieftain Nek\'rosh"),
+(@ENTRY,0,1,"Long live the Dragonmaw! Die you worthless $r!",12,1,100,0,0,0,"Chieftain Nek\'rosh"),
 (@ENTRY,0,2,"For the Dragonmaw!",12,1,100,0,0,0,"Chieftain Nek\'rosh");
 
 -- Texts for Dragonmaw Grunt
 SET @ENTRY := 2102;
 DELETE FROM `creature_text` WHERE `entry`=@ENTRY;
 INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`probability`,`emote`,`duration`,`sound`,`comment`) VALUES
-(@ENTRY,0,0,"Your bones will break under my boot, $R!",12,1,100,0,0,0,"Dragonmaw Grunt"),
-(@ENTRY,0,1,"Long live the Dragonmaw! Die you worthless $R!",12,1,100,0,0,0,"Dragonmaw Grunt"),
+(@ENTRY,0,0,"Your bones will break under my boot, $r!",12,1,100,0,0,0,"Dragonmaw Grunt"),
+(@ENTRY,0,1,"Long live the Dragonmaw! Die you worthless $r!",12,1,100,0,0,0,"Dragonmaw Grunt"),
 (@ENTRY,0,2,"For the Dragonmaw!",12,1,100,0,0,0,"Dragonmaw Grunt");
 
 -- Texts for Dragonmaw Scout
 SET @ENTRY := 2103;
 DELETE FROM `creature_text` WHERE `entry`=@ENTRY;
 INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`probability`,`emote`,`duration`,`sound`,`comment`) VALUES
-(@ENTRY,0,0,"Your bones will break under my boot, $R!",12,1,100,0,0,0,"Dragonmaw Scout"),
-(@ENTRY,0,1,"Long live the Dragonmaw! Die you worthless $R!",12,1,100,0,0,0,"Dragonmaw Scout"),
+(@ENTRY,0,0,"Your bones will break under my boot, $r!",12,1,100,0,0,0,"Dragonmaw Scout"),
+(@ENTRY,0,1,"Long live the Dragonmaw! Die you worthless $r!",12,1,100,0,0,0,"Dragonmaw Scout"),
 (@ENTRY,0,2,"For the Dragonmaw!",12,1,100,0,0,0,"Dragonmaw Scout");
 
 -- Texts for Garneg Charskull
 SET @ENTRY := 2108;
 DELETE FROM `creature_text` WHERE `entry`=@ENTRY;
 INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`probability`,`emote`,`duration`,`sound`,`comment`) VALUES
-(@ENTRY,0,0,"Your bones will break under my boot, $R!",12,1,100,0,0,0,"Garneg Charskull"),
-(@ENTRY,0,1,"Long live the Dragonmaw! Die you worthless $R!",12,1,100,0,0,0,"Garneg Charskull"),
+(@ENTRY,0,0,"Your bones will break under my boot, $r!",12,1,100,0,0,0,"Garneg Charskull"),
+(@ENTRY,0,1,"Long live the Dragonmaw! Die you worthless $r!",12,1,100,0,0,0,"Garneg Charskull"),
 (@ENTRY,0,2,"For the Dragonmaw!",12,1,100,0,0,0,"Garneg Charskull");
 
 -- Texts for Lord Falconcrest
@@ -162,7 +164,7 @@ INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`pr
 SET @ENTRY := 3277;
 DELETE FROM `creature_text` WHERE `entry`=@ENTRY;
 INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`probability`,`emote`,`duration`,`sound`,`comment`) VALUES
-(@ENTRY,0,0,"My talons will shred your puny body, $R.",12,0,100,0,0,0,"Witchwing Roguefeather");
+(@ENTRY,0,0,"My talons will shred your puny body, $r.",12,0,100,0,0,0,"Witchwing Roguefeather");
 
 -- Texts for Verog the Dervish
 SET @ENTRY := 3395;
@@ -187,11 +189,11 @@ INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`pr
 SET @ENTRY := 3644;
 DELETE FROM `creature_text` WHERE `entry`=@ENTRY;
 INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`probability`,`emote`,`duration`,`sound`,`comment`) VALUES
-(@ENTRY,0,0,"Anaya...? Do my eyes deceive me? Is it really you?",12,0,100,0,0,0,"Cerellean Whiteclaw"),
-(@ENTRY,1,0,"That fates should be so cruel as to permit us only this after a thousand years apart...",12,0,100,0,0,0,"Cerellean Whiteclaw"),
-(@ENTRY,2,0,"Do you hate me, my love? That I was forced to destroy your living form, that your spirit be released from unhappy bondage.",12,0,100,0,0,0,"Cerellean Whiteclaw"),
-(@ENTRY,3,0,"No! Anaya... Anaya! Don't leave me! Please...",12,0,100,0,0,0,"Cerellean Whiteclaw"),
-(@ENTRY,4,0,"How, my love? How will I find the strength to face the ages of the world without you by my side...",12,0,100,0,0,0,"Cerellean Whiteclaw");
+(@ENTRY,0,0,"You have chosen death.",12,0,100,0,0,0,"Cerellean Whiteclaw"),
+(@ENTRY,1,0,"%s growls in your direction before taking time to sniff you.",16,0,100,0,0,0,"Cerellean Whiteclaw"),
+(@ENTRY,2,0,"%s faces southeast and whimpers before looking back at you. ",16,0,100,0,0,0,"Cerellean Whiteclaw"),
+(@ENTRY,3,0,"The end comes for you!",12,0,100,0,0,0,"Cerellean Whiteclaw"),
+(@ENTRY,4,0,"I shall be rewarded!",12,0,100,0,0,0,"Cerellean Whiteclaw");
 
 -- Texts for Anaya Dawnrunner
 SET @ENTRY := 3667;
@@ -203,11 +205,11 @@ INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`pr
 SET @ENTRY := 3843;
 DELETE FROM `creature_text` WHERE `entry`=@ENTRY;
 INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`probability`,`emote`,`duration`,`sound`,`comment`) VALUES
-(@ENTRY,0,0,"The ages have been cruel to you and I, my love, but be assured, it is, and at long last we are reunited.",12,0,100,0,0,0,"Anaya"),
-(@ENTRY,1,0,"Let it not trouble your heart, beloved. You have freed me from slavery, and for that I love you all the more.",12,0,100,0,0,0,"Anaya"),
-(@ENTRY,2,0,"Sadly, even this must be cut short... The ties that bind me to this world weaken, and pull me away...",12,0,100,0,0,0,"Anaya"),
-(@ENTRY,3,0,"Farewell, Cerellean, until we are joined once again...",12,0,100,0,0,0,"Anaya"),
-(@ENTRY,4,0,"%s's soft voice trails away into the mists, \"Know that I love you always...\"",16,0,100,0,0,0,"Anaya");
+(@ENTRY,0,0,"I do as I must!",12,0,100,0,0,0,"Anaya"),
+(@ENTRY,1,0,"Ruin finds us all!",12,0,100,0,0,0,"Anaya"),
+(@ENTRY,2,0,"In Sargeras' name!",12,0,100,0,0,0,"Anaya"),
+(@ENTRY,3,0,"The Legion reigns!",12,0,100,0,0,0,"Anaya"),
+(@ENTRY,4,0,"Pathetic worm!",12,0,100,0,0,0,"Anaya");
 
 -- Texts for Thistlefur Avenger
 SET @ENTRY := 3925;
@@ -241,12 +243,12 @@ INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`pr
 SET @ENTRY := 4509;
 DELETE FROM `creature_text` WHERE `entry`=@ENTRY;
 INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`probability`,`emote`,`duration`,`sound`,`comment`) VALUES
-(@ENTRY,0,0,"In the throes of the Sundering, Ameth'Aran was at the whim of the terror that gripped the land. There was little hope for survival.",12,0,100,0,0,0,"Sargath"),
-(@ENTRY,1,0,"Athrikus came to us. He told us that he could save us from harm. He cast a spell upon us to protect us from harm.",12,0,100,0,0,0,"Sargath"),
-(@ENTRY,2,0,"When the shaking stopped, his true motives were revealed. We were trapped, and he was slowly draining our powers.",12,0,100,0,0,0,"Sargath"),
-(@ENTRY,3,0,"There were hundreds imprisoned by his spell. Now only a few remain in their prisons. He would speak to us sometimes.",12,0,100,0,0,0,"Sargath"),
-(@ENTRY,4,0,"He worried that his power weakened, that soon even we last of his precious soulgems would fade and die.",12,0,100,0,0,0,"Sargath"),
-(@ENTRY,5,0,"His lieutenant, Ilkurd Magthrull possesses a tome which might indicate the location of the remaining soulgems.",12,0,100,0,0,0,"Sargath");
+(@ENTRY,0,0,"Get it while it's hot!",12,0,100,0,0,0,"Sargath"),
+(@ENTRY,1,0,"Any intruders must be eliminated!",14,0,100,0,0,0,"Sargath"),
+(@ENTRY,2,0,"Protect the Botanica at all costs!",14,0,100,0,0,0,"Sargath"),
+(@ENTRY,3,0,"Protect the Mechanar at all costs!",14,0,100,0,0,0,"Sargath"),
+(@ENTRY,4,0,"You hear a faint unlocking sound...",16,0,100,0,0,0,"Sargath"),
+(@ENTRY,5,0,"The end is come!",12,0,100,0,0,0,"Sargath");
 
 -- Texts for Hatefury Rogue
 SET @ENTRY := 4670;
@@ -296,13 +298,13 @@ INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`pr
 SET @ENTRY := 4851;
 DELETE FROM `creature_text` WHERE `entry`=@ENTRY;
 INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`probability`,`emote`,`duration`,`sound`,`comment`) VALUES
-(@ENTRY,0,0,"%s becomes enraged!",16,0,100,0,0,0,"Stonevault Rockchewer");
+(@ENTRY,0,0,"%s goes into a frenzy!",16,0,100,0,0,0,"Stonevault Rockchewer");
 
 -- Texts for Grimlok
 SET @ENTRY := 4854;
 DELETE FROM `creature_text` WHERE `entry`=@ENTRY;
 INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`probability`,`emote`,`duration`,`sound`,`comment`) VALUES
-(@ENTRY,0,0,"Me %s, King!",14,0,100,0,0,5853,"Grimlok"),
+(@ENTRY,0,0,"Me %s, king!",14,0,100,0,0,5853,"Grimlok"),
 (@ENTRY,2,0,"Die! Die!",14,0,100,0,0,5854,"Grimlok");
 
 -- Texts for Stonevault Brawler
@@ -346,8 +348,8 @@ INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`pr
 SET @ENTRY := 6523;
 DELETE FROM `creature_text` WHERE `entry`=@ENTRY;
 INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`probability`,`emote`,`duration`,`sound`,`comment`) VALUES
-(@ENTRY,0,0,"Never cross a Dark Iron, $C.",12,0,100,0,0,0,"Dark Iron Rifleman"),
-(@ENTRY,0,1,"Time to die, $C!",12,0,100,0,0,0,"Dark Iron Rifleman"),
+(@ENTRY,0,0,"Never cross a Dark Iron, $c.",12,0,100,0,0,0,"Dark Iron Rifleman"),
+(@ENTRY,0,1,"Time to die, $c!",12,0,100,0,0,0,"Dark Iron Rifleman"),
 (@ENTRY,0,2,"Feel the power of the Dark Iron Dwarves!",12,0,100,0,0,0,"Dark Iron Rifleman");
 
 -- Texts for Deadwood Avenger
@@ -366,7 +368,7 @@ INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`pr
 SET @ENTRY := 7291;
 DELETE FROM `creature_text` WHERE `entry`=@ENTRY;
 INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`probability`,`emote`,`duration`,`sound`,`comment`) VALUES
-(@ENTRY,0,0,"By Thorazan's Beard, Slay Them!",14,0,100,0,0,5852,"Galgann Firehammer");
+(@ENTRY,0,0,"By Thaurissan's beard! Slay them!",14,0,100,0,0,5852,"Galgann Firehammer");
 
 -- Texts for Stonevault Mauler
 SET @ENTRY := 7320;
@@ -411,9 +413,9 @@ INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`pr
 SET @ENTRY := 8035;
 DELETE FROM `creature_text` WHERE `entry`=@ENTRY;
 INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`probability`,`emote`,`duration`,`sound`,`comment`) VALUES
-(@ENTRY,0,0,"%s will be armed in 10 seconds!",16,0,100,0,0,0,"Dark Iron Land Mine"),
-(@ENTRY,1,0,"%s will be armed in 5 seconds!",16,0,100,0,0,0,"Dark Iron Land Mine"),
-(@ENTRY,2,0,"%s is now armed!",16,0,100,0,0,0,"Dark Iron Land Mine");
+(@ENTRY,0,0,"No! You must no do this!",14,0,100,0,0,0,"Dark Iron Land Mine"),
+(@ENTRY,1,0,"DIE, MORTALS!",14,0,100,0,0,5871,"Dark Iron Land Mine"),
+(@ENTRY,2,0,"By the Light, you will leave this tomb!",12,0,100,0,0,0,"Dark Iron Land Mine");
 
 -- Texts for Omgorn the Lost
 SET @ENTRY := 8201;
@@ -433,7 +435,7 @@ SET @ENTRY := 8580;
 DELETE FROM `creature_text` WHERE `entry`=@ENTRY;
 INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`probability`,`emote`,`duration`,`sound`,`comment`) VALUES
 (@ENTRY,0,0,"So or'manley fi siame Dim fus siame yudo",14,14,100,0,0,5859,"Atal\'alarion"),
-(@ENTRY,1,0,"IMan atuad fi ting caang",14,14,100,0,0,5860,"Atal\'alarion");
+(@ENTRY,1,0,"You will rest with the honored dead.",12,0,100,0,0,0,"Atal\'alarion");
 
 -- Texts for Mosshoof Courser
 SET @ENTRY := 8761;
@@ -445,13 +447,13 @@ INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`pr
 SET @ENTRY := 8877;
 DELETE FROM `creature_text` WHERE `entry`=@ENTRY;
 INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`probability`,`emote`,`duration`,`sound`,`comment`) VALUES
-(@ENTRY,0,0,"%s becomes enraged!",16,0,100,0,0,0,"Sandfury Zealot");
+(@ENTRY,0,0,"%s goes into a frenzy!",16,0,100,0,0,0,"Sandfury Zealot");
 
 -- Texts for Angerclaw Bear
 SET @ENTRY := 8956;
 DELETE FROM `creature_text` WHERE `entry`=@ENTRY;
 INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`probability`,`emote`,`duration`,`sound`,`comment`) VALUES
-(@ENTRY,0,0,"%s becomes enraged!",16,0,100,0,0,0,"Angerclaw Bear");
+(@ENTRY,0,0,"%s goes into a frenzy!",16,0,100,0,0,0,"Angerclaw Bear");
 
 -- Texts for Angerclaw Grizzly
 SET @ENTRY := 8957;
@@ -505,7 +507,7 @@ INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`pr
 SET @ENTRY := 10411;
 DELETE FROM `creature_text` WHERE `entry`=@ENTRY;
 INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`probability`,`emote`,`duration`,`sound`,`comment`) VALUES
-(@ENTRY,0,0,"The living are here!",14,0,100,0,0,0,"Eye of Naxxramas");
+(@ENTRY,0,0,"The living are here!",14,0,100,0,0,6596,"Eye of Naxxramas");
 
 -- Texts for Marduk Blackpool
 SET @ENTRY := 10433;
@@ -535,20 +537,20 @@ INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`pr
 SET @ENTRY := 11058;
 DELETE FROM `creature_text` WHERE `entry`=@ENTRY;
 INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`probability`,`emote`,`duration`,`sound`,`comment`) VALUES
-(@ENTRY,0,0,"The stogies? You'll have to pry them from my cold dead... er... RAWR!",12,0,66,0,0,0,"Fras Siabi"),
-(@ENTRY,0,1,"I'm going to wear your skin as a smoking jacket!",14,0,33,0,0,0,"Fras Siabi");
+(@ENTRY,0,0,"Looking for these???? You'll never have em!",12,0,66,0,0,0,"Fras Siabi"),
+(@ENTRY,0,1,"I'm going to wear your skin as a smoking jacket! The stogies? You'll have to pry them from my cold dead... er... RAWR!!!!",12,0,33,0,0,0,"Fras Siabi");
 
 -- Texts for Manifestation of Water
 SET @ENTRY := 11256;
 DELETE FROM `creature_text` WHERE `entry`=@ENTRY;
 INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`probability`,`emote`,`duration`,`sound`,`comment`) VALUES
-(@ENTRY,0,0,"Ma reth bromo zoln kilagrin dra ma zoern tu ko fraht ka tadrom Ma krin drinor zaln dirnor Ma krin kan aasrugel korsul",12,0,100,0,0,0,"Manifestation of Water");
+(@ENTRY,0,0,"NO!!!  It puts the tannin in the basket, or it gets the mallet again!",14,0,100,0,0,0,"Manifestation of Water");
 
 -- Texts for Gordok Brute
 SET @ENTRY := 11441;
 DELETE FROM `creature_text` WHERE `entry`=@ENTRY;
 INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`probability`,`emote`,`duration`,`sound`,`comment`) VALUES
-(@ENTRY,0,0,"Raaar!!! Me smash $R!",12,0,100,0,0,0,"Gordok Brute"),
+(@ENTRY,0,0,"Raaar!!! Me smash $r!",12,0,100,0,0,0,"Gordok Brute"),
 (@ENTRY,0,1,"Me smash! You die!",12,0,100,0,0,0,"Gordok Brute"),
 (@ENTRY,0,2,"I'll crush you!",12,0,100,0,0,0,"Gordok Brute"),
 (@ENTRY,1,0,"%s becomes enraged!",16,0,100,0,0,0,"Gordok Brute");
@@ -557,7 +559,7 @@ INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`pr
 SET @ENTRY := 11442;
 DELETE FROM `creature_text` WHERE `entry`=@ENTRY;
 INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`probability`,`emote`,`duration`,`sound`,`comment`) VALUES
-(@ENTRY,0,0,"Raaar!!! Me smash $R!",12,0,100,0,0,0,"Gordok Mauler"),
+(@ENTRY,0,0,"Raaar!!! Me smash $r!",12,0,100,0,0,0,"Gordok Mauler"),
 (@ENTRY,0,1,"Me smash! You die!",12,0,100,0,0,0,"Gordok Mauler"),
 (@ENTRY,0,2,"I'll crush you!",12,0,100,0,0,0,"Gordok Mauler"),
 (@ENTRY,1,0,"%s becomes enraged!",16,0,100,0,0,0,"Gordok Mauler");
@@ -566,7 +568,7 @@ INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`pr
 SET @ENTRY := 11443;
 DELETE FROM `creature_text` WHERE `entry`=@ENTRY;
 INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`probability`,`emote`,`duration`,`sound`,`comment`) VALUES
-(@ENTRY,0,0,"Raaar!!! Me smash $R!",12,0,100,0,0,0,"Gordok Ogre-Mage"),
+(@ENTRY,0,0,"Raaar!!! Me smash $r!",12,0,100,0,0,0,"Gordok Ogre-Mage"),
 (@ENTRY,0,1,"Me smash! You die!",12,0,100,0,0,0,"Gordok Ogre-Mage"),
 (@ENTRY,0,2,"I'll crush you!",12,0,100,0,0,0,"Gordok Ogre-Mage");
 
@@ -574,7 +576,7 @@ INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`pr
 SET @ENTRY := 11444;
 DELETE FROM `creature_text` WHERE `entry`=@ENTRY;
 INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`probability`,`emote`,`duration`,`sound`,`comment`) VALUES
-(@ENTRY,0,0,"Raaar!!! Me smash $R!",12,0,100,0,0,0,"Gordok Mage-Lord"),
+(@ENTRY,0,0,"Raaar!!! Me smash $r!",12,0,100,0,0,0,"Gordok Mage-Lord"),
 (@ENTRY,0,1,"Me smash! You die!",12,0,100,0,0,0,"Gordok Mage-Lord"),
 (@ENTRY,0,2,"I'll crush you!",12,0,100,0,0,0,"Gordok Mage-Lord"),
 (@ENTRY,1,0,"%s becomes enraged!",16,0,100,0,0,0,"Gordok Mage-Lord");
@@ -583,7 +585,7 @@ INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`pr
 SET @ENTRY := 11448;
 DELETE FROM `creature_text` WHERE `entry`=@ENTRY;
 INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`probability`,`emote`,`duration`,`sound`,`comment`) VALUES
-(@ENTRY,0,0,"Raaar!!! Me smash $R!",12,0,100,0,0,0,"Gordok Warlock"),
+(@ENTRY,0,0,"Raaar!!! Me smash $r!",12,0,100,0,0,0,"Gordok Warlock"),
 (@ENTRY,0,1,"Me smash! You die!",12,0,100,0,0,0,"Gordok Warlock"),
 (@ENTRY,0,2,"I'll crush you!",12,0,100,0,0,0,"Gordok Warlock");
 
@@ -623,8 +625,8 @@ INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`pr
 SET @ENTRY := 11680;
 DELETE FROM `creature_text` WHERE `entry`=@ENTRY;
 INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`probability`,`emote`,`duration`,`sound`,`comment`) VALUES
-(@ENTRY,0,0,"Never cross a Dark Iron, $C.",12,0,100,0,0,0,"Horde Scout"),
-(@ENTRY,0,1,"Time to die, $C!",12,0,100,0,0,0,"Horde Scout"),
+(@ENTRY,0,0,"Never cross a Dark Iron, $c.",12,0,100,0,0,0,"Horde Scout"),
+(@ENTRY,0,1,"Time to die, $c!",12,0,100,0,0,0,"Horde Scout"),
 (@ENTRY,0,2,"Feel the power of the Dark Iron Dwarves!",12,0,100,0,0,0,"Horde Scout");
 
 -- Texts for Desert Rager
@@ -761,19 +763,19 @@ SET @ENTRY := 16406;
 DELETE FROM `creature_text` WHERE `entry`=@ENTRY;
 INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`probability`,`emote`,`duration`,`sound`,`comment`) VALUES
 (@ENTRY,0,0,"What is happening?",12,0,100,0,0,0,"Phantom Attendant"),
-(@ENTRY,0,1,"Where am I? What...",14,0,100,0,0,0,"Phantom Attendant");
+(@ENTRY,0,1,"Where am I? What...",12,0,100,0,0,0,"Phantom Attendant");
 
 -- Texts for Phantom Valet
 SET @ENTRY := 16408;
 DELETE FROM `creature_text` WHERE `entry`=@ENTRY;
 INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`probability`,`emote`,`duration`,`sound`,`comment`) VALUES
-(@ENTRY,0,0,"The fates have turned against me!",14,0,100,0,0,0,"Phantom Valet");
+(@ENTRY,0,0,"The fates have turned against me!",12,0,100,0,0,0,"Phantom Valet");
 
 -- Texts for Phantom Guest
 SET @ENTRY := 16409;
 DELETE FROM `creature_text` WHERE `entry`=@ENTRY;
 INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`probability`,`emote`,`duration`,`sound`,`comment`) VALUES
-(@ENTRY,0,0,"Not... Fair...",14,0,100,0,0,0,"Phantom Guest");
+(@ENTRY,0,0,"Not... Fair...",12,0,100,0,0,0,"Phantom Guest");
 
 -- Texts for Ghostly Steward
 SET @ENTRY := 16414;
@@ -782,7 +784,7 @@ INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`pr
 (@ENTRY,0,0,"That was a 200 year old Pupellyverbos Port!",12,0,100,0,0,0,"Ghostly Steward"),
 (@ENTRY,0,1,"That was wasted on the likes of you!",12,0,100,0,0,0,"Ghostly Steward"),
 (@ENTRY,0,2,"How dare you disturb the master's dinner!",14,0,100,0,0,0,"Ghostly Steward"),
-(@ENTRY,1,0,"Wait... No! No!",14,0,100,0,0,0,"Ghostly Steward");
+(@ENTRY,1,0,"Wait... No! No!",12,0,100,0,0,0,"Ghostly Steward");
 
 -- Texts for Plagued Ghoul
 SET @ENTRY := 16447;
@@ -794,23 +796,23 @@ INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`pr
 SET @ENTRY := 16460;
 DELETE FROM `creature_text` WHERE `entry`=@ENTRY;
 INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`probability`,`emote`,`duration`,`sound`,`comment`) VALUES
-(@ENTRY,0,0,"He asked if the imp could join in... can you believe it? Actually, it wasn't half bad...",12,0,100,0,0,0,"Night Mistress"),
-(@ENTRY,0,1,"So I said, \"Yeah, but that'll cost you extra.\"",12,0,100,0,0,0,"Night Mistress"),
-(@ENTRY,0,2,"Five seconds! I'm not kidding!",14,0,100,0,0,0,"Night Mistress");
+(@ENTRY,0,0,"He asked if the imp could join in... can you believe it? Actually, it wasn't half bad...",12,0,100,1,0,0,"Night Mistress"),
+(@ENTRY,0,1,"So I said, \"Yeah, but that'll cost you extra.\"",12,0,100,1,0,0,"Night Mistress"),
+(@ENTRY,0,2,"Five seconds! I'm not kidding!",12,0,100,1,0,0,"Night Mistress");
 
 -- Texts for Concubine
 SET @ENTRY := 16461;
 DELETE FROM `creature_text` WHERE `entry`=@ENTRY;
 INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`probability`,`emote`,`duration`,`sound`,`comment`) VALUES
-(@ENTRY,0,0,"We could have had so much fun!",14,0,100,0,0,0,"Concubine"),
-(@ENTRY,1,0,"They fall asleep after. Me, I fall asleep during....",14,0,100,0,0,0,"Concubine");
+(@ENTRY,0,0,"We could have had so much fun!",12,0,100,0,0,0,"Concubine"),
+(@ENTRY,1,0,"They fall asleep after. Me, I fall asleep during....",12,0,100,1,0,0,"Concubine");
 
 -- Texts for Spectral Patron
 SET @ENTRY := 16468;
 DELETE FROM `creature_text` WHERE `entry`=@ENTRY;
 INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`probability`,`emote`,`duration`,`sound`,`comment`) VALUES
 (@ENTRY,0,0,"Yes... I think I remember now...",12,0,100,0,0,0,"Spectral Patron"),
-(@ENTRY,0,1,"I'll miss the show!",14,0,100,0,0,0,"Spectral Patron");
+(@ENTRY,0,1,"I'll miss the show!",12,0,100,0,0,0,"Spectral Patron");
 
 -- Texts for Ghostly Philanthropist
 SET @ENTRY := 16470;
@@ -824,23 +826,23 @@ SET @ENTRY := 16481;
 DELETE FROM `creature_text` WHERE `entry`=@ENTRY;
 INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`probability`,`emote`,`duration`,`sound`,`comment`) VALUES
 (@ENTRY,0,0,"Time to move on...",12,0,100,0,0,0,"Ghastly Haunt"),
-(@ENTRY,0,1,"Free... at last.",14,0,100,0,0,0,"Ghastly Haunt");
+(@ENTRY,0,1,"Free... at last.",12,0,100,0,0,0,"Ghastly Haunt");
 
 -- Texts for Trapped Soul
 SET @ENTRY := 16482;
 DELETE FROM `creature_text` WHERE `entry`=@ENTRY;
 INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`probability`,`emote`,`duration`,`sound`,`comment`) VALUES
 (@ENTRY,0,0,"Time to move on...",12,0,100,0,0,0,"Trapped Soul"),
-(@ENTRY,0,1,"Free... at last.",14,0,100,0,0,0,"Trapped Soul");
+(@ENTRY,0,1,"Free... at last.",12,0,100,0,0,0,"Trapped Soul");
 
 -- Texts for Arcane Watchman
 SET @ENTRY := 16485;
 DELETE FROM `creature_text` WHERE `entry`=@ENTRY;
 INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`probability`,`emote`,`duration`,`sound`,`comment`) VALUES
 (@ENTRY,0,0,"The same fate awaits all who would steal from the master.",12,0,100,0,0,0,"Arcane Watchman"),
-(@ENTRY,0,1,"Death is far too merciful for your kind.",14,0,100,0,0,0,"Arcane Watchman"),
+(@ENTRY,0,1,"Death is far too merciful for your kind.",12,0,100,0,0,0,"Arcane Watchman"),
 (@ENTRY,1,0,"This... changes nothing. Eternal damnation awaits you!",12,0,100,0,0,0,"Arcane Watchman"),
-(@ENTRY,1,1,"Others will take my place!",14,0,100,0,0,0,"Arcane Watchman");
+(@ENTRY,1,1,"Others will take my place!",12,0,100,0,0,0,"Arcane Watchman");
 
 -- Texts for Blood Elf Scout
 SET @ENTRY := 16521;
@@ -876,8 +878,8 @@ INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`pr
 SET @ENTRY := 16544;
 DELETE FROM `creature_text` WHERE `entry`=@ENTRY;
 INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`probability`,`emote`,`duration`,`sound`,`comment`) VALUES
-(@ENTRY,0,0,"Turn your back while you can!",14,0,100,0,0,0,"Ethereal Thief"),
-(@ENTRY,1,0,"You will succeed only in damning yourselves!",14,0,100,0,0,0,"Ethereal Thief");
+(@ENTRY,0,0,"Turn your back while you can!",12,0,100,0,0,0,"Ethereal Thief"),
+(@ENTRY,1,0,"You will succeed only in damning yourselves!",12,0,100,0,0,0,"Ethereal Thief");
 
 -- Texts for Watch Commander Krunk
 SET @ENTRY := 16584;
@@ -948,7 +950,7 @@ INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`pr
 SET @ENTRY := 17188;
 DELETE FROM `creature_text` WHERE `entry`=@ENTRY;
 INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`probability`,`emote`,`duration`,`sound`,`comment`) VALUES
-(@ENTRY,0,0,"%s becomes enraged!",16,0,100,0,0,0,"Raving Owlbeast");
+(@ENTRY,0,0,"%s goes into a frenzy!",16,0,100,0,0,0,"Raving Owlbeast");
 
 -- Texts for Bonechewer Hungerer
 SET @ENTRY := 17259;
@@ -1134,17 +1136,6 @@ DELETE FROM `creature_text` WHERE `entry`=@ENTRY;
 INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`probability`,`emote`,`duration`,`sound`,`comment`) VALUES
 (@ENTRY,0,0,"Hey!  Over here!  Yeah, over here... I'm in this cage!!!",14,0,100,0,0,0,"Naturalist Bite");
 
--- Texts for Mennu the Betrayer
-SET @ENTRY := 17941;
-DELETE FROM `creature_text` WHERE `entry`=@ENTRY;
-INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`probability`,`emote`,`duration`,`sound`,`comment`) VALUES
-(@ENTRY,0,0,"You brought this on yourselves.",14,0,100,0,0,10379,"Mennu the Betrayer"),
-(@ENTRY,0,1,"Don't make me kill you!",14,0,100,0,0,10378,"Mennu the Betrayer"),
-(@ENTRY,0,2,"The work must continue.",14,0,100,0,0,10376,"Mennu the Betrayer"),
-(@ENTRY,1,0,"You should not have come.",14,0,66,0,0,10381,"Mennu the Betrayer"),
-(@ENTRY,1,1,"It had to be done.",14,0,33,0,0,10380,"Mennu the Betrayer"),
-(@ENTRY,2,0,"I... Deserve this.",14,0,100,0,0,10382,"Mennu the Betrayer");
-
 -- Texts for Coilfang Slavehandler
 SET @ENTRY := 17959;
 DELETE FROM `creature_text` WHERE `entry`=@ENTRY;
@@ -1162,12 +1153,6 @@ SET @ENTRY := 17962;
 DELETE FROM `creature_text` WHERE `entry`=@ENTRY;
 INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`probability`,`emote`,`duration`,`sound`,`comment`) VALUES
 (@ENTRY,0,0,"%s goes into a frenzy!",16,0,100,0,0,0,"Coilfang Collaborator");
-
--- Texts for Rokmar the Crackler
-SET @ENTRY := 17991;
-DELETE FROM `creature_text` WHERE `entry`=@ENTRY;
-INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`probability`,`emote`,`duration`,`sound`,`comment`) VALUES
-(@ENTRY,0,0,"%s becomes enraged!",16,0,100,0,0,0,"Rokmar the Crackler");
 
 -- Texts for Enraged Crusher
 SET @ENTRY := 18062;
@@ -1224,7 +1209,7 @@ INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`pr
 SET @ENTRY := 18293;
 DELETE FROM `creature_text` WHERE `entry`=@ENTRY;
 INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`probability`,`emote`,`duration`,`sound`,`comment`) VALUES
-(@ENTRY,0,0,"He's so well diciplined!",12,0,100,0,0,0,"Sunspring Post Refugee");
+(@ENTRY,0,0,"He's so well disciplined!",12,0,100,0,0,0,"Sunspring Post Refugee");
 
 -- Texts for Sunspring Post Orphan
 SET @ENTRY := 18296;
@@ -1266,7 +1251,9 @@ SET @ENTRY := 18598;
 DELETE FROM `creature_text` WHERE `entry`=@ENTRY;
 INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`probability`,`emote`,`duration`,`sound`,`comment`) VALUES
 (@ENTRY,0,0,"Don't feel.....so good.....",12,0,100,0,0,0,"Orc Prisoner"),
-(@ENTRY,0,1,"When do we eat again?",12,0,100,0,0,0,"Orc Prisoner");
+(@ENTRY,0,1,"When do we eat again?",12,0,100,0,0,0,"Orc Prisoner"),
+(@ENTRY,1,0,"Don't feel.....so good.....",12,0,100,0,0,0,"Orc Prisoner"),
+(@ENTRY,2,0,"When do we eat again?",12,0,100,0,0,0,"Orc Prisoner");
 
 -- Texts for Ever-Core the Punisher
 SET @ENTRY := 18698;
@@ -1329,7 +1316,7 @@ INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`pr
 (@ENTRY,1,1,"Hey! Hey, $r! I be havin' just the thing for ya. Ya ever see a Tikbalang? Frightenin' creatures. Prone to stealin' ya away. What ya need is my tikbaland wards. Guaranteed to ward away all tikbalangs!",12,0,100,0,0,0,"Griftah"),
 (@ENTRY,1,2,"Look over here, $c! I got somethin' for ya. Just what ya need. It's soap, right... and it's on a rope! No offense, man, but yer a little ripe, you know what I'm sayin'? ",12,0,100,0,0,0,"Griftah"),
 (@ENTRY,2,0,"Ya look lovesick. Special someone be gettin' ya down, eh? No worries, no worries. Ya get this medallion from me, ya wear it when ya see 'em and they be all over ya, sweetheart!",12,0,100,0,0,0,"Griftah"),
-(@ENTRY,2,1,"Amazing Amulets! Incredible curios! The newfangled jewlcrafters be havin' nothin' on the tried and true mystical methods of ol' %s! Improve yerself through these magical talismans for a bargain price!",12,0,100,0,0,0,"Griftah"),
+(@ENTRY,2,1,"Amazing Amulets! Incredible curios! The newfangled jewelcrafters be havin' nothin' on the tried and true mystical methods of ol' %s! Improve yerself through these magical talismans for a bargain price!",12,0,100,0,0,0,"Griftah"),
 (@ENTRY,2,2,"Dangerous out there, innit? Know what ya need? Protection. I can help ya defy death itself! Ya wear this madstone 'round yer neck, see, and then ya be able to come back if ya find yerself in the spirit world! Just a quick jaunt to yer corpse and up ya com",12,0,100,0,0,0,"Griftah");
 
 -- Texts for Vagrant
@@ -1338,7 +1325,7 @@ DELETE FROM `creature_text` WHERE `entry`=@ENTRY;
 INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`probability`,`emote`,`duration`,`sound`,`comment`) VALUES
 (@ENTRY,0,0,"Please don't ignore us...",12,0,100,1,0,0,"Vagrant"),
 (@ENTRY,0,1,"Spare a copper, madame?",12,0,100,1,0,0,"Vagrant"),
-(@ENTRY,0,2,"Hey man, got some money? I've got five kids to feed!",12,0,100,1,0,0,"Vagrant");
+(@ENTRY,0,2,"Hey, $G man:lady;? Got some money?  I got five kids to feed!",12,0,100,1,0,0,"Vagrant");
 
 -- Texts for Marshal Isildor
 SET @ENTRY := 19308;
@@ -1352,9 +1339,9 @@ INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`pr
 SET @ENTRY := 19346;
 DELETE FROM `creature_text` WHERE `entry`=@ENTRY;
 INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`probability`,`emote`,`duration`,`sound`,`comment`) VALUES
-(@ENTRY,0,0,"Anchorite Nindumen, I have a request to make of you.",12,0,100,0,0,0,"Harbinger Erothem"),
-(@ENTRY,1,0,"We've just sent another inexperienced squad into Nagrand. Might you offer a prayer for them?",12,0,100,0,0,0,"Harbinger Erothem"),
-(@ENTRY,2,0,"May it be so.",12,0,100,0,0,0,"Harbinger Erothem");
+(@ENTRY,0,0,"%s looks weak enough to capture.",16,0,100,0,0,0,"Harbinger Erothem"),
+(@ENTRY,1,0,"This land was mine long before your wretched kind set foot here.",14,0,100,0,0,0,"Harbinger Erothem"),
+(@ENTRY,2,0,"All who venture here belong to me, including you!",14,0,100,0,0,0,"Harbinger Erothem");
 
 -- Texts for Kor'kron Defender
 SET @ENTRY := 19362;
@@ -1375,7 +1362,7 @@ INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`pr
 (@ENTRY,5,0,"Please bless and protect them, and grant them success over those who seek to do us harm...",12,0,100,0,0,0,"Anchorite Nindumen"),
 (@ENTRY,6,0,"Continue to bless this, our ancient home, we beg.",12,0,100,0,0,0,"Anchorite Nindumen"),
 (@ENTRY,7,0,"Bless us with tolerance for our elven visitors.",12,0,100,0,0,0,"Anchorite Nindumen"),
-(@ENTRY,8,0,"By tha Naaru, may it be so.",12,0,100,0,0,0,"Anchorite Nindumen");
+(@ENTRY,8,0,"By the Naaru, may it be so.",12,0,100,0,0,0,"Anchorite Nindumen");
 
 -- Texts for D'ore
 SET @ENTRY := 19412;
@@ -1466,7 +1453,7 @@ INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`pr
 SET @ENTRY := 19926;
 DELETE FROM `creature_text` WHERE `entry`=@ENTRY;
 INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`probability`,`emote`,`duration`,`sound`,`comment`) VALUES
-(@ENTRY,0,0,"You are being misled! The Onslaught is all lies! The Scourge and the Forsaken are not our enemies! Wake up!",14,0,100,0,0,0,"Spellreaver Marathelle");
+(@ENTRY,0,0,"Looks like today was the wrong day to quit mana tapping...",12,0,100,1,0,0,"Spellreaver Marathelle");
 
 -- Texts for Bloodmaul Skirmisher
 SET @ENTRY := 19948;
@@ -1599,35 +1586,11 @@ DELETE FROM `creature_text` WHERE `entry`=@ENTRY;
 INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`probability`,`emote`,`duration`,`sound`,`comment`) VALUES
 (@ENTRY,0,0,"%s goes into a frenzy!",16,0,100,0,0,0,"Maggoc");
 
--- Texts for Dalliah the Doomsayer
-SET @ENTRY := 20885;
-DELETE FROM `creature_text` WHERE `entry`=@ENTRY;
-INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`probability`,`emote`,`duration`,`sound`,`comment`) VALUES
-(@ENTRY,0,0,"It is unwise to anger me.",14,0,100,0,0,0,"Dalliah the Doomsayer"),
-(@ENTRY,1,0,"You chose the wrong opponent.",14,0,100,0,0,11088,"Dalliah the Doomsayer"),
-(@ENTRY,1,1,"Completely ineffective. Just like someone else I know.",14,0,100,0,0,11087,"Dalliah the Doomsayer"),
-(@ENTRY,2,0,"Now I'm really... angry...",14,0,100,0,0,11093,"Dalliah the Doomsayer"),
-(@ENTRY,3,0,"I'll cut you to pieces!",12,0,100,0,0,0,"Dalliah the Doomsayer"),
-(@ENTRY,3,1,"Reap the Whirlwind!",14,0,100,0,0,0,"Dalliah the Doomsayer"),
-(@ENTRY,4,0,"Ahh... Just what I needed.",12,0,100,0,0,0,"Dalliah the Doomsayer"),
-(@ENTRY,4,1,"Ahh... That is much better.",14,0,100,0,0,0,"Dalliah the Doomsayer");
-
--- Texts for Wrath-Scryer Soccothrates
-SET @ENTRY := 20886;
-DELETE FROM `creature_text` WHERE `entry`=@ENTRY;
-INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`probability`,`emote`,`duration`,`sound`,`comment`) VALUES
-(@ENTRY,0,0,"Defend yourself, for all the good it will do...",14,0,66,0,0,11242,"Wrath-Scryer Soccothrates"),
-(@ENTRY,0,1,"On guard!",14,0,33,0,0,11241,"Wrath-Scryer Soccothrates"),
-(@ENTRY,1,0,"Knew this was... the only way out",14,0,100,0,0,11243,"Wrath-Scryer Soccothrates"),
-(@ENTRY,2,0,"Yes, that was quite satisfying",14,0,100,0,0,11239,"Wrath-Scryer Soccothrates"),
-(@ENTRY,3,0,"At last, a target for my frustrations!",14,0,100,0,0,11238,"Wrath-Scryer Soccothrates"),
-(@ENTRY,4,0,"Have you come to kill Dalliah? Can I watch?",14,0,100,0,0,11237,"Wrath-Scryer Soccothrates");
-
 -- Texts for Rina Moonspring
 SET @ENTRY := 21066;
 DELETE FROM `creature_text` WHERE `entry`=@ENTRY;
 INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`probability`,`emote`,`duration`,`sound`,`comment`) VALUES
-(@ENTRY,0,0,"%s whispers softle in reverent tones under her breath.",16,0,100,0,0,0,"Rina Moonspring");
+(@ENTRY,0,0,"%s whispers softley in reverent tones under her breath.",16,0,100,0,0,0,"Rina Moonspring");
 
 -- Texts for Rift Keeper
 SET @ENTRY := 21104;
@@ -1685,7 +1648,7 @@ INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`pr
 SET @ENTRY := 21771;
 DELETE FROM `creature_text` WHERE `entry`=@ENTRY;
 INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`probability`,`emote`,`duration`,`sound`,`comment`) VALUES
-(@ENTRY,0,0,"Wit a reward like dis, how could they refuse, mon?",12,0,100,0,0,0,"Warcaller Sardon Truslice");
+(@ENTRY,0,0,"Matron, flee! They are ruthless....",14,0,100,0,0,15503,"Warcaller Sardon Truslice");
 
 -- Texts for Thane Yoregar
 SET @ENTRY := 21773;
@@ -1764,27 +1727,21 @@ SET @ENTRY := 22992;
 DELETE FROM `creature_text` WHERE `entry`=@ENTRY;
 INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`probability`,`emote`,`duration`,`sound`,`comment`) VALUES
 (@ENTRY,0,0,"Fool! The essence of the hawk will never be yours!",12,0,100,0,0,0,"Guardian of the Hawk"),
-(@ENTRY,0,1,"I see those fools at the Abbey sent some fresh meat for us.",12,0,100,0,0,0,"Guardian of the Hawk"),
-(@ENTRY,1,0,"The time of the Raven is night, but yours will end here!",12,0,100,0,0,0,"Guardian of the Hawk"),
-(@ENTRY,1,1,"I see those fools at the Abbey sent some fresh meat for us.",12,0,100,0,0,0,"Guardian of the Hawk");
+(@ENTRY,1,0,"The time of the Raven is night, but yours will end here!",12,0,100,0,0,0,"Guardian of the Hawk");
 
 -- Texts for Guardian of the Eagle
 SET @ENTRY := 22993;
 DELETE FROM `creature_text` WHERE `entry`=@ENTRY;
 INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`probability`,`emote`,`duration`,`sound`,`comment`) VALUES
 (@ENTRY,0,0,"You dare to disturb the loyal followers of the Raven?",12,0,100,0,0,0,"Guardian of the Eagle"),
-(@ENTRY,0,1,"I see those fools at the Abbey sent some fresh meat for us.",12,0,100,0,0,0,"Guardian of the Eagle"),
-(@ENTRY,1,0,"You will die for your hubris, druid!",12,0,100,0,0,0,"Guardian of the Eagle"),
-(@ENTRY,1,1,"I see those fools at the Abbey sent some fresh meat for us.",12,0,100,0,0,0,"Guardian of the Eagle");
+(@ENTRY,1,0,"You will die for your hubris, druid!",12,0,100,0,0,0,"Guardian of the Eagle");
 
 -- Texts for Guardian of the Falcon
 SET @ENTRY := 22994;
 DELETE FROM `creature_text` WHERE `entry`=@ENTRY;
 INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`probability`,`emote`,`duration`,`sound`,`comment`) VALUES
-(@ENTRY,0,0,"You dare to disturb the loyal followers of the Raven?",12,0,100,0,0,0,"Guardian of the Falcon"),
-(@ENTRY,0,1,"I see those fools at the Abbey sent some fresh meat for us.",12,0,100,0,0,0,"Guardian of the Falcon"),
-(@ENTRY,1,0,"You will die for your hubris, druid!",12,0,100,0,0,0,"Guardian of the Falcon"),
-(@ENTRY,1,1,"I see those fools at the Abbey sent some fresh meat for us.",12,0,100,0,0,0,"Guardian of the Falcon");
+(@ENTRY,0,0,"The falcon is vaniquished, doomed never to rise again! Your quest is futile!",12,0,100,0,0,0,"Guardian of the Falcon"),
+(@ENTRY,1,0,"The raven will return to us as foretold in the prophecy and you are powerless to stop it!",12,0,100,0,0,0,"Guardian of the Falcon");
 
 -- Texts for Shadowmoon Weapon Master
 SET @ENTRY := 23049;
@@ -1803,14 +1760,7 @@ SET @ENTRY := 23163;
 DELETE FROM `creature_text` WHERE `entry`=@ENTRY;
 INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`probability`,`emote`,`duration`,`sound`,`comment`) VALUES
 (@ENTRY,0,0,"%s bares her fangs and hisses menacingly at those around her.",16,0,100,0,0,0,"Gezzarak the Huntress"),
-(@ENTRY,0,1,"I see those fools at the Abbey sent some fresh meat for us.",12,0,100,0,0,0,"Gezzarak the Huntress"),
 (@ENTRY,1,0,"%s focuses on $N.",16,0,100,0,0,0,"Gezzarak the Huntress");
-
--- Texts for Hand of Gorefiend
-SET @ENTRY := 23172;
-DELETE FROM `creature_text` WHERE `entry`=@ENTRY;
-INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`probability`,`emote`,`duration`,`sound`,`comment`) VALUES
-(@ENTRY,0,0,"%s becomes enraged!",16,0,100,0,0,0,"Hand of Gorefiend");
 
 -- Texts for Bonechewer Behemoth
 SET @ENTRY := 23196;
@@ -1915,23 +1865,6 @@ INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`pr
 (@ENTRY,0,0,"You cannot stop us all!",12,0,100,0,0,0,"Naxxanar Skeletal Mage"),
 (@ENTRY,0,1,"Your death will soon follow....",12,0,100,0,0,0,"Naxxanar Skeletal Mage");
 
--- Texts for Simmer
-SET @ENTRY := 25416;
-DELETE FROM `creature_text` WHERE `entry`=@ENTRY;
-INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`probability`,`emote`,`duration`,`sound`,`comment`) VALUES
-(@ENTRY,0,0,"Who dares?",12,0,100,0,0,0,"Simmer"),
-(@ENTRY,1,0,"STOP!",12,0,100,0,0,0,"Simmer"),
-(@ENTRY,2,0,"Tell Imperean that I will consider a cessation of hostilities. But first, Churn must stop his watery intrusions upon my rise!",12,0,100,0,0,0,"Simmer"),
-(@ENTRY,3,0,"I grow bored with you. Begone!",12,0,100,0,0,0,"Simmer");
-
--- Texts for Churn
-SET @ENTRY := 25418;
-DELETE FROM `creature_text` WHERE `entry`=@ENTRY;
-INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`probability`,`emote`,`duration`,`sound`,`comment`) VALUES
-(@ENTRY,0,0,"WAIT... NO MORE!",12,0,100,0,0,0,"Churn"),
-(@ENTRY,1,0,"I... submit. As long as Simmer agrees to stop boiling my pool, I agree to an armistice.",12,0,100,0,0,0,"Churn"),
-(@ENTRY,2,0,"Now, remove yourself from my presence. You would be wise not to come within sight of me again.",12,0,100,0,0,0,"Churn");
-
 -- Texts for Magmoth Shaman
 SET @ENTRY := 25428;
 DELETE FROM `creature_text` WHERE `entry`=@ENTRY;
@@ -1976,7 +1909,7 @@ INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`pr
 (@ENTRY,1,0,"Give it up, little beast!",12,0,100,0,0,0,"Loot Crazed Poacher"),
 (@ENTRY,1,1,"Just fifty more hooves and I'll have the new gun!",12,0,100,0,0,0,"Loot Crazed Poacher"),
 (@ENTRY,1,2,"No way! Rhino head helmet for the low, low price of thirty rhino heads? I'll take two at those prices!",12,0,100,0,0,0,"Loot Crazed Poacher"),
-(@ENTRY,2,0,"I wonder what nesingwary will give me for your hide!",12,0,100,0,0,0,"Loot Crazed Poacher"),
+(@ENTRY,2,0,"I wonder what Nesingwary will give me for your hide!",12,0,100,0,0,0,"Loot Crazed Poacher"),
 (@ENTRY,2,1,"It's gonna be veal tonight!",12,0,100,0,0,0,"Loot Crazed Poacher"),
 (@ENTRY,2,2,"Nesingwary is going to go broke if he keeps this up! Lane probably has no idea what he's doing!",12,0,100,0,0,0,"Loot Crazed Poacher");
 
@@ -2000,7 +1933,7 @@ INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`pr
 (@ENTRY,1,0,"Give it up, little beast!",12,0,100,0,0,0,"Loot Crazed Hunter"),
 (@ENTRY,1,1,"Just fifty more hooves and I'll have the new gun!",12,0,100,0,0,0,"Loot Crazed Hunter"),
 (@ENTRY,1,2,"No way! Rhino head helmet for the low, low price of thirty rhino heads? I'll take two at those prices!",12,0,100,0,0,0,"Loot Crazed Hunter"),
-(@ENTRY,2,0,"I wonder what nesingwary will give me for your hide!",12,0,100,0,0,0,"Loot Crazed Hunter"),
+(@ENTRY,2,0,"I wonder what Nesingwary will give me for your hide!",12,0,100,0,0,0,"Loot Crazed Hunter"),
 (@ENTRY,2,1,"It's gonna be veal tonight!",12,0,100,0,0,0,"Loot Crazed Hunter"),
 (@ENTRY,2,2,"Nesingwary is going to go broke if he keeps this up! Lane probably has no idea what he's doing!",12,0,100,0,0,0,"Loot Crazed Hunter");
 
@@ -2030,66 +1963,6 @@ INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`pr
 (@ENTRY,0,1,"To battle, my children! Show the enemy no mercy!",12,0,100,0,0,0,"Forgemaster Damrath"),
 (@ENTRY,0,2,"For the thane! For Loken!",12,0,100,0,0,0,"Forgemaster Damrath");
 
--- Texts for Meathook
-SET @ENTRY := 26529;
-DELETE FROM `creature_text` WHERE `entry`=@ENTRY;
-INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`probability`,`emote`,`duration`,`sound`,`comment`) VALUES
-(@ENTRY,0,0,"Play time!",14,0,100,0,0,13428,"Meathook"),
-(@ENTRY,1,0,"New toys!",14,0,100,0,0,13429,"Meathook"),
-(@ENTRY,2,0,"Get up! Me not done!",14,0,100,0,0,13432,"Meathook"),
-(@ENTRY,2,1,"Why you stop moving?",14,0,100,0,0,13431,"Meathook"),
-(@ENTRY,2,2,"Boring...",14,0,100,0,0,13430,"Meathook"),
-(@ENTRY,3,0,"This not fun...",14,0,100,0,0,13433,"Meathook");
-
--- Texts for Salramm the Fleshcrafter
-SET @ENTRY := 26530;
-DELETE FROM `creature_text` WHERE `entry`=@ENTRY;
-INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`probability`,`emote`,`duration`,`sound`,`comment`) VALUES
-(@ENTRY,0,0,"You are too late, champion of Lordaeron. The dead shall have their day.",14,0,100,0,0,13471,"Salramm the Fleshcrafter"),
-(@ENTRY,1,0,"Ah, the entertainment has arrived!",14,0,100,0,0,13472,"Salramm the Fleshcrafter"),
-(@ENTRY,2,0,"Your flesh betrays you.",14,0,100,0,0,13482,"Salramm the Fleshcrafter"),
-(@ENTRY,2,1,"Such strength... it must be mine!",14,0,100,0,0,13481,"Salramm the Fleshcrafter"),
-(@ENTRY,2,2,"I want a sample...",14,0,100,0,0,13480,"Salramm the Fleshcrafter"),
-(@ENTRY,3,0,"Come, citizen of Stratholme! Meet your saviors.",14,0,100,0,0,13477,"Salramm the Fleshcrafter"),
-(@ENTRY,3,1,"Say hello to some friends of mine.",14,0,100,0,0,13476,"Salramm the Fleshcrafter"),
-(@ENTRY,4,0,"Blood... destruction... EXHILARATING!",14,0,100,0,0,13479,"Salramm the Fleshcrafter"),
-(@ENTRY,4,1,"BOOM! Hahahahah...",14,0,100,0,0,13478,"Salramm the Fleshcrafter"),
-(@ENTRY,5,0,"Blood... destruction... EXHILARATING!",14,0,100,0,0,13479,"Salramm the Fleshcrafter"),
-(@ENTRY,5,1,"BOOM! Hahahahah...",14,0,100,0,0,13478,"Salramm the Fleshcrafter"),
-(@ENTRY,6,0,"Don't worry, I'll make good use of you.",14,0,100,0,0,13475,"Salramm the Fleshcrafter"),
-(@ENTRY,6,1,"Aah, quality materials!",14,0,100,0,0,13474,"Salramm the Fleshcrafter"),
-(@ENTRY,6,2,"The fun is just beginning!",14,0,100,0,0,13473,"Salramm the Fleshcrafter"),
-(@ENTRY,7,0,"You only advance... the master's plan...",14,0,100,0,0,13483,"Salramm the Fleshcrafter");
-
--- Texts for Chrono-Lord Epoch
-SET @ENTRY := 26532;
-DELETE FROM `creature_text` WHERE `entry`=@ENTRY;
-INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`probability`,`emote`,`duration`,`sound`,`comment`) VALUES
-(@ENTRY,0,0,"Prince Arthas Menethil, on this day, a powerful darkness has taken hold of your soul. The death you are destined to visit upon others will this day be your own.",12,0,100,0,0,13408,"Chrono-Lord Epoch"),
-(@ENTRY,1,0,"We'll see about that, young prince.",14,0,100,0,0,13409,"Chrono-Lord Epoch"),
-(@ENTRY,2,0,"Let's get this over with.",14,0,100,0,0,13412,"Chrono-Lord Epoch"),
-(@ENTRY,2,1,"Not quick enough!",14,0,100,0,0,13411,"Chrono-Lord Epoch"),
-(@ENTRY,2,2,"Tick tock, tick tock...",14,0,100,0,0,13410,"Chrono-Lord Epoch"),
-(@ENTRY,3,0,"You would destined to fail.",14,0,100,0,0,13415,"Chrono-Lord Epoch"),
-(@ENTRY,3,1,"This is the hour of our greatest triumph!",14,0,100,0,0,13414,"Chrono-Lord Epoch"),
-(@ENTRY,3,2,"There is no future for you.",14,0,100,0,0,13413,"Chrono-Lord Epoch");
-
--- Texts for Mal'Ganis
-SET @ENTRY := 26533;
-DELETE FROM `creature_text` WHERE `entry`=@ENTRY;
-INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`probability`,`emote`,`duration`,`sound`,`comment`) VALUES
-(@ENTRY,0,0,"Yes, this is the beginning. I've been waiting for you, young prince. I am Mal'Ganis.",14,0,100,0,0,14410,"Mal\'Ganis"),
-(@ENTRY,1,0,"As you can see, your people are now mine. I will now turn this city, household by household, until the flame of life has been snuffed out forever.",14,0,100,0,0,14411,"Mal\'Ganis"),
-(@ENTRY,2,0,"This will be a fine test, Prince Arthas.",14,0,100,0,0,14413,"Mal\'Ganis"),
-(@ENTRY,3,0,"You seem tired.",14,0,100,0,0,14415,"Mal\'Ganis"),
-(@ENTRY,3,1,"Time out.",14,0,100,0,0,14414,"Mal\'Ganis"),
-(@ENTRY,4,0,"You seem tired.",14,0,100,0,0,14415,"Mal\'Ganis"),
-(@ENTRY,4,1,"Time out.",14,0,100,0,0,14414,"Mal\'Ganis"),
-(@ENTRY,5,0,"It is Prince Arthas I want, not you.",14,0,100,0,0,14418,"Mal\'Ganis"),
-(@ENTRY,5,1,"The dark lord is displeased with your interference.",14,0,100,0,0,14417,"Mal\'Ganis"),
-(@ENTRY,5,2,"All too easy.",14,0,100,0,0,14416,"Mal\'Ganis"),
-(@ENTRY,6,0,"Your journey has just begun, young prince. Gather your forces, and meet me in the arctic land of Northrend. It is there we shall settle the score between us. It is there that your true destiny will unfold.",14,0,100,0,0,14412,"Mal\'Ganis");
-
 -- Texts for Roanauk Icemist
 SET @ENTRY := 26654;
 DELETE FROM `creature_text` WHERE `entry`=@ENTRY;
@@ -2117,8 +1990,8 @@ SET @ENTRY := 27209;
 DELETE FROM `creature_text` WHERE `entry`=@ENTRY;
 INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`probability`,`emote`,`duration`,`sound`,`comment`) VALUES
 (@ENTRY,0,0,"Come to play?",12,0,100,0,0,0,"Torturer LeCraft"),
-(@ENTRY,1,0,"Ow! I'll tell you NOTHING, filthy $R!",15,0,100,0,0,0,"Torturer LeCraft"),
-(@ENTRY,2,0,"Wait... WAIT! What is it that you want to know? I know you're the $C named $N.",15,0,100,0,0,0,"Torturer LeCraft"),
+(@ENTRY,1,0,"Ow! I'll tell you NOTHING, filthy $r!",15,0,100,0,0,0,"Torturer LeCraft"),
+(@ENTRY,2,0,"Wait... WAIT! What is it that you want to know? I know you're the $c named $N.",15,0,100,0,0,0,"Torturer LeCraft"),
 (@ENTRY,3,0,"OW...NO! We know that you've been stealing our armor and weapons and horses!",15,0,100,0,0,0,"Torturer LeCraft"),
 (@ENTRY,4,0,"We know... that you don't... know why we're immune... to your so-called blight. Grand Admiral Westwind somehow gave the high abbot that prayer. I beg you... no more... please?",15,0,100,0,0,0,"Torturer LeCraft"),
 (@ENTRY,5,0,"AHHHHHHHHH! Please... we know... that you... have a spy... disguised as... one of us! There... that's all that I know. Please... mercy... STOP!",15,0,100,0,0,0,"Torturer LeCraft"),
@@ -2169,12 +2042,6 @@ DELETE FROM `creature_text` WHERE `entry`=@ENTRY;
 INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`probability`,`emote`,`duration`,`sound`,`comment`) VALUES
 (@ENTRY,0,0,"%s begins to emanate a power dark energy!",16,0,100,0,0,0,"Urgreth of the Thousand Tombs");
 
--- Texts for Warlord Tartek
-SET @ENTRY := 28105;
-DELETE FROM `creature_text` WHERE `entry`=@ENTRY;
-INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`probability`,`emote`,`duration`,`sound`,`comment`) VALUES
-(@ENTRY,0,0,"My treasure! You no steal from Tartek, dumb big-tongue traitor thing. Tartek and nasty dragon going to kill you! You so dumb.",12,0,100,0,0,0,"Warlord Tartek");
-
 -- Texts for Captive Footman
 SET @ENTRY := 28415;
 DELETE FROM `creature_text` WHERE `entry`=@ENTRY;
@@ -2206,45 +2073,11 @@ INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`pr
 (@ENTRY,0,1,"Let the purging begin!",12,0,100,0,0,0,"Scarlet Medic"),
 (@ENTRY,0,2,"You're not welcome in these lands, monster!",12,0,100,0,0,0,"Scarlet Medic");
 
--- Texts for Prince Valanar
-SET @ENTRY := 28907;
-DELETE FROM `creature_text` WHERE `entry`=@ENTRY;
-INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`probability`,`emote`,`duration`,`sound`,`comment`) VALUES
-(@ENTRY,0,0,"Open your eyes, brothers and sisters! GAZE UPON APOCALYPSE!",14,0,100,1,0,0,"Prince Valanar"),
-(@ENTRY,0,1,"The sky itself feeds upon the suffering of the conquered!",14,0,100,1,0,0,"Prince Valanar"),
-(@ENTRY,0,2,"The Scarlet Crusade is powerless to stop us!",14,0,100,1,0,0,"Prince Valanar"),
-(@ENTRY,1,0,"The corpses of those that try only serve to feed our expanding host!",14,0,100,1,0,0,"Prince Valanar"),
-(@ENTRY,1,1,"The Scarlet fleet lies in ruin upon the sundered coast!",14,0,100,1,0,0,"Prince Valanar"),
-(@ENTRY,1,2,"With each enemy slain, our strength grows! We mustn't relent!",14,0,100,1,0,0,"Prince Valanar"),
-(@ENTRY,2,0,"The Lich King has spoken to each of you! Let his words resonate among you once more!",14,0,100,1,0,0,"Prince Valanar"),
-(@ENTRY,2,1,"ALL. MUST. DIE.",14,0,100,1,0,0,"Prince Valanar"),
-(@ENTRY,2,2,"Leave no survivors in your wake, brothers and sisters!",14,0,100,1,0,0,"Prince Valanar"),
-(@ENTRY,3,0,"No mercy for the weak!",14,0,100,1,0,0,"Prince Valanar"),
-(@ENTRY,3,1,"TERROR!",14,0,100,1,0,0,"Prince Valanar"),
-(@ENTRY,3,2,"CHAOS!",14,0,100,1,0,0,"Prince Valanar"),
-(@ENTRY,4,0,"DESTRUCTION!",14,0,100,1,0,0,"Prince Valanar"),
-(@ENTRY,4,1,"With the approaching darkness comes the end of the Scarlet Crusade. You will battle once more! For the Scourge! For the Lich King!",14,0,100,1,0,0,"Prince Valanar"),
-(@ENTRY,4,2,"SUFFER WELL, DEATH KNIGHTS!",14,0,100,1,0,0,"Prince Valanar");
-
 -- Texts for Yara
 SET @ENTRY := 28917;
 DELETE FROM `creature_text` WHERE `entry`=@ENTRY;
 INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`probability`,`emote`,`duration`,`sound`,`comment`) VALUES
 (@ENTRY,0,0,"Daddy!",12,0,100,0,0,0,"Yara");
-
--- Texts for Lord Thorval
-SET @ENTRY := 29196;
-DELETE FROM `creature_text` WHERE `entry`=@ENTRY;
-INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`probability`,`emote`,`duration`,`sound`,`comment`) VALUES
-(@ENTRY,0,0,"As disciples of blood, you strive to master the very lifeforce of your enemies.",12,0,100,0,0,0,"Lord Thorval"),
-(@ENTRY,1,0,"Be it by blade or incantation, blood feeds our attacks and weakens our foes.",12,0,100,0,0,0,"Lord Thorval"),
-(@ENTRY,2,0,"True masters learn to make blood serve more than just their strength in battle.",12,0,100,0,0,0,"Lord Thorval"),
-(@ENTRY,3,0,"Stripping energy from our foes, both fighting and fallen, allows us to persevere where lesser beigns falls exhausted.",12,0,100,0,0,0,"Lord Thorval"),
-(@ENTRY,4,0,"And every foe that falls, energy sapped and stolen, only further fuels our assault.",12,0,100,0,0,0,"Lord Thorval"),
-(@ENTRY,5,0,"As masters of blood, we know battle without end...",12,0,100,0,0,0,"Lord Thorval"),
-(@ENTRY,6,0,"We know hunger never to be quenched...",12,0,100,0,0,0,"Lord Thorval"),
-(@ENTRY,7,0,"We know power never to be overcome...",12,0,100,0,0,0,"Lord Thorval"),
-(@ENTRY,8,0,"As masters of blood, we are masters of life and death itself. Agains us, even hope falls drained and lifeless.",12,0,100,0,0,0,"Lord Thorval");
 
 -- Texts for Stormforged Taskmaster
 SET @ENTRY := 29369;
@@ -2256,10 +2089,10 @@ INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`pr
 SET @ENTRY := 30956;
 DELETE FROM `creature_text` WHERE `entry`=@ENTRY;
 INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`probability`,`emote`,`duration`,`sound`,`comment`) VALUES
-(@ENTRY,0,0,"I knew that you would come.",12,0,100,0,0,0,"Sapph"),
-(@ENTRY,1,0,"You have some fight in you. I'm impressed.",12,0,100,0,0,0,"Sapph"),
-(@ENTRY,2,0,"Welcome to the world of the unliving!",12,0,100,0,0,0,"Sapph"),
-(@ENTRY,3,0,"Well fought...",12,0,100,0,0,0,"Sapph");
+(@ENTRY,0,0,"I knew that you would come.",14,0,100,0,0,0,"Sapph"),
+(@ENTRY,1,0,"You have some fight in you. I'm impressed.",14,0,100,0,0,0,"Sapph"),
+(@ENTRY,2,0,"Welcome to the world of the unliving!",14,0,100,0,0,0,"Sapph"),
+(@ENTRY,3,0,"Well fought...",14,0,100,0,0,0,"Sapph");
 
 -- Texts for Magistrate Barthilas
 SET @ENTRY := 30994;
@@ -2282,10 +2115,10 @@ INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`pr
 SET @ENTRY := 31161;
 DELETE FROM `creature_text` WHERE `entry`=@ENTRY;
 INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`probability`,`emote`,`duration`,`sound`,`comment`) VALUES
-(@ENTRY,0,0,"I knew that you would come.",12,0,100,0,0,0,"Sapph"),
-(@ENTRY,1,0,"You have some fight in you. I'm impressed.",12,0,100,0,0,0,"Sapph"),
-(@ENTRY,2,0,"Welcome to the world of the unliving!",12,0,100,0,0,0,"Sapph"),
-(@ENTRY,3,0,"Well fought...",12,0,100,0,0,0,"Sapph");
+(@ENTRY,0,0,"I knew that you would come.",14,0,100,0,0,0,"Sapph"),
+(@ENTRY,1,0,"You have some fight in you. I'm impressed.",14,0,100,0,0,0,"Sapph"),
+(@ENTRY,2,0,"Welcome to the world of the unliving!",14,0,100,0,0,0,"Sapph"),
+(@ENTRY,3,0,"Well fought...",14,0,100,0,0,0,"Sapph");
 
 -- Texts for Orabus the Helmsman
 SET @ENTRY := 32576;
