@@ -189,11 +189,11 @@ INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`pr
 SET @ENTRY := 3644;
 DELETE FROM `creature_text` WHERE `entry`=@ENTRY;
 INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`probability`,`emote`,`duration`,`sound`,`comment`) VALUES
-(@ENTRY,0,0,"You have chosen death.",12,0,100,0,0,0,"Cerellean Whiteclaw"),
-(@ENTRY,1,0,"%s growls in your direction before taking time to sniff you.",16,0,100,0,0,0,"Cerellean Whiteclaw"),
-(@ENTRY,2,0,"%s faces southeast and whimpers before looking back at you. ",16,0,100,0,0,0,"Cerellean Whiteclaw"),
-(@ENTRY,3,0,"The end comes for you!",12,0,100,0,0,0,"Cerellean Whiteclaw"),
-(@ENTRY,4,0,"I shall be rewarded!",12,0,100,0,0,0,"Cerellean Whiteclaw");
+(@ENTRY,0,0,"Anaya...? Do my eyes deceive me? Is it really you?",12,0,100,0,0,0,"Cerellean Whiteclaw"),
+(@ENTRY,1,0,"That fates should be so cruel as to permit us only this after a thousand years apart...",16,0,100,0,0,0,"Cerellean Whiteclaw"),
+(@ENTRY,2,0,"Do you hate me, my love? That I was forced to destroy your living form, that your spirit be released from unhappy bondage.",16,0,100,0,0,0,"Cerellean Whiteclaw"),
+(@ENTRY,3,0,"No! Anaya... Anaya! Don't leave me! Please...",12,0,100,0,0,0,"Cerellean Whiteclaw"),
+(@ENTRY,4,0,"How, my love? How will I find the strength to face the ages of the world without you by my side...",12,0,100,0,0,0,"Cerellean Whiteclaw");
 
 -- Texts for Anaya Dawnrunner
 SET @ENTRY := 3667;
@@ -205,11 +205,11 @@ INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`pr
 SET @ENTRY := 3843;
 DELETE FROM `creature_text` WHERE `entry`=@ENTRY;
 INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`probability`,`emote`,`duration`,`sound`,`comment`) VALUES
-(@ENTRY,0,0,"I do as I must!",12,0,100,0,0,0,"Anaya"),
-(@ENTRY,1,0,"Ruin finds us all!",12,0,100,0,0,0,"Anaya"),
-(@ENTRY,2,0,"In Sargeras' name!",12,0,100,0,0,0,"Anaya"),
-(@ENTRY,3,0,"The Legion reigns!",12,0,100,0,0,0,"Anaya"),
-(@ENTRY,4,0,"Pathetic worm!",12,0,100,0,0,0,"Anaya");
+(@ENTRY,0,0,"The ages have been cruel to you and I, my love, but be assured, it is, and at long last we are reunited.",12,0,100,0,0,0,"Anaya"),
+(@ENTRY,1,0,"Let it not trouble your heart, beloved. You have freed me from slavery, and for that I love you all the more.",12,0,100,0,0,0,"Anaya"),
+(@ENTRY,2,0,"Sadly, even this must be cut short... The ties that bind me to this world weaken, and pull me away...",12,0,100,0,0,0,"Anaya"),
+(@ENTRY,3,0,"Farewell, Cerellean, until we are joined once again...",12,0,100,0,0,0,"Anaya"),
+(@ENTRY,4,0,"%s's soft voice trails away into the mists, \"Know that I love you always...\"",16,0,100,0,0,0,"Anaya");
 
 -- Texts for Thistlefur Avenger
 SET @ENTRY := 3925;
@@ -243,12 +243,12 @@ INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`pr
 SET @ENTRY := 4509;
 DELETE FROM `creature_text` WHERE `entry`=@ENTRY;
 INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`probability`,`emote`,`duration`,`sound`,`comment`) VALUES
-(@ENTRY,0,0,"Get it while it's hot!",12,0,100,0,0,0,"Sargath"),
-(@ENTRY,1,0,"Any intruders must be eliminated!",14,0,100,0,0,0,"Sargath"),
-(@ENTRY,2,0,"Protect the Botanica at all costs!",14,0,100,0,0,0,"Sargath"),
-(@ENTRY,3,0,"Protect the Mechanar at all costs!",14,0,100,0,0,0,"Sargath"),
-(@ENTRY,4,0,"You hear a faint unlocking sound...",16,0,100,0,0,0,"Sargath"),
-(@ENTRY,5,0,"The end is come!",12,0,100,0,0,0,"Sargath");
+(@ENTRY,0,0,"In the throes of the Sundering, Ameth'Aran was at the whim of the terror that gripped the land. There was little hope for survival.",12,0,100,0,0,0,"Sargath"),
+(@ENTRY,1,0,"Athrikus came to us. He told us that he could save us from harm. He cast a spell upon us to protect us from harm.",12,0,100,0,0,0,"Sargath"),
+(@ENTRY,2,0,"When the shaking stopped, his true motives were revealed. We were trapped, and he was slowly draining our powers.",12,0,100,0,0,0,"Sargath"),
+(@ENTRY,3,0,"There were hundreds imprisoned by his spell. Now only a few remain in their prisons. He would speak to us sometimes.",12,0,100,0,0,0,"Sargath"),
+(@ENTRY,4,0,"He worried that his power weakened, that soon even we last of his precious soulgems would fade and die.",12,0,100,0,0,0,"Sargath"),
+(@ENTRY,5,0,"His lieutenant, Ilkurd Magthrull possesses a tome which might indicate the location of the remaining soulgems.",12,0,100,0,0,0,"Sargath");
 
 -- Texts for Hatefury Rogue
 SET @ENTRY := 4670;
@@ -413,9 +413,9 @@ INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`pr
 SET @ENTRY := 8035;
 DELETE FROM `creature_text` WHERE `entry`=@ENTRY;
 INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`probability`,`emote`,`duration`,`sound`,`comment`) VALUES
-(@ENTRY,0,0,"No! You must no do this!",14,0,100,0,0,0,"Dark Iron Land Mine"),
-(@ENTRY,1,0,"DIE, MORTALS!",14,0,100,0,0,5871,"Dark Iron Land Mine"),
-(@ENTRY,2,0,"By the Light, you will leave this tomb!",12,0,100,0,0,0,"Dark Iron Land Mine");
+(@ENTRY,0,0,"%s will be armed in 10 seconds!",16,0,100,0,0,0,"Dark Iron Land Mine"),
+(@ENTRY,1,0,"%s will be armed in 5 seconds!",16,0,100,0,0,5871,"Dark Iron Land Mine"),
+(@ENTRY,2,0,"%s is now armed!",16,0,100,0,0,0,"Dark Iron Land Mine");
 
 -- Texts for Omgorn the Lost
 SET @ENTRY := 8201;
@@ -1339,9 +1339,9 @@ INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`pr
 SET @ENTRY := 19346;
 DELETE FROM `creature_text` WHERE `entry`=@ENTRY;
 INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`probability`,`emote`,`duration`,`sound`,`comment`) VALUES
-(@ENTRY,0,0,"%s looks weak enough to capture.",16,0,100,0,0,0,"Harbinger Erothem"),
-(@ENTRY,1,0,"This land was mine long before your wretched kind set foot here.",14,0,100,0,0,0,"Harbinger Erothem"),
-(@ENTRY,2,0,"All who venture here belong to me, including you!",14,0,100,0,0,0,"Harbinger Erothem");
+(@ENTRY,0,0,"Anchorite Nindumen, I have a request to make of you.",12,0,100,0,0,0,"Harbinger Erothem"),
+(@ENTRY,1,0,"We've just sent another inexperienced squad into Nagrand. Might you offer a prayer for them?",12,0,100,0,0,0,"Harbinger Erothem"),
+(@ENTRY,2,0,"May it be so.",12,0,100,0,0,0,"Harbinger Erothem");
 
 -- Texts for Kor'kron Defender
 SET @ENTRY := 19362;
@@ -1648,7 +1648,7 @@ INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`pr
 SET @ENTRY := 21771;
 DELETE FROM `creature_text` WHERE `entry`=@ENTRY;
 INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`probability`,`emote`,`duration`,`sound`,`comment`) VALUES
-(@ENTRY,0,0,"Matron, flee! They are ruthless....",14,0,100,0,0,15503,"Warcaller Sardon Truslice");
+(@ENTRY,0,0,"Wit a reward like dis, how could they refuse, mon?",12,0,100,0,0,0,"Warcaller Sardon Truslice");
 
 -- Texts for Thane Yoregar
 SET @ENTRY := 21773;
@@ -2144,7 +2144,7 @@ INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`pr
 SET @ENTRY := 28256;
 DELETE FROM `creature_text` WHERE `entry`=@ENTRY;
 INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`probability`,`emote`,`duration`,`sound`,`comment`) VALUES
-(@ENTRY,0,0,"So the oracIe has decided to aid you, outlander. Very well, I will offer you what i know.",12,0,100,0,0,0,"Voice of Nozronn"),
+(@ENTRY,0,0,"So the oracle has decided to aid you, outlander. Very well, I will offer you what I know.",12,0,100,0,0,0,"Voice of Nozronn"),
 (@ENTRY,1,0,"Your companion seeks the shardhorn patriarch Farunn, who holds himself aloof from his brothers.",12,0,100,0,0,0,"Voice of Nozronn"),
 (@ENTRY,2,0,"Farunn walks the lands north of what your people call the Bittertide Falls. You will find him alone, but you will see her requires no defenders.",12,0,100,0,0,0,"Voice of Nozronn"),
 (@ENTRY,3,0,"Return to your companion. Tell him to go forth and claim his prize in Farunn.",12,0,100,0,0,0,"Voice of Nozronn"),
